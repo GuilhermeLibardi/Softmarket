@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.*?>
+<SplitPane dividerPositions="0.23395931142410015" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.vendasController">
+  <items>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="303.0">
+         <children>
+            <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="48.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/SoftMarket.png" />
+               </image>
+            </ImageView>
+            <Label fx:id="lblQuantidade" layoutX="14.0" layoutY="230.0" text="2">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <Label layoutX="26.0" layoutY="235.0" text="x">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblNomeProduto" layoutX="42.0" layoutY="229.0" text="Coca-Cola 2L">
+               <font>
+                  <Font size="21.0" />
+               </font>
+            </Label>
+            <Label layoutX="11.0" layoutY="277.0" text="R$">
+               <font>
+                  <Font size="15.0" />
+               </font>
+            </Label>
+            <Label fx:id="lblSubtotal" layoutX="40.0" layoutY="267.0" text="14,00">
+               <font>
+                  <Font size="28.0" />
+               </font>
+            </Label>
+            <Label layoutX="16.0" layoutY="459.0" text="Total">
+               <font>
+                  <Font size="22.0" />
+               </font>
+            </Label>
+            <Label layoutX="80.0" layoutY="467.0" text="R$" />
+            <Label fx:id="lblTotal" layoutX="94.0" layoutY="444.0" text="14,00">
+               <font>
+                  <Font size="32.0" />
+               </font>
+            </Label>
+         </children></AnchorPane>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="437.0">
+         <children>
+            <Label layoutX="425.0" layoutY="14.0" text="Sistema de Vendas">
+               <font>
+                  <Font size="30.0" />
+               </font>
+            </Label>
+            <TableView fx:id="tableProdutos" layoutY="182.0" prefHeight="506.0" prefWidth="976.0">
+              <columns>
+                <TableColumn prefWidth="82.0" text="ID" />
+                <TableColumn prefWidth="212.0" text="Código de Barras" />
+                  <TableColumn prefWidth="448.0" text="Nome" />
+                  <TableColumn prefWidth="99.0" text="Quantidade" />
+                  <TableColumn prefWidth="132.0" text="Preço" />
+              </columns>
+            </TableView>
+            <TextField fx:id="txtCodBarras" layoutX="89.0" layoutY="104.0" prefHeight="32.0" prefWidth="461.0" />
+            <Label layoutX="72.0" layoutY="694.0" text="F3 - Cancelar Produto">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="380.0" layoutY="694.0" text="F4 - Cancelar Venda">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="672.0" layoutY="696.0" text="F5 - Confirmar Venda">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <TextField fx:id="txtQuantidade" layoutX="739.0" layoutY="104.0" prefHeight="32.0" prefWidth="160.0" />
+            <Label layoutX="739.0" layoutY="81.0" text="Quantidade" />
+            <Label layoutX="89.0" layoutY="81.0" text="Código de Barras" />
+         </children></AnchorPane>
+  </items>
+</SplitPane>
