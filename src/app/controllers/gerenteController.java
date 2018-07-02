@@ -16,8 +16,7 @@ public class gerenteController {
     @FXML
     private Button btnGerarRelatorios;
 
-    @FXML
-    private Pane painelEstoque;
+
 
     @FXML
     private TextField txtDataInicial;
@@ -32,16 +31,19 @@ public class gerenteController {
     private Button btnRelatorio;
 
     @FXML
-    private Pane painelRelatórios;
-
-    @FXML
-    private TableView<?> tabelaProdutos;
+    private TableView<String> tabelaProdutos;
 
     @FXML
     private TextField txtPesquisa;
 
     @FXML
     private Pane painelBemvindo;
+
+    @FXML
+    private Pane painelEstoque;
+
+    @FXML
+    private Pane painelRelatorios;
 
     @FXML
     void gerarRelatorio(ActionEvent event) {
@@ -51,6 +53,20 @@ public class gerenteController {
     @FXML
     void updateTable(KeyEvent event) {
 
+    }
+
+    @FXML
+    void handleGerenciarEstoque(ActionEvent event){
+        painelBemvindo.setVisible(false);
+        painelRelatorios.setVisible(false);
+        painelEstoque.setVisible(true);
+    }
+
+    @FXML
+    void handleGerarRelatorios(ActionEvent event){
+        painelBemvindo.setVisible(false);
+        painelRelatorios.setVisible(true);
+        painelEstoque.setVisible(false);
     }
 
 }

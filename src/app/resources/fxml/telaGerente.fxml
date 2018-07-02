@@ -7,7 +7,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-<SplitPane dividerPositions="0.29797979797979796" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.gerenteController">
+<SplitPane dividerPositions="0.29797979797979796" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.gerenteController">
   <items>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: #004;">
          <children>
@@ -19,14 +19,14 @@
                   <Image url="@../images/SoftMarket.png" />
                </image>
             </ImageView>
-            <Button fx:id="btnGerenciarEstoque" layoutX="-10.0" layoutY="313.0" mnemonicParsing="false" prefHeight="86.0" prefWidth="423.0" style="-fx-background-color: #fff;" text="GERENCIAR ESTOQUE">
+            <Button fx:id="btnGerenciarEstoque" layoutX="-10.0" layoutY="313.0" mnemonicParsing="false" onAction="#handleGerenciarEstoque" prefHeight="86.0" prefWidth="423.0" style="-fx-background-color: #fff;" text="GERENCIAR ESTOQUE">
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>
                <font>
                   <Font size="21.0" />
                </font></Button>
-            <Button fx:id="btnGerarRelatorios" layoutX="-10.0" layoutY="399.0" mnemonicParsing="false" prefHeight="86.0" prefWidth="423.0" style="-fx-background-color: #fff;" text="GERAR RELATÓRIOS">
+            <Button fx:id="btnGerarRelatorios" layoutX="-10.0" layoutY="406.0" mnemonicParsing="false" onAction="#handleGerarRelatorios" prefHeight="86.0" prefWidth="423.0" style="-fx-background-color: #fff;" text="GERAR RELATÓRIOS">
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>
@@ -37,7 +37,7 @@
          </children></AnchorPane>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: #ffffff;">
          <children>
-            <Pane fx:id="painelEstoque" prefHeight="766.0" prefWidth="955.0" style="-fx-background-color: #ffffff;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <Pane fx:id="painelRelatorios" prefHeight="766.0" prefWidth="955.0" style="-fx-background-color: #ffffff;" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <Label layoutX="343.0" layoutY="61.0" text="GERAR RELATÓRIOS" textAlignment="CENTER">
                      <font>
@@ -67,7 +67,7 @@
                   </Label>
                </children>
             </Pane>
-            <Pane fx:id="painelRelatórios" prefHeight="766.0" prefWidth="955.0" style="-fx-background-color: #ffffff;" visible="false">
+            <Pane fx:id="painelEstoque" prefHeight="766.0" prefWidth="955.0" style="-fx-background-color: #ffffff;" visible="false">
                <children>
                   <TableView fx:id="tabelaProdutos" layoutY="283.0" prefHeight="485.0" prefWidth="955.0" style="-fx-background-color: #fff;">
                     <columns>
@@ -102,7 +102,7 @@
                   </Button>
                </children>
             </Pane>
-            <Pane fx:id="painelBemvindo" prefHeight="766.0" prefWidth="955.0" style="-fx-background-color: #ffffff;" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <Pane fx:id="painelBemvindo" prefHeight="766.0" prefWidth="955.0" style="-fx-background-color: #ffffff;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <Label layoutX="349.0" layoutY="361.0" text="Bem vindo, gerente">
                      <font>
