@@ -1,5 +1,4 @@
 package app.classes.usuarios;
-
 import app.classes.util.Periodo;
 
 public class Gerente extends Usuario{

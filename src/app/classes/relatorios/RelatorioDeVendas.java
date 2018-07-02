@@ -1,9 +1,11 @@
 package app.classes.relatorios;
+import app.classes.Venda;
+import java.util.ArrayList;
 
 public class RelatorioDeVendas {
     private ArrayList <Venda> vendas;
 
-    public RelatorioDeEstoque() {
-        this.vendas = new ArrayList<Venda>;
+    public RelatorioDeVendas() {
+        this.vendas = new ArrayList<Venda>();
     }
 }

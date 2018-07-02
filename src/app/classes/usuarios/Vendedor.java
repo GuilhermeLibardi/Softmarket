@@ -8,11 +8,10 @@ public class Vendedor extends Usuario {
         super(nome, login, senha);
     }
 
-    public Venda iniciarVenda() {
-        Venda venda;
+    /*public Venda iniciarVenda() {
 
         return venda;
-    }
+    }*/
 
     public void fecharVenda(Venda v){
 

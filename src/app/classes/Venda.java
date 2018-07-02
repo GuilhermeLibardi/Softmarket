@@ -1,5 +1,6 @@
 package app.classes;
 import java.util.Date;
+import java.util.ArrayList;
 
 public class Venda {
     private ArrayList <Produto> produtos;
@@ -11,11 +12,11 @@ public class Venda {
     private Date date;
 
     public Venda(ArrayList<Produto> produtos, Date date) {
-        this.produtos = new AraryList<Produto>;
+        this.produtos = new ArrayList<Produto>();
         this.valor = 0;
         this.troco = 0;
         this.pagamento = 0;
-        this.tipoPag = null;
+        this.tipoPag = ' ';
         this.id = 1;
         this.date = date;
     }
