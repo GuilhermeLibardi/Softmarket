@@ -1,4 +1,4 @@
-package java.classes;
+package app.classes;
 
 public class Venda {
 }
