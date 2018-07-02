@@ -7,7 +7,7 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-<SplitPane dividerPositions="0.29797979797979796" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.gerenteController">
+<SplitPane dividerPositions="0.29797979797979796" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.gerenteController">
   <items>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: #004;">
          <children>
@@ -67,42 +67,42 @@
                   </Label>
                </children>
             </Pane>
-            <Pane fx:id="painelEstoque" prefHeight="766.0" prefWidth="955.0" style="-fx-background-color: #ffffff;" visible="false">
+            <Pane fx:id="painelEstoque" prefHeight="766.0" prefWidth="955.0" style="-fx-background-color: #ffffff;">
                <children>
-                  <TableView fx:id="tabelaProdutos" layoutY="283.0" prefHeight="485.0" prefWidth="955.0" style="-fx-background-color: #fff;">
+                  <TableView fx:id="tabelaProdutos" layoutX="14.0" layoutY="182.0" prefHeight="485.0" prefWidth="863.0" style="-fx-background-color: #fff;">
                     <columns>
-                      <TableColumn prefWidth="154.0" text="Cód. Barras" />
-                      <TableColumn prefWidth="447.0" text="Nome" />
-                        <TableColumn minWidth="0.0" prefWidth="101.0" text="Preço compra" />
-                        <TableColumn prefWidth="103.0" text="Preço venda" />
-                        <TableColumn prefWidth="149.0" text="Estoque" />
+                      <TableColumn fx:id="colCodBarras" prefWidth="132.0" text="Cód. Barras" />
+                      <TableColumn fx:id="colNome" prefWidth="401.0" text="Nome" />
+                        <TableColumn fx:id="colCompra" prefWidth="103.0" text="Preço Compra" />
+                        <TableColumn fx:id="colVenda" prefWidth="108.0" text="Preço Venda" />
+                        <TableColumn fx:id="colEstoque" prefWidth="101.0" text="Estoque" />
                     </columns>
                   </TableView>
-                  <Button layoutX="94.0" layoutY="143.0" mnemonicParsing="false" prefHeight="0.0" prefWidth="36.0" style="-fx-background-color: #5EFF59; -fx-background-radius: 200;" text="+" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS" wrapText="true">
+                  <Button layoutX="92.0" layoutY="95.0" mnemonicParsing="false" prefHeight="0.0" prefWidth="36.0" style="-fx-background-color: #5EFF59; -fx-background-radius: 200;" text="+" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS" wrapText="true">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Button>
-                  <TextField fx:id="txtPesquisa" layoutX="418.0" layoutY="150.0" onKeyReleased="#updateTable" prefHeight="25.0" prefWidth="417.0" text="Pesquisar por nome do produto" />
-                  <Label layoutX="412.0" layoutY="38.0" text="Seu estoque">
+                  <TextField fx:id="txtPesquisa" layoutX="393.0" layoutY="102.0" onKeyReleased="#updateTable" prefHeight="25.0" prefWidth="417.0" text="Pesquisar por nome do produto" />
+                  <Label layoutX="418.0" layoutY="14.0" text="Seu estoque">
                      <font>
                         <Font name="Tahoma" size="30.0" />
                      </font>
                   </Label>
-                  <Button layoutX="850.0" layoutY="150.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="60.0" text="Buscar" />
-                  <Button layoutX="202.0" layoutY="143.0" mnemonicParsing="false" prefHeight="0.0" prefWidth="36.0" style="-fx-background-color: #FF635C; -fx-background-radius: 200;" text="-" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS" wrapText="true">
+                  <Button layoutX="825.0" layoutY="102.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="60.0" text="Buscar" />
+                  <Button layoutX="200.0" layoutY="95.0" mnemonicParsing="false" prefHeight="0.0" prefWidth="36.0" style="-fx-background-color: #FF635C; -fx-background-radius: 200;" text="-" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS" wrapText="true">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Button>
-                  <Button layoutX="150.0" layoutY="143.0" mnemonicParsing="false" prefHeight="0.0" prefWidth="36.0" style="-fx-background-color: #4F6BB2; -fx-background-radius: 200;" text="/" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS" wrapText="true">
+                  <Button layoutX="148.0" layoutY="95.0" mnemonicParsing="false" prefHeight="0.0" prefWidth="36.0" style="-fx-background-color: #4F6BB2; -fx-background-radius: 200;" text="/" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS" wrapText="true">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>
                   </Button>
                </children>
             </Pane>
-            <Pane fx:id="painelBemvindo" prefHeight="766.0" prefWidth="955.0" style="-fx-background-color: #ffffff;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <Pane fx:id="painelBemvindo" prefHeight="766.0" prefWidth="955.0" style="-fx-background-color: #ffffff;" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <Label layoutX="349.0" layoutY="361.0" text="Bem vindo, gerente">
                      <font>
