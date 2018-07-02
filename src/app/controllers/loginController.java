@@ -1,6 +1,5 @@
 package app.controllers;
 
-import app.Main;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
@@ -11,6 +10,8 @@ import javafx.scene.control.TextField;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
+import java.io.IOException;
+
 public class loginController {
     @FXML
     Button btnLogin;
@@ -19,27 +20,38 @@ public class loginController {
     @FXML
     TextField txtSenha;
 
-    private Main application;
+    public void handleLogin() throws Exception {
+        if (txtUsuario.getText().equals("admin") && txtSenha.getText().equals("admin")) {
+            changeScreen("../resources/fxml/telaGerente.fxml");
+        } else if (txtUsuario.getText().equals("vendas") && txtSenha.getText().equals("vendas2018")) {
+            changeScreen("../resources/fxml/telaVendas.fxml");
+        } else {
+            System.out.println("Login inválido");
+        }
+    }
 
-    public void handleLogin() throws Exception{
+    public void handleSubmitSenha() throws Exception{
+        handleLogin();
+    }
+
+    private void changeScreen(String fxml) throws IOException {
         btnLogin.getScene().getWindow().hide();
-        Stage telaGerente = new Stage();
-
+        Stage stage = new Stage();
         FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource("../resources/fxml/telaGerente.fxml"));
+        loader.setLocation(getClass().getResource(fxml));
         Parent root = loader.load();
 
         Screen screen = Screen.getPrimary();
         Rectangle2D bounds = screen.getVisualBounds();
 
         Scene scene = new Scene(root);
-        telaGerente.setScene(scene);
-        telaGerente.show();
-        telaGerente.setResizable(false);
+        stage.setScene(scene);
+        stage.show();
+        stage.setResizable(false);
 
-        telaGerente.setX(bounds.getMinX());
-        telaGerente.setY(bounds.getMinY());
-        telaGerente.setWidth(bounds.getWidth());
-        telaGerente.setHeight(bounds.getHeight());
+        stage.setX(bounds.getMinX());
+        stage.setY(bounds.getMinY());
+        stage.setWidth(bounds.getWidth());
+        stage.setHeight(bounds.getHeight());
     }
 }

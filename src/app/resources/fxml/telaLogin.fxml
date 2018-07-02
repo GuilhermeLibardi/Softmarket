@@ -5,19 +5,25 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 <VBox prefHeight="350.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.loginController">
    <children>
       <AnchorPane prefHeight="350.0" prefWidth="400.0" style="-fx-background-color: #fff;" styleClass="main">
          <children>
             <Button id="btnLogin" fx:id="btnLogin" layoutX="170.0" layoutY="299.0" mnemonicParsing="false" onAction="#handleLogin" prefHeight="25.0" prefWidth="62.0" text="Login" />
-            <ImageView fx:id="imgLogo" fitHeight="136.0" fitWidth="230.0" layoutX="115.0" layoutY="39.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="imgLogo" fitHeight="102.0" fitWidth="149.0" layoutX="133.0" layoutY="73.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/SoftMarket.png" />
                </image></ImageView>
             <TextField fx:id="txtUsuario" layoutX="130.0" layoutY="213.0" />
-            <TextField fx:id="txtSenha" layoutX="130.0" layoutY="248.0" />
             <Label layoutX="84.0" layoutY="217.0" text="Usuário" />
             <Label layoutX="88.0" layoutY="252.0" text="Senha" />
+            <PasswordField fx:id="txtSenha" layoutX="130.0" layoutY="248.0" onAction="#handleSubmitSenha" />
+            <Label layoutX="159.0" layoutY="24.0" text="Softmarket">
+               <font>
+                  <Font size="17.0" />
+               </font>
+            </Label>
          </children>
       </AnchorPane>
    </children>

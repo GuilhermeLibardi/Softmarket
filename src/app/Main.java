@@ -16,6 +16,7 @@ public class Main extends Application {
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);
             primaryStage.show();
+            primaryStage.setTitle("Login marketsoft");
             primaryStage.setResizable(false);
         } catch (Exception e){
             e.printStackTrace();
