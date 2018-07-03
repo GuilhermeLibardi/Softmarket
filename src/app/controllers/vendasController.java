@@ -1,10 +1,21 @@
 package app.controllers;
 
+import app.classes.Produto;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.beans.value.ObservableValue;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.KeyCode;
+
+import java.net.URL;
+import java.util.ResourceBundle;
 
 public class vendasController {
 
@@ -21,7 +32,7 @@ public class vendasController {
     private Label lblTotal;
 
     @FXML
-    private TableView<?> tableProdutos;
+    private TableView<Produto> tableProdutos;
 
     @FXML
     private TextField txtCodBarras;
@@ -29,14 +40,46 @@ public class vendasController {
     @FXML
     private TextField txtQuantidade;
 
-    @FXML
-    void handleCodBarras(ActionEvent event) {
+    private ObservableList<Produto> listaProdutos = FXCollections.observableArrayList();
 
+    @FXML
+    private TableColumn<Produto, Integer> colCodBarras;
+
+    @FXML
+    private TableColumn<Produto, String> colNome;
+
+    @FXML
+    private TableColumn<Produto, Float> colCompra;
+
+    @FXML
+    private TableColumn<Produto, Float> colVenda;
+
+    @FXML
+    private TableColumn<Produto, Integer> colEstoque;
+
+    @FXML
+    void digitarCdb(KeyEvent event){
+        txtCodBarras.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                txtCodBarras.setText(newValue.replaceAll("[^\\d]", ""));
+            }
+        });
+        if(event.getCode().equals(KeyCode.ENTER))
+            txtQuantidade.requestFocus();
     }
 
     @FXML
-    void handleQuantidade(ActionEvent event) {
-
+    void qntVenda(KeyEvent event) {
+        txtCodBarras.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                txtCodBarras.setText(newValue.replaceAll("[^\\d]", ""));
+            }
+        });
+        if(event.getCode().equals(KeyCode.ENTER))
+            tableProdutos.requestFocus();
     }
+
 
 }
+
+
