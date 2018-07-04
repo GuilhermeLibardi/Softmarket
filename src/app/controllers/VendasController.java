@@ -91,28 +91,34 @@ public class VendasController {
 
     @FXML
     void qntVenda(KeyEvent event) {
+        Produto produtoaux;
+
         txtQuantidade.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
             if (!newValue.matches("\\d*")) {
                 txtQuantidade.setText(newValue.replaceAll("[^\\d]", ""));
             }
         });
         if(event.getCode().equals(KeyCode.ENTER)) {
-            for (Produto procurar : Main.estoqueProdutos) {
-                if (procurar.getCodigo().equals(txtCodBarras.getText())) {
-                    if (procurar.getQuantidade() >= Integer.parseInt(txtQuantidade.getText())) {
+            for (Produto procurar1 : Main.estoqueProdutos) {
+                if (procurar1.getCodigo().equals(txtCodBarras.getText())) {
+                    if (procurar1.getQuantidade() >= (Integer.parseInt(txtQuantidade.getText()))) {
                         if (verificaLista(vendaProdutos)) {
                             for (Produto vendasP : vendaProdutos) {
-                                if (vendasP.getQuantidade() < Integer.parseInt(txtQuantidade.getText())) {
-                                    Alert erroEst = new Alert(Alert.AlertType.ERROR);
-                                    erroEst.setTitle("Estoque Indisponível!");
-                                    erroEst.setHeaderText("Quantidade desejada indisponível no estoque.");
-                                    erroEst.setContentText("Você pode inserir até " + vendasP.getQuantidade() + " unidades.");
-                                    erroEst.showAndWait();
-                                    return;
+                                if(vendasP.getCodigo().equals(txtCodBarras.getText())) {
+                                    if (vendasP.getQuantidade() < Integer.parseInt(txtQuantidade.getText())) {
+                                        txtQuantidade.clear();
+                                        Alert erroEst = new Alert(Alert.AlertType.ERROR);
+                                        erroEst.setTitle("Estoque Indisponível!1");
+                                        erroEst.setHeaderText("Quantidade desejada indisponível no estoque.");
+                                        erroEst.setContentText("Você pode inserir até " + vendasP.getQuantidade() + " unidades.");
+                                        erroEst.showAndWait();
+                                        return;
+                                    }
                                 }
                             }
                         } else {
-                            vendaProdutos.add(procurar);
+                            produtoaux = new Produto(procurar1.getNome(),procurar1.getQuantidade(),procurar1.getValorCusto(),procurar1.getValorVenda(),procurar1.getCodigo());
+                            vendaProdutos.add(produtoaux);
                         }
                         inserir.requestFocus();
                         if (verificador == 1) {
@@ -120,10 +126,11 @@ public class VendasController {
                         }
                         return;
                     } else {
+                        txtQuantidade.clear();
                         Alert erroEst = new Alert(Alert.AlertType.ERROR);
-                        erroEst.setTitle("Estoque Indisponível!");
+                        erroEst.setTitle("Estoque Indisponível!2");
                         erroEst.setHeaderText("Quantidade desejada indisponível no estoque.");
-                        erroEst.setContentText("Você pode inserir até " + procurar.getQuantidade() + " unidades.");
+                        erroEst.setContentText("Você pode inserir até " + procurar1.getQuantidade() + " unidades.");
                         erroEst.showAndWait();
                     }
                 }
@@ -134,37 +141,40 @@ public class VendasController {
     @FXML
     public void inserirProduto(){
         Produto produto1;
+        int aux=0;
 
         if (verificador == 2) {
             statusVenda = ("Ativa");
-            verificador=0;
-            for(Produto procurar : vendaProdutos){
-                if (procurar.getCodigo().equals(txtCodBarras.getText()) && procurar.getQuantidade()>=Integer.parseInt(txtQuantidade.getText())){
-                    for(Produto tableP : listaProdutos){
-                        if(tableP.getCodigo().equals(procurar.getCodigo())){
-                            produto1 = new Produto(tableP.getNome(),tableP.getQuantidade(),tableP.getValorCusto(),tableP.getValorVenda(),tableP.getCodigo());
-                            produto1.setQuantidade(produto1.getQuantidade()+Integer.parseInt(txtQuantidade.getText()));
-                            listaProdutos.remove(tableP);
+            verificador = 0;
+            for (Produto procurar : vendaProdutos) {
+                if (procurar.getCodigo().equals(txtCodBarras.getText())) {
+                    if (procurar.getQuantidade() >= Integer.parseInt(txtQuantidade.getText())) {
+                        for (Produto tableP : listaProdutos) {
+                            if (tableP.getCodigo().equals(procurar.getCodigo())) {
+                                aux=1;
+                                produto1 = new Produto(tableP.getNome(), tableP.getQuantidade(), tableP.getValorCusto(), tableP.getValorVenda(), tableP.getCodigo());
+                                produto1.setQuantidade(produto1.getQuantidade() + Integer.parseInt(txtQuantidade.getText()));
+                                listaProdutos.remove(tableP);
+                                listaProdutos.add(produto1);
+                                procurar.setQuantidade(procurar.getQuantidade() - Integer.parseInt(txtQuantidade.getText()));
+                                txtQuantidade.clear();
+                                txtCodBarras.clear();
+                                return;
+                            }
+                        }
+                        if (aux==0) {
+                            produto1 = new Produto(procurar.getNome(), procurar.getQuantidade(), procurar.getValorCusto(), procurar.getValorVenda(), procurar.getCodigo());
+                            produto1.setQuantidade(Integer.parseInt(txtQuantidade.getText()));
+                            procurar.setQuantidade(procurar.getQuantidade() - Integer.parseInt(txtQuantidade.getText()));
                             listaProdutos.add(produto1);
-                            procurar.setQuantidade(procurar.getQuantidade()-Integer.parseInt(txtQuantidade.getText()));
                             txtQuantidade.clear();
                             txtCodBarras.clear();
                             creatTable();
                             return;
                         }
                     }
-                    if(!verificaLista(listaProdutos)){
-                        produto1=new Produto(procurar.getNome(),procurar.getQuantidade(),procurar.getValorCusto(),procurar.getValorVenda(),procurar.getCodigo());
-                        produto1.setQuantidade(Integer.parseInt(txtQuantidade.getText()));
-                        procurar.setQuantidade(procurar.getQuantidade()-Integer.parseInt(txtQuantidade.getText()));
-                        listaProdutos.add(produto1);
-                        txtQuantidade.clear();
-                        txtCodBarras.clear();
-                        creatTable();
-                    }
                 }
             }
-
         }
     }
 
