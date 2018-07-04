@@ -2,6 +2,7 @@ package app.controllers;
 
 import app.Main;
 import app.classes.Produto;
+import app.classes.util.CSVParser;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -68,6 +69,12 @@ public class EditarProdutoController {
         if (this.txtNome.isVisible()) {
             Produto old = Main.estoqueProdutos.remove(this.productIndex);
             Main.estoqueProdutos.add(new Produto(this.txtNome.getText(), Integer.parseInt(this.txtQuantidade.getText()), Double.parseDouble(this.txtPrecoCompra.getText()), Double.parseDouble(this.txtPrecoVenda.getText()), old.getCodigo()));
+            CSVParser parser = new CSVParser();
+            try {
+                parser.writeEstoque(Main.estoqueProdutos);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
             Stage window = (Stage) btnCadastrar.getScene().getWindow();
             window.close();

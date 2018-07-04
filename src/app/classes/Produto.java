@@ -56,7 +56,11 @@ public class Produto {
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return this.nome;
+    }
+
+    public String toCSV() {
+        return this.codigo + ',' + this.nome + ',' + this.valorCusto + ',' + this.valorVenda + ',' + this.quantidade + '\n';
     }
 }

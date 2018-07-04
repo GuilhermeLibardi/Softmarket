@@ -2,6 +2,7 @@ package app.controllers;
 
 import app.Main;
 import app.classes.Produto;
+import app.classes.util.CSVParser;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -41,6 +42,12 @@ public class RemoverProdutoController {
                 Optional<ButtonType> result = alerta.showAndWait();
                 if (result.isPresent() && result.get() == ButtonType.OK) {
                     Main.estoqueProdutos.remove(produto);
+                    CSVParser parser = new CSVParser();
+                    try {
+                        parser.writeEstoque(Main.estoqueProdutos);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                     Stage window = (Stage) btnCancelar.getScene().getWindow();
                     window.close();
                 }
