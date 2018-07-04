@@ -29,8 +29,12 @@ public class Main extends Application {
     }
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args)
+    {
+        Main.estoqueProdutos.add(new Produto("Chapolim", 1, 1, 1.2, "24"));
+        Main.estoqueProdutos.add(new Produto("Coca-cola", 3, 5.5, 6.5, "7891236313182"));
         launch(args);
+
     }
 
 }
