@@ -59,9 +59,6 @@ public class GerenteController implements Initializable {
 
         txtPesquisa.setPromptText("Procure por produtos");
 
-        Main.estoqueProdutos.add(new Produto("Coca-cola", 3, 5.5, 6.5, "7891236313182"));
-        Main.estoqueProdutos.add(new Produto("Chapolim", 1, 1, 1.2, "24"));
-
         FilteredList<Produto> filteredData = new FilteredList<>(Main.estoqueProdutos, p -> true);
 
         txtPesquisa.textProperty().addListener((observable, oldValue, newValue) -> {
