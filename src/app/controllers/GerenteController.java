@@ -49,7 +49,6 @@ public class GerenteController implements Initializable {
     private TableColumn<Produto, Integer> colEstoque;
 
 
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         colCodBarras.setCellValueFactory(new PropertyValueFactory<Produto, String>("codigo"));
@@ -117,7 +116,11 @@ public class GerenteController implements Initializable {
 
     @FXML
     void removeProduto() {
-
+        try {
+            changeScreen("../resources/fxml/telaRemoverProduto.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     private void changeScreen(String fxml) throws IOException {

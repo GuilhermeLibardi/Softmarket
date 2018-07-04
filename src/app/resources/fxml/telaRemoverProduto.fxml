@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<AnchorPane prefHeight="250.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.RemoverProdutoController">
+   <children>
+      <Button fx:id="btnRemover" layoutX="252.0" layoutY="183.0" mnemonicParsing="false" onAction="#handleRemover" style="-fx-background-color: #B22222;" text="Remover" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="12.0" />
+         </font>
+      </Button>
+      <Button fx:id="btnCancelar" layoutX="71.0" layoutY="183.0" mnemonicParsing="false" onAction="#handleCancelar" text="Cancelar" />
+      <TextField fx:id="txtCodBarras" layoutX="155.0" layoutY="94.0" onAction="#handleEnter" prefHeight="25.0" prefWidth="193.0" />
+      <Label layoutX="42.0" layoutY="98.0" text="Código de Barras" />
+      <Label layoutX="121.0" layoutY="22.0" text="REMOVER PRODUTO">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
