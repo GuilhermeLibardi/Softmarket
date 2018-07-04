@@ -108,7 +108,11 @@ public class GerenteController implements Initializable {
 
     @FXML
     void editProduto() {
-
+        try {
+            changeScreen("../resources/fxml/telaEditarProduto.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML

@@ -7,10 +7,11 @@ import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+
 public class AdicionarProdutoController {
 
     @FXML
-    private TextField txtCodBarras, txtNome, txtPreco, txtLucro, txtQuantidade;
+    private TextField txtCodBarras, txtNome, txtPreco, txtPrecoVenda, txtQuantidade;
 
     @FXML
     private Button btnCadastrar;
@@ -18,7 +19,7 @@ public class AdicionarProdutoController {
     @FXML
     void submit() {
         Double valorCompra = Double.parseDouble(txtPreco.getText());
-        Double valorVenda = ((valorCompra * Double.parseDouble(txtLucro.getText())) / 100) + valorCompra;
+        Double valorVenda = Double.parseDouble(txtPrecoVenda.getText());
         Main.estoqueProdutos.add(new Produto(txtNome.getText(), Integer.parseInt(txtQuantidade.getText()), valorCompra, valorVenda, txtCodBarras.getText()));
         Stage stage = (Stage) btnCadastrar.getScene().getWindow();
         stage.close();

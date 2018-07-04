@@ -35,7 +35,7 @@ public class Produto {
         return valorCusto;
     }
 
-    public void setValorCusto(float valorCusto) {
+    public void setValorCusto(double valorCusto) {
         this.valorCusto = valorCusto;
     }
 
@@ -43,7 +43,7 @@ public class Produto {
         return valorVenda;
     }
 
-    public void setValorVenda(float valorVenda) {
+    public void setValorVenda(double valorVenda) {
         this.valorVenda = valorVenda;
     }
 

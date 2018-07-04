@@ -93,7 +93,6 @@
                         <Font name="Tahoma" size="30.0" />
                      </font>
                   </Label>
-                  <Button layoutX="825.0" layoutY="102.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="60.0" text="Buscar" />
                   <Button fx:id="btnRemoveProd" layoutX="200.0" layoutY="95.0" mnemonicParsing="false" onAction="#removeProduto" prefHeight="0.0" prefWidth="36.0" style="-fx-background-color: #FF635C; -fx-background-radius: 200;" text="-" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS" wrapText="true">
                      <font>
                         <Font name="System Bold" size="18.0" />
