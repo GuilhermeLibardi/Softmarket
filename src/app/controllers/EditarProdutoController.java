@@ -18,18 +18,20 @@ public class EditarProdutoController {
     private Label lblNome, lblCompra, lblVenda, lblQuantidade;
 
     @FXML
-    private Button btnCadastrar;
+    private Button btnCadastrar, btnSearch;
 
     private int productIndex;
 
     @FXML
-    void handleSearch() {
-        for(int i = 0; i < Main.estoqueProdutos.size(); i++){
+    void searchButton() {
+        for (int i = 0; i < Main.estoqueProdutos.size(); i++) {
             if (Main.estoqueProdutos.get(i).getCodigo().equals(txtCodBarras.getText())) {
                 txtNome.setVisible(true);
                 txtPrecoCompra.setVisible(true);
                 txtPrecoVenda.setVisible(true);
                 txtQuantidade.setVisible(true);
+                btnSearch.setVisible(false);
+                btnCadastrar.setVisible(true);
                 lblNome.setVisible(true);
                 lblCompra.setVisible(true);
                 lblVenda.setVisible(true);
@@ -51,6 +53,11 @@ public class EditarProdutoController {
     }
 
     @FXML
+    void handleSearch() {
+        searchButton();
+    }
+
+    @FXML
     void cancel() {
         Stage window = (Stage) btnCadastrar.getScene().getWindow();
         window.close();
@@ -58,11 +65,13 @@ public class EditarProdutoController {
 
     @FXML
     void submit() {
-        Produto old = Main.estoqueProdutos.remove(this.productIndex);
-        Main.estoqueProdutos.add(new Produto(this.txtNome.getText(), Integer.parseInt(this.txtQuantidade.getText()), Double.parseDouble(this.txtPrecoCompra.getText()), Double.parseDouble(this.txtPrecoVenda.getText()), old.getCodigo()));
+        if (this.txtNome.isVisible()) {
+            Produto old = Main.estoqueProdutos.remove(this.productIndex);
+            Main.estoqueProdutos.add(new Produto(this.txtNome.getText(), Integer.parseInt(this.txtQuantidade.getText()), Double.parseDouble(this.txtPrecoCompra.getText()), Double.parseDouble(this.txtPrecoVenda.getText()), old.getCodigo()));
 
-        Stage window = (Stage) btnCadastrar.getScene().getWindow();
-        window.close();
+            Stage window = (Stage) btnCadastrar.getScene().getWindow();
+            window.close();
+        }
     }
 
 }
