@@ -1,11 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.text.*?>
-<SplitPane dividerPositions="0.23395931142410015" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.VendasController">
+<?import javafx.scene.text.Font?>
+
+<SplitPane dividerPositions="0.23395931142410015" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.VendasController">
   <items>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="303.0">
          <children>
@@ -60,14 +65,13 @@
             </Label>
             <TableView fx:id="tableProdutos" layoutY="182.0" prefHeight="506.0" prefWidth="976.0">
               <columns>
-                <TableColumn prefWidth="82.0" text="ID" />
-                <TableColumn prefWidth="212.0" text="Código de Barras" />
-                  <TableColumn prefWidth="448.0" text="Nome" />
-                  <TableColumn prefWidth="99.0" text="Quantidade" />
-                  <TableColumn prefWidth="132.0" text="Preço" />
+                <TableColumn fx:id="colCodBarras" prefWidth="212.0" text="Código de Barras" />
+                  <TableColumn fx:id="colNome" prefWidth="448.0" text="Nome" />
+                  <TableColumn fx:id="colEstoque" prefWidth="99.0" text="Quantidade" />
+                  <TableColumn fx:id="colVenda" prefWidth="132.0" text="Preço" />
               </columns>
             </TableView>
-            <TextField fx:id="txtCodBarras" layoutX="89.0" layoutY="104.0" prefHeight="32.0" prefWidth="461.0" />
+            <TextField fx:id="txtCodBarras" layoutX="89.0" layoutY="104.0" onKeyPressed="#digitarCdb" prefHeight="32.0" prefWidth="461.0" />
             <Label layoutX="72.0" layoutY="694.0" text="F3 - Cancelar Produto">
                <font>
                   <Font size="14.0" />
@@ -83,7 +87,7 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <TextField fx:id="txtQuantidade" layoutX="739.0" layoutY="104.0" prefHeight="32.0" prefWidth="160.0" />
+            <TextField fx:id="txtQuantidade" layoutX="739.0" layoutY="104.0" onKeyPressed="#qntVenda" prefHeight="32.0" prefWidth="160.0" />
             <Label layoutX="739.0" layoutY="81.0" text="Quantidade" />
             <Label layoutX="89.0" layoutY="81.0" text="Código de Barras" />
          </children></AnchorPane>

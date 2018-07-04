@@ -1,16 +1,18 @@
 package app.controllers;
 
+import app.Main;
 import app.classes.Produto;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+
+import java.net.URL;
+import java.util.ResourceBundle;
 
 public class VendasController {
 
@@ -38,19 +40,15 @@ public class VendasController {
     private ObservableList<Produto> listaProdutos = FXCollections.observableArrayList();
 
     @FXML
-    private TableColumn<Produto, Integer> colCodBarras;
+    private TableColumn<Produto, String> colCodBarras, colNome;
 
     @FXML
-    private TableColumn<Produto, String> colNome;
-
-    @FXML
-    private TableColumn<Produto, Float> colCompra;
-
-    @FXML
-    private TableColumn<Produto, Float> colVenda;
+    private TableColumn<Produto, Double> colVenda;
 
     @FXML
     private TableColumn<Produto, Integer> colEstoque;
+
+
 
     @FXML
     void digitarCdb(KeyEvent event){
@@ -59,8 +57,23 @@ public class VendasController {
                 txtCodBarras.setText(newValue.replaceAll("[^\\d]", ""));
             }
         });
-        if(event.getCode().equals(KeyCode.ENTER))
-            txtQuantidade.requestFocus();
+
+
+        if(event.getCode().equals(KeyCode.ENTER)) {
+            Main.estoqueProdutos.add(new Produto("Chapolim", 1, 1, 1.2, "24"));
+            for(Produto procurar : Main.estoqueProdutos) {
+                if (procurar.getCodigo().equals(txtCodBarras.getText())) {
+                    listaProdutos.add(procurar);
+                    txtQuantidade.requestFocus();
+                    return;
+                }
+            }
+            Alert erroCdB = new Alert(Alert.AlertType.ERROR);
+            erroCdB.setTitle("Produto não encontrado!");
+            erroCdB.setHeaderText("Código de barras não encontrado");
+            erroCdB.setContentText("Digite um código de barras de um produto cadastrado no sistema.");
+            erroCdB.showAndWait();
+        }
     }
 
     @FXML
@@ -70,8 +83,27 @@ public class VendasController {
                 txtCodBarras.setText(newValue.replaceAll("[^\\d]", ""));
             }
         });
-        if(event.getCode().equals(KeyCode.ENTER))
-            tableProdutos.requestFocus();
+        if(event.getCode().equals(KeyCode.ENTER)) {
+            if(listaProdutos.get(listaProdutos.size()-1).getQuantidade() >= Integer.parseInt(txtQuantidade.getText())){
+                creatTable();
+                return;
+            }
+            Alert erroEst = new Alert(Alert.AlertType.ERROR);
+            erroEst.setTitle("Estoque Indisponível!");
+            erroEst.setHeaderText("Quantidade desejada indisponível no estoque.");
+            erroEst.setContentText("Você pode inserir até " + listaProdutos.get(listaProdutos.size()-1).getQuantidade() + " unidades.");
+            erroEst.showAndWait();
+        }
+    }
+
+
+    private void creatTable() {
+        colCodBarras.setCellValueFactory(new PropertyValueFactory<Produto, String>("codigo"));
+        colNome.setCellValueFactory(new PropertyValueFactory<Produto, String>("nome"));
+        colEstoque.setCellValueFactory(new PropertyValueFactory<Produto, Integer>("quantidade"));
+        colVenda.setCellValueFactory(new PropertyValueFactory<Produto, Double>("valorVenda"));
+
+        tableProdutos.setItems(listaProdutos);
     }
 
 
