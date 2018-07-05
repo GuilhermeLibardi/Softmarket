@@ -2,6 +2,7 @@ package app.controllers;
 
 import app.Main;
 import app.classes.Produto;
+import app.classes.usuarios.Usuario;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
@@ -25,16 +26,16 @@ public class GerenteController implements Initializable {
             btnAddProd, btnEditProd, btnRemoveProd;
 
     @FXML
-    private TextField txtDataInicial, txtDataFinal;
+    private Label lblGerente;
+
+    @FXML
+    private TextField txtDataInicial, txtDataFinal, txtPesquisa;
 
     @FXML
     private SplitMenuButton dropTipoRelatorio;
 
     @FXML
     private TableView<Produto> tabelaProdutos;
-
-    @FXML
-    private TextField txtPesquisa;
 
     @FXML
     private Pane painelEstoque, painelRelatorios;
@@ -48,6 +49,13 @@ public class GerenteController implements Initializable {
     @FXML
     private TableColumn<Produto, Integer> colEstoque;
 
+    private Usuario usuario;
+
+
+    public void changeUser(Usuario user){
+        this.usuario = user;
+        this.lblGerente.setText("Gerente "+ user.getNome());
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {

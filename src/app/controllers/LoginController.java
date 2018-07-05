@@ -29,8 +29,8 @@ public class LoginController {
     public void handleLogin() throws java.io.IOException {
         for (Usuario user : Main.usuariosCadastrados) {
             if (txtUsuario.getText().equals(user.getLogin()) && txtSenha.getText().equals(user.getSenha())) {
-                if (user instanceof Gerente) changeScreen("../resources/fxml/telaGerente.fxml");
-                else if (user instanceof Vendedor) changeScreen("../resources/fxml/telaVendas.fxml");
+                if (user instanceof Gerente) changeScreen("../resources/fxml/telaGerente.fxml", user);
+                else if (user instanceof Vendedor) changeScreen("../resources/fxml/telaVendas.fxml", user);
                 return;
             }
         }
@@ -51,7 +51,7 @@ public class LoginController {
         txtSenha.requestFocus();
     }
 
-    private void changeScreen(String fxml) throws IOException {
+    private void changeScreen(String fxml, Usuario usuario) throws IOException {
         btnLogin.getScene().getWindow().hide();
         Stage stage = new Stage();
         FXMLLoader loader = new FXMLLoader();
@@ -66,8 +66,15 @@ public class LoginController {
         stage.show();
         stage.setResizable(true);
         stage.setMaximized(true);
-        if (fxml.contains("Gerente")) stage.setTitle("Sistema de gerenciamento");
-        else if (fxml.contains("Vendas")) stage.setTitle("Sistema de vendas");
+        if (fxml.contains("Gerente")) {
+            stage.setTitle("Sistema de gerenciamento");
+            GerenteController controladorGerente = (GerenteController) loader.getController();
+            controladorGerente.changeUser((Gerente) usuario);
+        } else if (fxml.contains("Vendas")) {
+            stage.setTitle("Sistema de vendas");
+            VendasController controladorVendas = (VendasController) loader.getController();
+            controladorVendas.changeUser((Vendedor) usuario);
+        }
         stage.setX(bounds.getMinX());
         stage.setY(bounds.getMinY());
         stage.setWidth(bounds.getWidth());
