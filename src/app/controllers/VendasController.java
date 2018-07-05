@@ -73,7 +73,7 @@ public class VendasController {
                 txtCodBarras.setText(newValue.replaceAll("[^\\d]", ""));
             }
         });
-        if(event.getCode().equals(KeyCode.ENTER)) {
+        if(event.getCode().equals(KeyCode.ENTER) || event.getCode().equals(KeyCode.TAB)) {
             for(Produto procurar : Main.estoqueProdutos) {
                 if (procurar.getCodigo().equals(txtCodBarras.getText())) {
                     if (verificador == 0) {
@@ -88,6 +88,7 @@ public class VendasController {
             erroCdB.setHeaderText("Código de barras não encontrado");
             erroCdB.setContentText("Digite um código de barras de um produto cadastrado no sistema.");
             erroCdB.showAndWait();
+            txtCodBarras.requestFocus();
         }
     }
 
@@ -100,55 +101,61 @@ public class VendasController {
                 txtQuantidade.setText(newValue.replaceAll("[^\\d]", ""));
             }
         });
-        if(event.getCode().equals(KeyCode.ENTER)) {
-            for (Produto procurar1 : Main.estoqueProdutos) {
-                if (procurar1.getCodigo().equals(txtCodBarras.getText())) {
-                    if (procurar1.getQuantidade() >= (Integer.parseInt(txtQuantidade.getText()))) {
-                        if (verificaLista(vendaProdutos)) {
-                            for (Produto vendasP : vendaProdutos) {
-                                if(vendasP.getCodigo().equals(txtCodBarras.getText())) {
-                                    if (vendasP.getQuantidade() < Integer.parseInt(txtQuantidade.getText())) {
-                                        txtQuantidade.clear();
-                                        Alert erroEst = new Alert(Alert.AlertType.ERROR);
-                                        erroEst.setTitle("Estoque Indisponível!1");
-                                        erroEst.setHeaderText("Quantidade desejada indisponível no estoque.");
-                                        erroEst.setContentText("Você pode inserir até " + vendasP.getQuantidade() + " unidades.");
-                                        erroEst.showAndWait();
-                                        return;
+        if(event.getCode().equals(KeyCode.ENTER) || event.getCode().equals(KeyCode.TAB)) {
+            if(!txtQuantidade.getText().equals("")) {
+                for (Produto procurar1 : Main.estoqueProdutos) {
+                    if (procurar1.getCodigo().equals(txtCodBarras.getText())) {
+                        if (procurar1.getQuantidade() >= (Integer.parseInt(txtQuantidade.getText()))) {
+                            if (verificaLista(vendaProdutos)) {
+                                for (Produto vendasP : vendaProdutos) {
+                                    if (vendasP.getCodigo().equals(txtCodBarras.getText())) {
+                                        if (vendasP.getQuantidade() < Integer.parseInt(txtQuantidade.getText())) {
+                                            txtQuantidade.clear();
+                                            alertaEstoque(vendasP);
+                                            txtQuantidade.requestFocus();
+                                            return;
+                                        }
                                     }
                                 }
+                            } else {
+                                produtoaux = new Produto(procurar1.getNome(), procurar1.getQuantidade(), procurar1.getValorCusto(), procurar1.getValorVenda(), procurar1.getCodigo());
+                                vendaProdutos.add(produtoaux);
                             }
+                            inserir.requestFocus();
+                            if (verificador == 1) {
+                                verificador++;
+                            }
+                            return;
                         } else {
-                            produtoaux = new Produto(procurar1.getNome(),procurar1.getQuantidade(),procurar1.getValorCusto(),procurar1.getValorVenda(),procurar1.getCodigo());
-                            vendaProdutos.add(produtoaux);
-                        }
-                        inserir.requestFocus();
-                        if (verificador == 1) {
-                            verificador++;
-                        }
-                        return;
-                    } else {
-                        for (Produto produtoEst : vendaProdutos){
-                            if(produtoEst.getCodigo().equals(txtCodBarras.getText())){
-                                txtQuantidade.clear();
-                                Alert erroEst = new Alert(Alert.AlertType.ERROR);
-                                erroEst.setTitle("Estoque Indisponível!");
-                                erroEst.setHeaderText("Quantidade desejada indisponível no estoque.");
-                                erroEst.setContentText("Você pode inserir até " + produtoEst.getQuantidade() + " unidades.");
-                                erroEst.showAndWait();
-                                return;
+                            for (Produto produtoEst : vendaProdutos) {
+                                if (produtoEst.getCodigo().equals(txtCodBarras.getText())) {
+                                    txtQuantidade.clear();
+                                    alertaEstoque(produtoEst);
+                                    txtQuantidade.requestFocus();
+                                    return;
+                                }
                             }
+                            txtQuantidade.clear();
+                            alertaEstoque(procurar1);
+                            txtQuantidade.requestFocus();
+                            return;
                         }
-
-                        txtQuantidade.clear();
-                        Alert erroEst = new Alert(Alert.AlertType.ERROR);
-                        erroEst.setTitle("Estoque Indisponível!");
-                        erroEst.setHeaderText("Quantidade desejada indisponível no estoque.");
-                        erroEst.setContentText("Você pode inserir até " + procurar1.getQuantidade() + " unidades.");
-                        erroEst.showAndWait();
-                        return;
                     }
                 }
+            }else if(!txtCodBarras.getText().equals("")){
+                Alert erroEst = new Alert(Alert.AlertType.ERROR);
+                erroEst.setTitle("Digite um valor");
+                erroEst.setHeaderText("Nenhum valor foi inserido");
+                erroEst.setContentText("Informe a Quantidade desejada");
+                erroEst.showAndWait();
+                txtQuantidade.requestFocus();
+            }else{
+                Alert erroEst = new Alert(Alert.AlertType.ERROR);
+                erroEst.setTitle("Código Barras Não Digitado");
+                erroEst.setHeaderText("Você não informou o produto desejado");
+                erroEst.setContentText("Digite o código de barras.");
+                erroEst.showAndWait();
+                txtCodBarras.requestFocus();
             }
         }
     }
@@ -235,6 +242,14 @@ public class VendasController {
         }
     }
 
+    public void alertaEstoque(Produto produto) {
+        Alert erroEst = new Alert(Alert.AlertType.ERROR);
+        erroEst.setTitle("Estoque Indisponível!");
+        erroEst.setHeaderText("Quantidade desejada indisponível no estoque.");
+        erroEst.setContentText("Você pode inserir até: " + produto.getQuantidade() + " unidades.");
+        erroEst.showAndWait();
+    }
+
     public void pressF3(){
         TextInputDialog dialogoRemocao = new TextInputDialog();
 
@@ -261,6 +276,7 @@ public class VendasController {
                 it.remove();
             }
         }
+        txtCodBarras.requestFocus();
     }
 
     public void pressF4(){
@@ -274,8 +290,7 @@ public class VendasController {
             listaProdutos.clear();
             vendaProdutos.clear();
         }
+        txtCodBarras.requestFocus();
     }
 
 }
-
-
