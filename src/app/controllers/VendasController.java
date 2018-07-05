@@ -128,12 +128,16 @@ public class VendasController {
                         }
                         return;
                     } else {
-                        txtQuantidade.clear();
-                        Alert erroEst = new Alert(Alert.AlertType.ERROR);
-                        erroEst.setTitle("Estoque Indisponível!2");
-                        erroEst.setHeaderText("Quantidade desejada indisponível no estoque.");
-                        erroEst.setContentText("Você pode inserir até " + procurar1.getQuantidade() + " unidades.");
-                        erroEst.showAndWait();
+                        for (Produto produtoEst : vendaProdutos){
+                            if(produtoEst.getCodigo().equals(txtCodBarras.getText())){
+                                txtQuantidade.clear();
+                                Alert erroEst = new Alert(Alert.AlertType.ERROR);
+                                erroEst.setTitle("Estoque Indisponível!");
+                                erroEst.setHeaderText("Quantidade desejada indisponível no estoque.");
+                                erroEst.setContentText("Você pode inserir até " + produtoEst.getQuantidade() + " unidades.");
+                                erroEst.showAndWait();
+                            }
+                        }
                     }
                 }
             }
@@ -218,7 +222,6 @@ public class VendasController {
                 pressF4();
                 break;
             case F5:
-                System.out.println("F5");
                 break;
         }
     }
@@ -261,10 +264,7 @@ public class VendasController {
         if(result.get() ==  ButtonType.OK){
             listaProdutos.clear();
             vendaProdutos.clear();
-        }else{
-            return;
         }
-
     }
 
 }
