@@ -136,8 +136,17 @@ public class VendasController {
                                 erroEst.setHeaderText("Quantidade desejada indisponível no estoque.");
                                 erroEst.setContentText("Você pode inserir até " + produtoEst.getQuantidade() + " unidades.");
                                 erroEst.showAndWait();
+                                return;
                             }
                         }
+
+                        txtQuantidade.clear();
+                        Alert erroEst = new Alert(Alert.AlertType.ERROR);
+                        erroEst.setTitle("Estoque Indisponível!");
+                        erroEst.setHeaderText("Quantidade desejada indisponível no estoque.");
+                        erroEst.setContentText("Você pode inserir até " + procurar1.getQuantidade() + " unidades.");
+                        erroEst.showAndWait();
+                        return;
                     }
                 }
             }
