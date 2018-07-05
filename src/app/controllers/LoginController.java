@@ -1,5 +1,9 @@
 package app.controllers;
 
+import app.Main;
+import app.classes.usuarios.Gerente;
+import app.classes.usuarios.Usuario;
+import app.classes.usuarios.Vendedor;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Rectangle2D;
@@ -21,16 +25,15 @@ public class LoginController {
     TextField txtSenha;
 
     public void handleLogin() throws Exception {
-        if (txtUsuario.getText().equals("admin") && txtSenha.getText().equals("admin")) {
-            changeScreen("../resources/fxml/telaGerente.fxml");
-        } else if (txtUsuario.getText().equals("vendas") && txtSenha.getText().equals("vendas2018")) {
-            changeScreen("../resources/fxml/telaVendas.fxml");
-        } else {
-            System.out.println("Login inválido");
+        for (Usuario user : Main.usuariosCadastrados) {
+            if (txtUsuario.getText().equals(user.getLogin()) && txtSenha.getText().equals(user.getSenha())) {
+                if (user instanceof Gerente) changeScreen("../resources/fxml/telaGerente.fxml");
+                else if (user instanceof Vendedor) changeScreen("../resources/fxml/telaVendas.fxml");
+            }
         }
     }
 
-    public void handleSubmitSenha() throws Exception{
+    public void handleSubmitSenha() throws Exception {
         handleLogin();
     }
 
