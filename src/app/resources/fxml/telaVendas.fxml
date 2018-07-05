@@ -57,7 +57,7 @@
                </font>
             </Label>
          </children></AnchorPane>
-    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="437.0">
+    <AnchorPane minHeight="0.0" minWidth="0.0" onKeyPressed="#fPress" prefHeight="160.0" prefWidth="437.0">
          <children>
             <Label layoutX="425.0" layoutY="14.0" text="Sistema de Vendas">
                <font>
@@ -73,17 +73,17 @@
               </columns>
             </TableView>
             <TextField fx:id="txtCodBarras" layoutX="89.0" layoutY="104.0" onKeyPressed="#digitarCdb" prefHeight="32.0" prefWidth="461.0" />
-            <Label layoutX="72.0" layoutY="694.0" text="F3 - Cancelar Produto">
+            <Label layoutX="89.0" layoutY="150.0" text="F3 - Remover Produto">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label layoutX="380.0" layoutY="694.0" text="F4 - Cancelar Venda">
+            <Label layoutX="258.0" layoutY="150.0" text="F4 - Cancelar Venda">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label layoutX="672.0" layoutY="696.0" text="F5 - Confirmar Venda">
+            <Label layoutX="417.0" layoutY="150.0" text="F5 - Confirmar Venda">
                <font>
                   <Font size="14.0" />
                </font>

@@ -17,6 +17,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class VendasController {
@@ -205,6 +207,66 @@ public class VendasController {
         }
         return false;
     }
+
+    public void fPress (KeyEvent event){
+
+        switch (event.getCode()){
+            case F3:
+                pressF3();
+                break;
+            case F4:
+                pressF4();
+                break;
+            case F5:
+                System.out.println("F5");
+                break;
+        }
+    }
+
+    public void pressF3(){
+        TextInputDialog dialogoRemocao = new TextInputDialog();
+
+
+        dialogoRemocao.setTitle("Cancelamento de venda de produto");
+        dialogoRemocao.setHeaderText("Informe o código de barras do produto a ser removido.");
+        dialogoRemocao.setContentText("Código de Barras:");
+        Optional<String> result = dialogoRemocao.showAndWait();
+        String cDb = "none";
+
+        if(result.isPresent()) {
+            cDb = result.get();
+        }
+        for (Iterator<Produto> i = vendaProdutos.iterator(); i.hasNext();) {
+            Produto produto = i.next();
+            if (produto.getCodigo().equals(cDb)) {
+                i.remove();
+            }
+        }
+
+        for (Iterator<Produto> it = listaProdutos.iterator(); it.hasNext();) {
+            Produto produto1 = it.next();
+            if (produto1.getCodigo().equals(cDb)) {
+                it.remove();
+            }
+        }
+    }
+
+    public void pressF4(){
+        Alert cancelarVenda = new Alert(Alert.AlertType.CONFIRMATION);
+        cancelarVenda.setTitle("Cancelamento de Venda");
+        cancelarVenda.setHeaderText("Você está prestes a cancelar uma venda.");
+        cancelarVenda.setContentText("Você tem certeza disso?");
+
+        Optional<ButtonType> result = cancelarVenda.showAndWait();
+        if(result.get() ==  ButtonType.OK){
+            listaProdutos.clear();
+            vendaProdutos.clear();
+        }else{
+            return;
+        }
+
+    }
+
 }
 
 
