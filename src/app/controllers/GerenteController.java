@@ -3,7 +3,8 @@ package app.controllers;
 import app.Main;
 import app.classes.Produto;
 import app.classes.usuarios.Usuario;
-import app.classes.util.Periodo;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
@@ -19,7 +20,6 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import java.time.LocalDate;
 
 public class GerenteController implements Initializable {
 
@@ -34,7 +34,7 @@ public class GerenteController implements Initializable {
     private TextField txtDataInicial, txtDataFinal, txtPesquisa;
 
     @FXML
-    private SplitMenuButton dropTipoRelatorio;
+    private ComboBox comboTipo;
 
     @FXML
     private TableView<Produto> tabelaProdutos;
@@ -57,13 +57,18 @@ public class GerenteController implements Initializable {
     private DatePicker dataInicial, dataFinal;
 
 
-    public void changeUser(Usuario user){
+    public void changeUser(Usuario user) {
         this.usuario = user;
-        this.lblGerente.setText("Gerente "+ user.getNome());
+        this.lblGerente.setText("Gerente " + user.getNome());
     }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        ObservableList<String> options = FXCollections.observableArrayList(
+                "Relatório de Vendas", "Relatório de Estoque"
+        );
+        this.comboTipo.setItems(options);
+
         colCodBarras.setCellValueFactory(new PropertyValueFactory<Produto, String>("codigo"));
         colNome.setCellValueFactory(new PropertyValueFactory<Produto, String>("nome"));
         colEstoque.setCellValueFactory(new PropertyValueFactory<Produto, Integer>("quantidade"));
@@ -91,17 +96,9 @@ public class GerenteController implements Initializable {
 
     @FXML
     void gerarRelatorio() {
-        LocalDate dataIni = dataInicial.getValue();
-        LocalDate dataFin = dataFinal.getValue();
-
-        Periodo periodo = new Periodo(dataIni,dataFin);
-
-        if(dataIni.isAfter(dataFin))
-        {
-            System.out.println(dataIni);
-        }
 
     }
+
 
     @FXML
     void handleGerenciarEstoque() {

@@ -1,6 +1,8 @@
 package app;
 
 import app.classes.Produto;
+import app.classes.Venda;
+import app.classes.relatorios.Relatorio;
 import app.classes.usuarios.Usuario;
 import app.classes.util.CSVParser;
 import javafx.application.Application;
@@ -18,6 +20,8 @@ public class Main extends Application {
 
     public static ObservableList<Produto> estoqueProdutos;
     public static ArrayList<Usuario> usuariosCadastrados;
+    public static ArrayList<Relatorio> relatoriosEmitidos;
+    public static ArrayList<Venda> vendasFechadas;
 
     @Override
     public void start(Stage primaryStage) {
