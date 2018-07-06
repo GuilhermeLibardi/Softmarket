@@ -1,11 +1,15 @@
 package app.classes.relatorios;
-import java.util.Date;
+import app.classes.util.Periodo;
+
+import java.time.LocalDate;
 
 public abstract class Relatorio {
-    private Date date;
-    private char periodo;
+    private LocalDate date;
+    private Periodo periodo;
 
-    public Relatorio() {
+    public Relatorio(Periodo periodo) {
+        this.date = LocalDate.now();
+        this.periodo = periodo;
     }
 
     /*public Relatorio gerarRelatorio() {

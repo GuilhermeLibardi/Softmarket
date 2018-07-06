@@ -1,6 +1,7 @@
 package app.classes;
 import java.util.Date;
 import java.util.ArrayList;
+import java.time.LocalDate;
 
 public class Venda {
     private ArrayList <Produto> produtos;
@@ -9,7 +10,7 @@ public class Venda {
     private double pagamento;
     private char tipoPag;
     private int id;
-    private Date date;
+    private LocalDate date;
 
     public Venda() {
         this.produtos = new ArrayList<Produto>();
@@ -18,7 +19,7 @@ public class Venda {
         this.pagamento = 0;
         this.tipoPag = ' ';
         this.id = 1;
-        this.date = new Date();
+        this.date = LocalDate.now();
     }
 
     public Double CalculaTroco() {
