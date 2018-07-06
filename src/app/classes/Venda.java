@@ -11,14 +11,14 @@ public class Venda {
     private int id;
     private Date date;
 
-    public Venda(ArrayList<Produto> produtos, Date date) {
+    public Venda() {
         this.produtos = new ArrayList<Produto>();
         this.valor = 0;
         this.troco = 0;
         this.pagamento = 0;
         this.tipoPag = ' ';
         this.id = 1;
-        this.date = date;
+        this.date = new Date();
     }
 
     public float CalculaTroco() {

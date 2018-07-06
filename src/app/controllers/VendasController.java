@@ -2,6 +2,8 @@ package app.controllers;
 
 import app.Main;
 import app.classes.Produto;
+import app.classes.usuarios.Usuario;
+import app.classes.usuarios.Vendedor;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -16,10 +18,8 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.MouseEvent;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.Optional;
-import java.util.ResourceBundle;
+import java.text.DecimalFormat;
+import java.util.*;
 
 public class VendasController {
 
@@ -62,6 +62,8 @@ public class VendasController {
     private Button inserir;
 
     private String statusVenda=("Ocioso");
+
+    private Usuario usuario;
 
 
 
@@ -165,9 +167,14 @@ public class VendasController {
         Produto produto1;
         int aux=0;
 
+        if(statusVenda.equals("Ocioso")){
+
+        }
+
         if (verificador == 2) {
             statusVenda = ("Ativa");
             verificador = 0;
+            txtCodBarras.requestFocus();
             for (Produto procurar : vendaProdutos) {
                 if (procurar.getCodigo().equals(txtCodBarras.getText())) {
                     if (procurar.getQuantidade() >= Integer.parseInt(txtQuantidade.getText())) {
@@ -181,6 +188,9 @@ public class VendasController {
                                 procurar.setQuantidade(procurar.getQuantidade() - Integer.parseInt(txtQuantidade.getText()));
                                 txtQuantidade.clear();
                                 txtCodBarras.clear();
+                                lblQuantidade.setText(Integer.toString(produto1.getQuantidade()));
+                                lblNomeProduto.setText(produto1.getNome());
+                                lblSubtotal.setText(String.format("%.2f", produto1.getValorVenda()*produto1.getQuantidade()));
                                 return;
                             }
                         }
@@ -191,12 +201,16 @@ public class VendasController {
                             listaProdutos.add(produto1);
                             txtQuantidade.clear();
                             txtCodBarras.clear();
+                            lblQuantidade.setText(Integer.toString(produto1.getQuantidade()));
+                            lblNomeProduto.setText(produto1.getNome());
+                            lblSubtotal.setText(String.format("%.2f", produto1.getValorVenda()*produto1.getQuantidade()));
                             creatTable();
                             return;
                         }
                     }
                 }
             }
+
         }
     }
 
@@ -206,7 +220,7 @@ public class VendasController {
         colNome.setCellValueFactory(new PropertyValueFactory<Produto, String>("nome"));
         colEstoque.setCellValueFactory(new PropertyValueFactory<Produto, Integer>("quantidade"));
         colVenda.setCellValueFactory(new PropertyValueFactory<Produto, Double>("valorVenda"));
-
+        
         tableProdutos.setItems(listaProdutos);
     }
 
@@ -238,6 +252,7 @@ public class VendasController {
                 pressF4();
                 break;
             case F5:
+                pressF5();
                 break;
         }
     }
@@ -262,13 +277,27 @@ public class VendasController {
 
         if(result.isPresent()) {
             cDb = result.get();
-        }
-        for (Iterator<Produto> i = vendaProdutos.iterator(); i.hasNext();) {
-            Produto produto = i.next();
-            if (produto.getCodigo().equals(cDb)) {
-                i.remove();
+            for (Iterator<Produto> it = listaProdutos.iterator(); it.hasNext();) {
+                Produto produto1 = it.next();
+                if (produto1.getCodigo().equals(cDb)) {
+                    it.remove();
+                    for (Iterator<Produto> i = vendaProdutos.iterator(); i.hasNext();) {
+                        Produto produto = i.next();
+                        if (produto.getCodigo().equals(cDb)) {
+                            i.remove();
+                            return;
+                        }
+                    }
+                }
             }
+            Alert erroEst = new Alert(Alert.AlertType.ERROR);
+            erroEst.setTitle("Código de barras inválido!");
+            erroEst.setHeaderText("O código de barras informado não foi inserido nessa venda.");
+            erroEst.setContentText("Insira o código de barras novamente.");
+            erroEst.showAndWait();
+            pressF3();
         }
+
 
         for (Iterator<Produto> it = listaProdutos.iterator(); it.hasNext();) {
             Produto produto1 = it.next();
@@ -293,4 +322,11 @@ public class VendasController {
         txtCodBarras.requestFocus();
     }
 
+    public void pressF5(){
+
+    }
+
+    public void changeUser(Usuario user) {
+        this.usuario = user;
+    }
 }
