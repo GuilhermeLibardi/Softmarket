@@ -4,9 +4,9 @@ import java.util.ArrayList;
 
 public class Venda {
     private ArrayList <Produto> produtos;
-    private float valor;
-    private float troco;
-    private float pagamento;
+    private double valor;
+    private double troco;
+    private double pagamento;
     private char tipoPag;
     private int id;
     private Date date;
@@ -21,12 +21,68 @@ public class Venda {
         this.date = new Date();
     }
 
-    public float CalculaTroco() {
+    public Double CalculaTroco() {
         return this.troco;
     }
 
     public void notaFiscal(){
 
+    }
+
+    public ArrayList<Produto> getProdutos() {
+        return produtos;
+    }
+
+    public void setProdutos(ArrayList<Produto> produtos) {
+        this.produtos = produtos;
+    }
+
+    public Double getValor() {
+        return valor;
+    }
+
+    public void setValor(Double valor) {
+        this.valor = valor;
+    }
+
+    public Double getTroco() {
+        return troco;
+    }
+
+    public void setTroco(Double troco) {
+        this.troco = troco;
+    }
+
+    public Double getPagamento() {
+        return pagamento;
+    }
+
+    public void setPagamento(Double pagamento) {
+        this.pagamento = pagamento;
+    }
+
+    public char getTipoPag() {
+        return tipoPag;
+    }
+
+    public void setTipoPag(char tipoPag) {
+        this.tipoPag = tipoPag;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     public void inserirProduto() {
@@ -38,7 +94,7 @@ public class Venda {
     }
 
     public void cancelarVenda() {
-
+        produtos.clear();
     }
 
 

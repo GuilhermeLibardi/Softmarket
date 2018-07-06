@@ -2,6 +2,7 @@ package app.controllers;
 
 import app.Main;
 import app.classes.Produto;
+import app.classes.Venda;
 import app.classes.usuarios.Usuario;
 import app.classes.usuarios.Vendedor;
 import javafx.beans.value.ObservableValue;
@@ -45,7 +46,6 @@ public class VendasController {
     private TextField txtQuantidade;
 
     private ObservableList<Produto> listaProdutos = FXCollections.observableArrayList();
-    private ArrayList<Produto> vendaProdutos = new ArrayList<Produto>();
 
     @FXML
     private TableColumn<Produto, String> colCodBarras, colNome;
@@ -63,7 +63,9 @@ public class VendasController {
 
     private String statusVenda=("Ocioso");
 
-    private Usuario usuario;
+    private Vendedor vendedor;
+
+    private Venda venda;
 
 
 
@@ -96,7 +98,6 @@ public class VendasController {
 
     @FXML
     void qntVenda(KeyEvent event) {
-        Produto produtoaux;
 
         txtQuantidade.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
             if (!newValue.matches("\\d*")) {
@@ -105,23 +106,22 @@ public class VendasController {
         });
         if(event.getCode().equals(KeyCode.ENTER) || event.getCode().equals(KeyCode.TAB)) {
             if(!txtQuantidade.getText().equals("")) {
-                for (Produto procurar1 : Main.estoqueProdutos) {
+                for (Produto procurar1 : Main.estoqueProdutos)
                     if (procurar1.getCodigo().equals(txtCodBarras.getText())) {
                         if (procurar1.getQuantidade() >= (Integer.parseInt(txtQuantidade.getText()))) {
-                            if (verificaLista(vendaProdutos)) {
-                                for (Produto vendasP : vendaProdutos) {
-                                    if (vendasP.getCodigo().equals(txtCodBarras.getText())) {
-                                        if (vendasP.getQuantidade() < Integer.parseInt(txtQuantidade.getText())) {
-                                            txtQuantidade.clear();
-                                            alertaEstoque(vendasP);
-                                            txtQuantidade.requestFocus();
-                                            return;
+                            if(statusVenda.equals("Ativa")) {
+                                if (verificaLista(venda.getProdutos())) {
+                                    for (Produto vendasP : venda.getProdutos()) {
+                                        if (vendasP.getCodigo().equals(txtCodBarras.getText())) {
+                                            if (vendasP.getQuantidade() < Integer.parseInt(txtQuantidade.getText())) {
+                                                txtQuantidade.clear();
+                                                alertaEstoque(vendasP);
+                                                txtQuantidade.requestFocus();
+                                                return;
+                                            }
                                         }
                                     }
                                 }
-                            } else {
-                                produtoaux = new Produto(procurar1.getNome(), procurar1.getQuantidade(), procurar1.getValorCusto(), procurar1.getValorVenda(), procurar1.getCodigo());
-                                vendaProdutos.add(produtoaux);
                             }
                             inserir.requestFocus();
                             if (verificador == 1) {
@@ -129,7 +129,7 @@ public class VendasController {
                             }
                             return;
                         } else {
-                            for (Produto produtoEst : vendaProdutos) {
+                            for (Produto produtoEst : venda.getProdutos()) {
                                 if (produtoEst.getCodigo().equals(txtCodBarras.getText())) {
                                     txtQuantidade.clear();
                                     alertaEstoque(produtoEst);
@@ -143,7 +143,6 @@ public class VendasController {
                             return;
                         }
                     }
-                }
             }else if(!txtCodBarras.getText().equals("")){
                 Alert erroEst = new Alert(Alert.AlertType.ERROR);
                 erroEst.setTitle("Digite um valor");
@@ -164,53 +163,75 @@ public class VendasController {
 
     @FXML
     public void inserirProduto(){
-        Produto produto1;
-        int aux=0;
+        Produto produto1, produtoE;
 
-        if(statusVenda.equals("Ocioso")){
-
-        }
-
-        if (verificador == 2) {
-            statusVenda = ("Ativa");
-            verificador = 0;
-            txtCodBarras.requestFocus();
-            for (Produto procurar : vendaProdutos) {
-                if (procurar.getCodigo().equals(txtCodBarras.getText())) {
-                    if (procurar.getQuantidade() >= Integer.parseInt(txtQuantidade.getText())) {
+        if(verificador == 2) {
+            verificador=0;
+            if (statusVenda.equals("Ocioso")) {
+                statusVenda = ("Ativa");
+                venda = vendedor.iniciarVenda();
+                for (Produto mainP : Main.estoqueProdutos) {
+                    if (mainP.getCodigo().equals(txtCodBarras.getText())) {
+                        produto1 = new Produto(mainP.getNome(), Integer.parseInt(txtQuantidade.getText()), mainP.getValorCusto(), mainP.getValorVenda(), mainP.getCodigo());
+                        produtoE = new Produto(mainP.getNome(), mainP.getQuantidade() - Integer.parseInt(txtQuantidade.getText()), mainP.getValorCusto(), mainP.getValorVenda(), mainP.getCodigo());
+                        venda.getProdutos().add(produtoE);
+                        venda.setValor(venda.getValor() + mainP.getValorVenda() * Double.parseDouble(txtQuantidade.getText()));
+                        listaProdutos.add(produto1);
+                        txtQuantidade.clear();
+                        txtCodBarras.clear();
+                        lblQuantidade.setText(Integer.toString(produto1.getQuantidade()));
+                        lblNomeProduto.setText(produto1.getNome());
+                        lblSubtotal.setText(String.format("%.2f", produto1.getValorVenda() * produto1.getQuantidade()));
+                        lblTotal.setText(String.format("%.2f", venda.getValor()));
+                        txtCodBarras.clear();
+                        txtQuantidade.clear();
+                        txtCodBarras.requestFocus();
+                        creatTable();
+                    }
+                }
+            }else if(statusVenda.equals("Ativa")){
+                for (Produto procurar : venda.getProdutos()) {
+                    if (procurar.getCodigo().equals(txtCodBarras.getText())) {
                         for (Produto tableP : listaProdutos) {
                             if (tableP.getCodigo().equals(procurar.getCodigo())) {
-                                aux=1;
                                 produto1 = new Produto(tableP.getNome(), tableP.getQuantidade(), tableP.getValorCusto(), tableP.getValorVenda(), tableP.getCodigo());
                                 produto1.setQuantidade(produto1.getQuantidade() + Integer.parseInt(txtQuantidade.getText()));
                                 listaProdutos.remove(tableP);
                                 listaProdutos.add(produto1);
                                 procurar.setQuantidade(procurar.getQuantidade() - Integer.parseInt(txtQuantidade.getText()));
+                                venda.setValor(venda.getValor()+produto1.getValorVenda() * Double.parseDouble(txtQuantidade.getText()));
                                 txtQuantidade.clear();
                                 txtCodBarras.clear();
+                                txtCodBarras.requestFocus();
                                 lblQuantidade.setText(Integer.toString(produto1.getQuantidade()));
                                 lblNomeProduto.setText(produto1.getNome());
-                                lblSubtotal.setText(String.format("%.2f", produto1.getValorVenda()*produto1.getQuantidade()));
+                                lblSubtotal.setText(String.format("%.2f", produto1.getValorVenda() * produto1.getQuantidade()));
+                                lblTotal.setText(String.format("%.2f", venda.getValor()));
+
                                 return;
                             }
                         }
-                        if (aux==0) {
-                            produto1 = new Produto(procurar.getNome(), procurar.getQuantidade(), procurar.getValorCusto(), procurar.getValorVenda(), procurar.getCodigo());
-                            produto1.setQuantidade(Integer.parseInt(txtQuantidade.getText()));
-                            procurar.setQuantidade(procurar.getQuantidade() - Integer.parseInt(txtQuantidade.getText()));
-                            listaProdutos.add(produto1);
-                            txtQuantidade.clear();
-                            txtCodBarras.clear();
-                            lblQuantidade.setText(Integer.toString(produto1.getQuantidade()));
-                            lblNomeProduto.setText(produto1.getNome());
-                            lblSubtotal.setText(String.format("%.2f", produto1.getValorVenda()*produto1.getQuantidade()));
-                            creatTable();
-                            return;
-                        }
+                    }
+                }
+                for (Produto mainP : Main.estoqueProdutos) {
+                    if (mainP.getCodigo().equals(txtCodBarras.getText())) {
+                        produto1 = new Produto(mainP.getNome(), Integer.parseInt(txtQuantidade.getText()), mainP.getValorCusto(), mainP.getValorVenda(), mainP.getCodigo());
+                        produtoE = new Produto(mainP.getNome(), mainP.getQuantidade() - Integer.parseInt(txtQuantidade.getText()), mainP.getValorCusto(), mainP.getValorVenda(), mainP.getCodigo());
+                        venda.getProdutos().add(produtoE);
+                        venda.setValor(venda.getValor() + mainP.getValorVenda() * Double.parseDouble(txtQuantidade.getText()));
+                        listaProdutos.add(produto1);
+                        txtQuantidade.clear();
+                        txtCodBarras.clear();
+                        lblQuantidade.setText(Integer.toString(produto1.getQuantidade()));
+                        lblNomeProduto.setText(produto1.getNome());
+                        lblSubtotal.setText(String.format("%.2f", produto1.getValorVenda() * produto1.getQuantidade()));
+                        lblTotal.setText(String.format("%.2f", venda.getValor()));
+                        txtCodBarras.clear();
+                        txtQuantidade.clear();
+                        txtCodBarras.requestFocus();
                     }
                 }
             }
-
         }
     }
 
@@ -281,7 +302,7 @@ public class VendasController {
                 Produto produto1 = it.next();
                 if (produto1.getCodigo().equals(cDb)) {
                     it.remove();
-                    for (Iterator<Produto> i = vendaProdutos.iterator(); i.hasNext();) {
+                    for (Iterator<Produto> i = venda.getProdutos().iterator(); i.hasNext();) {
                         Produto produto = i.next();
                         if (produto.getCodigo().equals(cDb)) {
                             i.remove();
@@ -317,7 +338,7 @@ public class VendasController {
         Optional<ButtonType> result = cancelarVenda.showAndWait();
         if(result.get() ==  ButtonType.OK){
             listaProdutos.clear();
-            vendaProdutos.clear();
+            venda.cancelarVenda();
         }
         txtCodBarras.requestFocus();
     }
@@ -326,7 +347,7 @@ public class VendasController {
 
     }
 
-    public void changeUser(Usuario user) {
-        this.usuario = user;
+    public void changeUser(Vendedor user) {
+        this.vendedor = user;
     }
 }
