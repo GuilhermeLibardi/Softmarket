@@ -26,7 +26,7 @@ public class Main extends Application {
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);
             primaryStage.show();
-            primaryStage.setTitle("Login marketsoft");
+            primaryStage.setTitle("Softmarket Login");
             primaryStage.setResizable(false);
         } catch (Exception e) {
             e.printStackTrace();
@@ -39,7 +39,7 @@ public class Main extends Application {
             estoqueProdutos = parser.readEstoque();
             usuariosCadastrados = parser.readUsuarios();
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
+            System.out.println(e.getCause().toString());
         }
         launch(args);
     }

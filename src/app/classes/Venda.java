@@ -1,7 +1,7 @@
 package app.classes;
-import java.util.Date;
-import java.util.ArrayList;
+
 import java.time.LocalDate;
+import java.util.ArrayList;
 
 public class Venda {
     private ArrayList <Produto> produtos;
@@ -78,11 +78,11 @@ public class Venda {
         this.id = id;
     }
 
-    public Date getDate() {
+    public LocalDate getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(LocalDate date) {
         this.date = date;
     }
 
