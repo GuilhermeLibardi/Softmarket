@@ -37,6 +37,9 @@ public class VendasController {
     private Label lblTotal;
 
     @FXML
+    private Label xVisible, realVisible1, realVisible2;
+
+    @FXML
     private TableView<Produto> tableProdutos;
 
     @FXML
@@ -160,6 +163,13 @@ public class VendasController {
         Produto produto1, produtoE;
 
         if(!txtCodBarras.getText().isEmpty() && !txtQuantidade.getText().isEmpty()) {
+            lblNomeProduto.setVisible(true);
+            lblQuantidade.setVisible(true);
+            lblSubtotal.setVisible(true);
+            lblTotal.setVisible(true);
+            xVisible.setVisible(true);
+            realVisible1.setVisible(true);
+            realVisible2.setVisible(true);
             if (statusVenda.equals("Ocioso")) {
                 statusVenda = ("Ativa");
                 venda = vendedor.iniciarVenda();
@@ -282,6 +292,7 @@ public class VendasController {
     public void pressF3(){
         TextInputDialog dialogoRemocao = new TextInputDialog();
 
+        txtCodBarras.requestFocus();
 
         dialogoRemocao.setTitle("Cancelamento de venda de produto");
         dialogoRemocao.setHeaderText("Informe o código de barras do produto a ser removido.");
@@ -295,13 +306,23 @@ public class VendasController {
                 Produto produto1 = it.next();
                 if (produto1.getCodigo().equals(cDb)) {
                     it.remove();
-                    for (Iterator<Produto> i = venda.getProdutos().iterator(); i.hasNext();) {
-                        Produto produto = i.next();
-                        if (produto.getCodigo().equals(cDb)) {
-                            i.remove();
-                            return;
-                        }
+                    venda.cancelarProduto(produto1);
+                    venda.setValor(venda.getValor()-(produto1.getValorVenda()*produto1.getQuantidade()));
+                    if(!listaProdutos.isEmpty()){
+                        lblNomeProduto.setText(listaProdutos.get(listaProdutos.size()-1).getNome());
+                        lblQuantidade.setText(Integer.toString(listaProdutos.get(listaProdutos.size()-1).getQuantidade()));
+                        lblSubtotal.setText(String.format("%.2f", listaProdutos.get(listaProdutos.size()-1).getValorVenda()*listaProdutos.get(listaProdutos.size()-1).getQuantidade()));
+                        lblTotal.setText(String.format("%.2f", venda.getValor()));
+                    }else{
+                        lblNomeProduto.setVisible(false);
+                        lblQuantidade.setVisible(false);
+                        lblSubtotal.setVisible(false);
+                        lblTotal.setVisible(false);
+                        xVisible.setVisible(false);
+                        realVisible1.setVisible(false);
+                        realVisible2.setVisible(false);
                     }
+                    return;
                 }
             }
             Alert erroEst = new Alert(Alert.AlertType.ERROR);
@@ -311,15 +332,6 @@ public class VendasController {
             erroEst.showAndWait();
             pressF3();
         }
-
-
-        for (Iterator<Produto> it = listaProdutos.iterator(); it.hasNext();) {
-            Produto produto1 = it.next();
-            if (produto1.getCodigo().equals(cDb)) {
-                it.remove();
-            }
-        }
-        txtCodBarras.requestFocus();
     }
 
     public void pressF4(){
@@ -332,6 +344,14 @@ public class VendasController {
         if(result.get() ==  ButtonType.OK){
             listaProdutos.clear();
             venda.cancelarVenda();
+            venda.setValor(0.0);
+            lblNomeProduto.setVisible(false);
+            lblQuantidade.setVisible(false);
+            lblSubtotal.setVisible(false);
+            lblTotal.setVisible(false);
+            xVisible.setVisible(false);
+            realVisible1.setVisible(false);
+            realVisible2.setVisible(false);
         }
         txtCodBarras.requestFocus();
     }

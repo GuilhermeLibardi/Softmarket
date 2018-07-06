@@ -20,38 +20,41 @@
                   <Image url="@../images/SoftMarket.png" />
                </image>
             </ImageView>
-            <Label fx:id="lblQuantidade" layoutX="14.0" layoutY="230.0" text="2">
+            <Label fx:id="lblQuantidade" layoutX="14.0" layoutY="230.0" text="2" visible="false">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label layoutX="26.0" layoutY="235.0" text="x">
+            <Label layoutX="26.0" layoutY="235.0" text="x" visible="false" fx:id="xVisible">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label fx:id="lblNomeProduto" layoutX="42.0" layoutY="229.0" text="Coca-Cola 2L">
+            <Label fx:id="lblNomeProduto" layoutX="42.0" layoutY="229.0" text="Coca-Cola 2L" visible="false">
                <font>
                   <Font size="21.0" />
                </font>
             </Label>
-            <Label layoutX="11.0" layoutY="277.0" text="R$">
+            <Label fx:id="realVisible1" layoutX="11.0" layoutY="277.0" text="R$" visible="false">
                <font>
                   <Font size="15.0" />
                </font>
             </Label>
-            <Label fx:id="lblSubtotal" layoutX="40.0" layoutY="267.0" text="14,00">
+            <Label fx:id="lblSubtotal" layoutX="34.0" layoutY="268.0" text="14,00" visible="false">
                <font>
                   <Font size="28.0" />
                </font>
             </Label>
-            <Label layoutX="16.0" layoutY="459.0" text="Total">
+            <Label layoutX="18.0" layoutY="462.0" text="Total">
                <font>
                   <Font size="22.0" />
                </font>
             </Label>
-            <Label layoutX="80.0" layoutY="467.0" text="R$" />
-            <Label fx:id="lblTotal" layoutX="94.0" layoutY="444.0" text="14,00">
+            <Label fx:id="realVisible2" layoutX="85.0" layoutY="468.0" text="R$" visible="false">
+               <font>
+                  <Font size="15.0" />
+               </font></Label>
+            <Label fx:id="lblTotal" layoutX="109.0" layoutY="455.0" text="14,00" visible="false">
                <font>
                   <Font size="32.0" />
                </font>

@@ -2,6 +2,7 @@ package app.classes;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class Venda {
     private ArrayList <Produto> produtos;
@@ -91,7 +92,13 @@ public class Venda {
     }
 
     public void cancelarProduto(Produto produto1) {
-
+        for (Iterator<Produto> i = produtos.iterator(); i.hasNext();) {
+            Produto produto = i.next();
+            if (produto.getCodigo().equals(produto1.getCodigo())) {
+                i.remove();
+                return;
+            }
+        }
     }
 
     public void cancelarVenda() {
