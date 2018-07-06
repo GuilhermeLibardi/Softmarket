@@ -3,26 +3,16 @@ package app.controllers;
 import app.Main;
 import app.classes.Produto;
 import app.classes.Venda;
-import app.classes.usuarios.Usuario;
 import app.classes.usuarios.Vendedor;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
-
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.MouseEvent;
-import java.net.URL;
-import java.text.DecimalFormat;
+import javafx.util.Callback;
 import java.util.*;
 
 public class VendasController {
@@ -108,10 +98,10 @@ public class VendasController {
         });
         if(event.getCode().equals(KeyCode.ENTER) || event.getCode().equals(KeyCode.TAB)) {
             if(!txtQuantidade.getText().equals("")) {
-                for (Produto procurar1 : Main.estoqueProdutos)
+                for (Produto procurar1 : Main.estoqueProdutos) {
                     if (procurar1.getCodigo().equals(txtCodBarras.getText())) {
                         if (procurar1.getQuantidade() >= (Integer.parseInt(txtQuantidade.getText()))) {
-                            if(statusVenda.equals("Ativa")) {
+                            if (statusVenda.equals("Ativa")) {
                                 if (verificaLista(venda.getProdutos())) {
                                     for (Produto vendasP : estoqueProdutos) {
                                         if (vendasP.getCodigo().equals(txtCodBarras.getText())) {
@@ -128,7 +118,7 @@ public class VendasController {
                             inserir.requestFocus();
                             return;
                         } else {
-                            if(statusVenda.equals("Ativa")) {
+                            if (statusVenda.equals("Ativa")) {
                                 for (Produto produtoEst : estoqueProdutos) {
                                     if (produtoEst.getCodigo().equals(txtCodBarras.getText())) {
                                         txtQuantidade.clear();
@@ -144,6 +134,8 @@ public class VendasController {
                             return;
                         }
                     }
+                }
+                txtCodBarras.requestFocus();
             }else if(!txtCodBarras.getText().equals("")){
                 Alert erroEst = new Alert(Alert.AlertType.ERROR);
                 erroEst.setTitle("Digite um valor");
@@ -250,7 +242,24 @@ public class VendasController {
         colNome.setCellValueFactory(new PropertyValueFactory<Produto, String>("nome"));
         colEstoque.setCellValueFactory(new PropertyValueFactory<Produto, Integer>("quantidade"));
         colVenda.setCellValueFactory(new PropertyValueFactory<Produto, Double>("valorVenda"));
-        
+
+        Callback<TableColumn<Produto, Double>, TableCell<Produto, Double>> cellFactory = new Callback<TableColumn<Produto, Double>, TableCell<Produto, Double>>() {
+            @Override
+            public TableCell<Produto, Double> call(TableColumn<Produto, Double> col) {
+                return new TableCell<Produto, Double>() {
+                    @Override
+                    public void updateItem(Double value, boolean empty) {
+                        super.updateItem(value, empty) ;
+                        if (value==null) {
+                            setText(null);
+                        } else {
+                            setText(String.format("R$ %.2f", value.doubleValue()));
+                        }
+                    }
+                };
+            }
+        };
+        colVenda.setCellFactory(cellFactory);
         tableProdutos.setItems(listaProdutos);
     }
 
