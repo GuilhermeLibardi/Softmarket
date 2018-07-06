@@ -56,8 +56,6 @@ public class VendasController {
     @FXML
     private TableColumn<Produto, Integer> colEstoque;
 
-    private Integer verificador=0;
-
     @FXML
     private Button inserir;
 
@@ -80,9 +78,6 @@ public class VendasController {
         if(event.getCode().equals(KeyCode.ENTER) || event.getCode().equals(KeyCode.TAB)) {
             for(Produto procurar : Main.estoqueProdutos) {
                 if (procurar.getCodigo().equals(txtCodBarras.getText())) {
-                    if (verificador == 0) {
-                        verificador++;
-                    }
                     txtQuantidade.requestFocus();
                     return;
                 }
@@ -124,9 +119,6 @@ public class VendasController {
                                 }
                             }
                             inserir.requestFocus();
-                            if (verificador == 1) {
-                                verificador++;
-                            }
                             return;
                         } else {
                             for (Produto produtoEst : venda.getProdutos()) {
@@ -165,8 +157,7 @@ public class VendasController {
     public void inserirProduto(){
         Produto produto1, produtoE;
 
-        if(verificador == 2) {
-            verificador=0;
+        if(!txtCodBarras.getText().isEmpty() && !txtQuantidade.getText().isEmpty()) {
             if (statusVenda.equals("Ocioso")) {
                 statusVenda = ("Ativa");
                 venda = vendedor.iniciarVenda();
