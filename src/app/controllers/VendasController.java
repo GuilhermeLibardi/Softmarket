@@ -121,12 +121,14 @@ public class VendasController {
                             inserir.requestFocus();
                             return;
                         } else {
-                            for (Produto produtoEst : venda.getProdutos()) {
-                                if (produtoEst.getCodigo().equals(txtCodBarras.getText())) {
-                                    txtQuantidade.clear();
-                                    alertaEstoque(produtoEst);
-                                    txtQuantidade.requestFocus();
-                                    return;
+                            if(statusVenda.equals("Ativa")) {
+                                for (Produto produtoEst : venda.getProdutos()) {
+                                    if (produtoEst.getCodigo().equals(txtCodBarras.getText())) {
+                                        txtQuantidade.clear();
+                                        alertaEstoque(produtoEst);
+                                        txtQuantidade.requestFocus();
+                                        return;
+                                    }
                                 }
                             }
                             txtQuantidade.clear();
