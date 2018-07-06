@@ -165,7 +165,7 @@ public class VendasController {
                     if (mainP.getCodigo().equals(txtCodBarras.getText())) {
                         produto1 = new Produto(mainP.getNome(), Integer.parseInt(txtQuantidade.getText()), mainP.getValorCusto(), mainP.getValorVenda(), mainP.getCodigo());
                         produtoE = new Produto(mainP.getNome(), mainP.getQuantidade() - Integer.parseInt(txtQuantidade.getText()), mainP.getValorCusto(), mainP.getValorVenda(), mainP.getCodigo());
-                        venda.getProdutos().add(produtoE);
+                        venda.inserirProduto(produtoE);
                         venda.setValor(venda.getValor() + mainP.getValorVenda() * Double.parseDouble(txtQuantidade.getText()));
                         listaProdutos.add(produto1);
                         txtQuantidade.clear();
@@ -208,7 +208,7 @@ public class VendasController {
                     if (mainP.getCodigo().equals(txtCodBarras.getText())) {
                         produto1 = new Produto(mainP.getNome(), Integer.parseInt(txtQuantidade.getText()), mainP.getValorCusto(), mainP.getValorVenda(), mainP.getCodigo());
                         produtoE = new Produto(mainP.getNome(), mainP.getQuantidade() - Integer.parseInt(txtQuantidade.getText()), mainP.getValorCusto(), mainP.getValorVenda(), mainP.getCodigo());
-                        venda.getProdutos().add(produtoE);
+                        venda.inserirProduto(produtoE);
                         venda.setValor(venda.getValor() + mainP.getValorVenda() * Double.parseDouble(txtQuantidade.getText()));
                         listaProdutos.add(produto1);
                         txtQuantidade.clear();

@@ -86,11 +86,11 @@ public class Venda {
         this.date = date;
     }
 
-    public void inserirProduto() {
-
+    public void inserirProduto(Produto produto1) {
+        produtos.add(produto1);
     }
 
-    public void cancelarProduto() {
+    public void cancelarProduto(Produto produto1) {
 
     }
 
