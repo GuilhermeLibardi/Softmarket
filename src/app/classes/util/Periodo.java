@@ -1,11 +1,11 @@
 package app.classes.util;
-import java.util.Date;
+import java.time.LocalDate;
 
 public class Periodo {
-    private Date inicio;
-    private Date fim;
+    private LocalDate inicio;
+    private LocalDate fim;
 
-    public Periodo(Date inicio, Date fim) {
+    public Periodo(LocalDate inicio, LocalDate fim) {
         this.inicio = inicio;
         this.fim = fim;
     }

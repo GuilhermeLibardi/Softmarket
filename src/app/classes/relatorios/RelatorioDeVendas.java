@@ -8,4 +8,6 @@ public class RelatorioDeVendas {
     public RelatorioDeVendas() {
         this.vendas = new ArrayList<Venda>();
     }
+
+
 }

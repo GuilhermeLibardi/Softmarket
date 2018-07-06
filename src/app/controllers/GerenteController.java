@@ -3,6 +3,7 @@ package app.controllers;
 import app.Main;
 import app.classes.Produto;
 import app.classes.usuarios.Usuario;
+import app.classes.util.Periodo;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
@@ -18,6 +19,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.time.LocalDate;
 
 public class GerenteController implements Initializable {
 
@@ -50,6 +52,9 @@ public class GerenteController implements Initializable {
     private TableColumn<Produto, Integer> colEstoque;
 
     private Usuario usuario;
+
+    @FXML
+    private DatePicker dataInicial, dataFinal;
 
 
     public void changeUser(Usuario user){
@@ -86,6 +91,15 @@ public class GerenteController implements Initializable {
 
     @FXML
     void gerarRelatorio() {
+        LocalDate dataIni = dataInicial.getValue();
+        LocalDate dataFin = dataFinal.getValue();
+
+        Periodo periodo = new Periodo(dataIni,dataFin);
+
+        if(dataIni.isAfter(dataFin))
+        {
+            System.out.println(dataIni);
+        }
 
     }
 
