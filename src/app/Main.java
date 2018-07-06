@@ -21,7 +21,7 @@ public class Main extends Application {
     public static ObservableList<Produto> estoqueProdutos;
     public static ArrayList<Usuario> usuariosCadastrados;
     public static ArrayList<Relatorio> relatoriosEmitidos;
-    public static ArrayList<Venda> vendasFechadas;
+    public static ArrayList<Venda> vendasFechadas = new ArrayList<>();
 
     @Override
     public void start(Stage primaryStage) {

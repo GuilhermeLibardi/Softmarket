@@ -10,10 +10,13 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -49,6 +52,7 @@ public class VendasController {
     private TextField txtQuantidade;
 
     private ObservableList<Produto> listaProdutos = FXCollections.observableArrayList();
+    private ArrayList<Produto> estoqueProdutos = new ArrayList<>();
 
     @FXML
     private TableColumn<Produto, String> colCodBarras, colNome;
@@ -109,7 +113,7 @@ public class VendasController {
                         if (procurar1.getQuantidade() >= (Integer.parseInt(txtQuantidade.getText()))) {
                             if(statusVenda.equals("Ativa")) {
                                 if (verificaLista(venda.getProdutos())) {
-                                    for (Produto vendasP : venda.getProdutos()) {
+                                    for (Produto vendasP : estoqueProdutos) {
                                         if (vendasP.getCodigo().equals(txtCodBarras.getText())) {
                                             if (vendasP.getQuantidade() < Integer.parseInt(txtQuantidade.getText())) {
                                                 txtQuantidade.clear();
@@ -125,7 +129,7 @@ public class VendasController {
                             return;
                         } else {
                             if(statusVenda.equals("Ativa")) {
-                                for (Produto produtoEst : venda.getProdutos()) {
+                                for (Produto produtoEst : estoqueProdutos) {
                                     if (produtoEst.getCodigo().equals(txtCodBarras.getText())) {
                                         txtQuantidade.clear();
                                         alertaEstoque(produtoEst);
@@ -177,9 +181,10 @@ public class VendasController {
                     if (mainP.getCodigo().equals(txtCodBarras.getText())) {
                         produto1 = new Produto(mainP.getNome(), Integer.parseInt(txtQuantidade.getText()), mainP.getValorCusto(), mainP.getValorVenda(), mainP.getCodigo());
                         produtoE = new Produto(mainP.getNome(), mainP.getQuantidade() - Integer.parseInt(txtQuantidade.getText()), mainP.getValorCusto(), mainP.getValorVenda(), mainP.getCodigo());
-                        venda.inserirProduto(produtoE);
+                        estoqueProdutos.add(produtoE);
                         venda.setValor(venda.getValor() + mainP.getValorVenda() * Double.parseDouble(txtQuantidade.getText()));
                         listaProdutos.add(produto1);
+                        venda.inserirProduto(produto1);
                         txtQuantidade.clear();
                         txtCodBarras.clear();
                         lblQuantidade.setText(Integer.toString(produto1.getQuantidade()));
@@ -193,7 +198,7 @@ public class VendasController {
                     }
                 }
             }else if(statusVenda.equals("Ativa")){
-                for (Produto procurar : venda.getProdutos()) {
+                for (Produto procurar : estoqueProdutos) {
                     if (procurar.getCodigo().equals(txtCodBarras.getText())) {
                         for (Produto tableP : listaProdutos) {
                             if (tableP.getCodigo().equals(procurar.getCodigo())) {
@@ -220,9 +225,10 @@ public class VendasController {
                     if (mainP.getCodigo().equals(txtCodBarras.getText())) {
                         produto1 = new Produto(mainP.getNome(), Integer.parseInt(txtQuantidade.getText()), mainP.getValorCusto(), mainP.getValorVenda(), mainP.getCodigo());
                         produtoE = new Produto(mainP.getNome(), mainP.getQuantidade() - Integer.parseInt(txtQuantidade.getText()), mainP.getValorCusto(), mainP.getValorVenda(), mainP.getCodigo());
-                        venda.inserirProduto(produtoE);
+                        estoqueProdutos.add(produtoE);
                         venda.setValor(venda.getValor() + mainP.getValorVenda() * Double.parseDouble(txtQuantidade.getText()));
                         listaProdutos.add(produto1);
+                        venda.inserirProduto(produto1);
                         txtQuantidade.clear();
                         txtCodBarras.clear();
                         lblQuantidade.setText(Integer.toString(produto1.getQuantidade()));
@@ -267,17 +273,18 @@ public class VendasController {
     }
 
     public void fPress (KeyEvent event){
-
-        switch (event.getCode()){
-            case F3:
-                pressF3();
-                break;
-            case F4:
-                pressF4();
-                break;
-            case F5:
-                pressF5();
-                break;
+        if(!listaProdutos.isEmpty()) {
+            switch (event.getCode()) {
+                case F3:
+                    pressF3();
+                    break;
+                case F4:
+                    pressF4();
+                    break;
+                case F5:
+                    pressF5();
+                    break;
+            }
         }
     }
 
@@ -306,6 +313,13 @@ public class VendasController {
                 Produto produto1 = it.next();
                 if (produto1.getCodigo().equals(cDb)) {
                     it.remove();
+                    for (Iterator<Produto> i = estoqueProdutos.iterator(); i.hasNext();) {
+                        Produto produto = i.next();
+                        if (produto.getCodigo().equals(produto1.getCodigo())) {
+                            i.remove();
+                            break;
+                        }
+                    }
                     venda.cancelarProduto(produto1);
                     venda.setValor(venda.getValor()-(produto1.getValorVenda()*produto1.getQuantidade()));
                     if(!listaProdutos.isEmpty()){
@@ -343,6 +357,7 @@ public class VendasController {
         Optional<ButtonType> result = cancelarVenda.showAndWait();
         if(result.get() ==  ButtonType.OK){
             listaProdutos.clear();
+            estoqueProdutos.clear();
             venda.cancelarVenda();
             venda.setValor(0.0);
             lblNomeProduto.setVisible(false);
@@ -357,10 +372,80 @@ public class VendasController {
     }
 
     public void pressF5(){
+        Alert dialogoExe = new Alert(Alert.AlertType.CONFIRMATION);
+        ButtonType btnCartao = new ButtonType("Cartão");
+        ButtonType btnDinheiro = new ButtonType("Dinheiro");
+        dialogoExe.setTitle("Forma de Pagamento");
+        dialogoExe.setHeaderText("Informe a Forma de Pagamento");
+        dialogoExe.setContentText("Você irá pagar em dinheiro ou cartão?");
 
+        dialogoExe.getButtonTypes().setAll(btnCartao, btnDinheiro);
+
+        Optional<ButtonType> resultado = dialogoExe.showAndWait();
+
+        if(resultado.get() == btnCartao){
+            venda.setTipoPag('c');
+            venda.setPagamento(venda.getValor());
+        }else if(resultado.get() == btnDinheiro) {
+            venda.setTipoPag('d');
+            TextInputDialog dialogoPagamento = new TextInputDialog();
+
+            dialogoPagamento.setTitle("Valor Pago");
+            dialogoPagamento.setHeaderText("Insira o valor pago");
+            dialogoPagamento.setContentText("R$");
+            Optional<String> pagamento = dialogoPagamento.showAndWait();
+
+            System.out.println(Double.parseDouble(pagamento.get()));
+            while (!isDoubleString(pagamento.get()) || Double.parseDouble(pagamento.get()) < venda.getValor()) {
+                Alert dialogoInfo = new Alert(Alert.AlertType.ERROR);
+                dialogoInfo.setTitle("Valor Incorreto");
+                dialogoInfo.setHeaderText("Você digitou um valor incorreto.");
+                dialogoInfo.setContentText("Digite o valor pago pelo cliente novamente.");
+                dialogoInfo.showAndWait();
+                pagamento = dialogoPagamento.showAndWait();
+            }
+
+            venda.setPagamento(Double.parseDouble(pagamento.get()));
+            venda.setTroco(venda.calculaTroco());
+
+            Alert dialogoInfo = new Alert(Alert.AlertType.INFORMATION);
+            dialogoInfo.setTitle("Valor do Troco");
+            dialogoInfo.setHeaderText("O valor do troco é:");
+            dialogoInfo.setContentText(String.format("R$ %.2f", venda.getTroco()));
+            dialogoInfo.showAndWait();
+
+        }
+
+        Alert dialogoNota = new Alert(Alert.AlertType.INFORMATION);
+        dialogoNota.setTitle("Nota Fiscal");
+        dialogoNota.setHeaderText("Nota Fiscal");
+        dialogoNota.setContentText(venda.notaFiscal());
+        dialogoNota.showAndWait();
+
+        listaProdutos.clear();
+        estoqueProdutos.clear();
+        vendedor.fecharVenda(venda);
+        txtCodBarras.requestFocus();
+        statusVenda = ("Ocioso");
+        lblNomeProduto.setVisible(false);
+        lblQuantidade.setVisible(false);
+        lblSubtotal.setVisible(false);
+        lblTotal.setVisible(false);
+        xVisible.setVisible(false);
+        realVisible1.setVisible(false);
+        realVisible2.setVisible(false);
     }
 
     public void changeUser(Vendedor user) {
         this.vendedor = user;
+    }
+
+    public static boolean isDoubleString (String s){
+        try {
+            Double.parseDouble(s);
+            return true;
+        } catch (NumberFormatException ex) {
+            return false;
+        }
     }
 }

@@ -23,12 +23,29 @@ public class Venda {
         this.date = LocalDate.now();
     }
 
-    public Double CalculaTroco() {
-        return this.troco;
+    public Double calculaTroco() {
+        return this.pagamento-this.valor;
     }
 
-    public void notaFiscal(){
+    public String notaFiscal(){
+        StringBuilder nota = new StringBuilder();
+        nota.append("Lista de Produtos\n\n");
+        for(Produto produtosI : produtos){
+            nota.append(produtosI.getCodigo()).append(" - ").append(produtosI.getNome()).append(" - ").append(produtosI.getQuantidade()).append(String.format("x R$ %.2f", produtosI.getValorVenda()));
+            nota.append("\n");
+        }
+        nota.append("\nForma de Pagamento: ");
+        if(tipoPag=='c'){
+            nota.append("Cartão\n");
+        }else{
+            nota.append("Dinheiro\n");
+        }
+        nota.append("Data: " + LocalDate.now().toString() + "\n");
+        nota.append("Valor Total: " + String.format("R$ %.2f", valor) + "\n");
+        nota.append("Valor Pago: " + String.format("R$ %.2f", pagamento) + "\n");
+        nota.append("Troco: " + String.format("R$ %.2f", troco) + "\n\n");
 
+        return String.valueOf(nota);
     }
 
     public ArrayList<Produto> getProdutos() {
@@ -96,7 +113,7 @@ public class Venda {
             Produto produto = i.next();
             if (produto.getCodigo().equals(produto1.getCodigo())) {
                 i.remove();
-                return;
+                break;
             }
         }
     }
