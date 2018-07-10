@@ -2,21 +2,29 @@ package app.controllers;
 
 import app.Main;
 import app.classes.Produto;
+import app.classes.relatorios.RelatorioDeEstoque;
 import app.classes.usuarios.Usuario;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.beans.EventHandler;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -94,9 +102,16 @@ public class GerenteController implements Initializable {
         tabelaProdutos.setItems(sortedData);
     }
 
-    @FXML
-    void gerarRelatorio() {
 
+
+    @FXML
+    void gerarRelatorio() throws IOException {
+        if(comboTipo.getValue().toString().equals("Relatório de Vendas")){
+            System.out.println("Teste");
+        }else if(comboTipo.getValue().toString().equals("Relatório de Estoque")){
+            RelatorioDeEstoque relatorio = new RelatorioDeEstoque(Main.estoqueProdutos);
+            relatorio.gerarRelatorio();
+        }
     }
 
 

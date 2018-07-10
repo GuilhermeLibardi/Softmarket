@@ -1,6 +1,7 @@
 package app.classes.util;
 
 import app.classes.Produto;
+import app.classes.Venda;
 import app.classes.usuarios.Gerente;
 import app.classes.usuarios.Usuario;
 import app.classes.usuarios.Vendedor;
@@ -54,4 +55,14 @@ public class CSVParser {
         scanner.close();
         return usuarios;
     }
+
+    public void writeVenda(ObservableList<Venda> vendas) throws Exception {
+        URL url = getClass().getResource("../../resources/data/vendas.csv");
+        PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(new File(url.getPath()), false)));
+        StringBuilder sb = new StringBuilder();
+        for (Venda v : vendas) sb.append(v.toCSV());
+        pw.print(sb.toString());
+        pw.close();
+    }
+
 }
