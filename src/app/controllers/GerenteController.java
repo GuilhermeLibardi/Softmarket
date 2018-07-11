@@ -36,7 +36,7 @@ public class GerenteController implements Initializable {
             btnAddProd, btnEditProd, btnRemoveProd;
 
     @FXML
-    private Label lblGerente;
+    private Label lblGerente, periodoR, deL, aL;
 
     @FXML
     private TextField txtDataInicial, txtDataFinal, txtPesquisa;
@@ -100,6 +100,25 @@ public class GerenteController implements Initializable {
         sortedData.comparatorProperty().bind(tabelaProdutos.comparatorProperty());
 
         tabelaProdutos.setItems(sortedData);
+
+        comboTipo.setOnAction(new javafx.event.EventHandler<javafx.event.ActionEvent>() {
+            @Override
+            public void handle(javafx.event.ActionEvent event) {
+                if(comboTipo.getValue().toString().equals("Relatório de Vendas")){
+                    periodoR.setVisible(true);
+                    deL.setVisible(true);
+                    aL.setVisible(true);
+                    dataFinal.setVisible(true);
+                    dataInicial.setVisible(true);
+                }else if(comboTipo.getValue().toString().equals("Relatório de Estoque")){
+                    periodoR.setVisible(false);
+                    deL.setVisible(false);
+                    aL.setVisible(false);
+                    dataFinal.setVisible(false);
+                    dataInicial.setVisible(false);
+                }
+            }
+        });
     }
 
 
