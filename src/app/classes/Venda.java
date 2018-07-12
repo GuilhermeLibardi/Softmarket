@@ -123,7 +123,7 @@ public class Venda {
     }
 
     public String toCSV() {
-        return this.valor + ',' + this.troco + ',' + this.pagamento + ',' + this.tipoPag + ',' + this.id + ',' + this.date.toString() + ',' + '\n';
+        return   this.date.toString() + ',' + this.troco + ',' + this.pagamento + ',' + this.tipoPag + ',' + this.id + ',' + this.valor + ',' + '\n';
     }
 
 }

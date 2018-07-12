@@ -10,6 +10,7 @@ import javafx.collections.ObservableList;
 
 import java.io.*;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -63,6 +64,27 @@ public class CSVParser {
         for (Venda v : vendas) sb.append(v.toCSV());
         pw.print(sb.toString());
         pw.close();
+    }
+
+    public ArrayList<Venda> readVendas() throws FileNotFoundException {
+        ArrayList<Venda> vendas = new ArrayList<>(5);
+        URL url = getClass().getResource("../../resources/data/vendas.csv");
+        Scanner scanner = new Scanner(new File(url.getPath()));
+        while (scanner.hasNextLine()) {
+            String[] info = scanner.nextLine().split(",");
+            Venda v = new Venda();
+            v.setPagamento(Double.parseDouble(info[2]));
+            v.setValor(Double.parseDouble(info[5]));
+            v.setTipoPag(info[3].toCharArray()[0]);
+            v.setTroco(Double.parseDouble(info[1]));
+            v.setDate(LocalDate.parse(info[0]));
+            v.setId(Integer.parseInt(info[4]));
+
+            vendas.add(v);
+
+        }
+        scanner.close();
+        return vendas;
     }
 
 }
