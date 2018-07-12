@@ -3,9 +3,11 @@ package app.classes.relatorios;
 import app.Main;
 import app.classes.Produto;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
 
 import java.io.*;
 import java.net.URL;
+import java.time.LocalDate;
 
 public class RelatorioDeEstoque extends Relatorio {
     private ObservableList<Produto> produtos;
@@ -28,11 +30,17 @@ public class RelatorioDeEstoque extends Relatorio {
             valorc += p.getQuantidade() * p.getValorCusto();
             valorl += p.getQuantidade() * p.getValorVenda();
         }
-        System.out.println("Quantidade total de produtos é: " + quant);
-        System.out.println("Valor total de custo dos itens do estoque: " + valorc);
-        System.out.println("Valor total de venda dos itens do estoque: " + valorl);
-        System.out.println("Lucro total dos itens do estoque após venda: " + (valorl-valorc));
 
+        Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+        alerta.setTitle("Relatório de estoque");
+        alerta.setHeaderText("Vendas de estoque atual (" + LocalDate.now().toString() + ")");
+        alerta.setContentText("Quantidade total de produtos: " + quant + "\n" +
+                "Custo total dos itens no estoque: " + valorc + "\n" +
+                "Valor total de venda dos itens: " + valorl + "\nLucro total após vendas: " + (valorl-valorc));
+        for (Produto p : Main.estoqueProdutos) {
+            alerta.setContentText("Produto:" + p.getNome() + " Código:" + p.getCodigo() + " Quantidade:" + p.getQuantidade() + "\n");
+        }
+        alerta.showAndWait();
 
 
 
