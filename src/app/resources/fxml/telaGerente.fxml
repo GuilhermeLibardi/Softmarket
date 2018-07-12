@@ -2,22 +2,12 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.geometry.Rectangle2D?>
+<?import javafx.scene.control.*?>
 <?import javafx.scene.Cursor?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ComboBox?>
-<?import javafx.scene.control.DatePicker?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.SplitPane?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.Pane?>
-<?import javafx.scene.text.Font?>
-
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
 <SplitPane dividerPositions="0.29797979797979796" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.GerenteController">
   <items>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: #004;">
@@ -53,7 +43,7 @@
          </children></AnchorPane>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: #ffffff;">
          <children>
-            <Pane fx:id="painelRelatorios" prefHeight="766.0" prefWidth="955.0" style="-fx-background-color: #ffffff;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <Pane fx:id="painelRelatorios" prefHeight="766.0" prefWidth="955.0" style="-fx-background-color: #ffffff;" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
                   <Label layoutX="343.0" layoutY="61.0" text="GERAR RELATÓRIOS" textAlignment="CENTER">
                      <font>
@@ -76,15 +66,9 @@
                   <DatePicker fx:id="dataInicial" layoutX="318.0" layoutY="286.0" visible="false" />
                   <DatePicker fx:id="dataFinal" layoutX="532.0" layoutY="286.0" visible="false" />
                   <ComboBox fx:id="comboTipo" layoutX="318.0" layoutY="188.0" prefWidth="150.0" promptText="Tipo de relatório" />
-                  <Label layoutX="214.0" layoutY="351.0" text="Nome do relatório">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </Label>
-                  <TextArea fx:id="nomeRelatorio" layoutX="321.0" layoutY="395.0" prefHeight="25.0" prefWidth="250.0" />
                </children>
             </Pane>
-            <Pane fx:id="painelEstoque" prefHeight="766.0" prefWidth="955.0" style="-fx-background-color: #ffffff;" visible="false">
+            <Pane fx:id="painelEstoque" prefHeight="766.0" prefWidth="955.0" style="-fx-background-color: #ffffff;">
                <children>
                   <TableView fx:id="tabelaProdutos" layoutX="14.0" layoutY="182.0" prefHeight="485.0" prefWidth="863.0" style="-fx-background-color: #fff;">
                     <columns>

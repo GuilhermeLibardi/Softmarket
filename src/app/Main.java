@@ -2,7 +2,6 @@ package app;
 
 import app.classes.Produto;
 import app.classes.Venda;
-import app.classes.relatorios.Relatorio;
 import app.classes.usuarios.Usuario;
 import app.classes.util.CSVParser;
 import javafx.application.Application;
@@ -12,7 +11,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.io.FileNotFoundException;
 import java.util.ArrayList;
 
 
@@ -20,7 +18,6 @@ public class Main extends Application {
 
     public static ObservableList<Produto> estoqueProdutos;
     public static ArrayList<Usuario> usuariosCadastrados;
-    public static ArrayList<Relatorio> relatoriosEmitidos;
     public static ArrayList<Venda> vendasFechadas = new ArrayList<>();
 
     @Override
