@@ -3,7 +3,9 @@ package app.controllers;
 import app.Main;
 import app.classes.Produto;
 import app.classes.relatorios.RelatorioDeEstoque;
+import app.classes.relatorios.RelatorioDeVendas;
 import app.classes.usuarios.Usuario;
+import app.classes.util.Periodo;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -126,7 +128,9 @@ public class GerenteController implements Initializable {
     @FXML
     void gerarRelatorio() throws IOException {
         if(comboTipo.getValue().toString().equals("Relatório de Vendas")){
-            System.out.println("Teste");
+            Periodo p = new Periodo(dataInicial.getValue(), dataFinal.getValue());
+            RelatorioDeVendas relVendas = new RelatorioDeVendas(p,Main.vendasFechadas);
+            relVendas.gerarRelatorio();
         }else if(comboTipo.getValue().toString().equals("Relatório de Estoque")){
             RelatorioDeEstoque relatorio = new RelatorioDeEstoque(Main.estoqueProdutos);
             relatorio.gerarRelatorio();

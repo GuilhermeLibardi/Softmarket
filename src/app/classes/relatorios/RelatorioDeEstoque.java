@@ -17,11 +17,22 @@ public class RelatorioDeEstoque extends Relatorio {
     @Override
     public void gerarRelatorio() throws IOException {
         //Estrutura do relatório
+        int quant = 0;
+        float valorc = 0, valorl = 0;
         System.out.println("Gerando relatório de estoque...");
-        FileWriter writer = new FileWriter("Relatorio.csv");
-        for (Produto p : Main.estoqueProdutos) writer.append(p.toCSV());
-        writer.flush();
-        writer.close();
+
+        for (Produto p : Main.estoqueProdutos)
+        {
+            System.out.println("Produto:" + p.getNome() + " Código:" + p.getCodigo() + " Quantidade:" +  p.getQuantidade() + "\n");
+            quant += p.getQuantidade();
+            valorc += p.getQuantidade() * p.getValorCusto();
+            valorl += p.getQuantidade() * p.getValorVenda();
+        }
+        System.out.println("Quantidade total de produtos é: " + quant);
+        System.out.println("Valor total de custo dos itens do estoque: " + valorc);
+        System.out.println("Valor total de venda dos itens do estoque: " + valorl);
+        System.out.println("Lucro total dos itens do estoque após venda: " + (valorl-valorc));
+
 
 
 

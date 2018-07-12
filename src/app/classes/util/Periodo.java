@@ -10,4 +10,12 @@ public class Periodo {
         this.fim = fim;
     }
 
+    public LocalDate getsInicio()
+    {
+        return inicio;
+    }
+    public LocalDate getsFim()
+    {
+        return fim;
+    }
 }

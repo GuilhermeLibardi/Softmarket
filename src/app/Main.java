@@ -42,8 +42,8 @@ public class Main extends Application {
         try {
             estoqueProdutos = parser.readEstoque();
             usuariosCadastrados = parser.readUsuarios();
-        } catch (FileNotFoundException e) {
-            System.out.println(e.getCause().toString());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
         }
         launch(args);
     }
