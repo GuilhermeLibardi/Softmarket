@@ -5,6 +5,7 @@ import app.classes.Produto;
 import app.classes.relatorios.RelatorioDeEstoque;
 import app.classes.relatorios.RelatorioDeVendas;
 import app.classes.usuarios.Usuario;
+import app.classes.util.CSVParser;
 import app.classes.util.Periodo;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

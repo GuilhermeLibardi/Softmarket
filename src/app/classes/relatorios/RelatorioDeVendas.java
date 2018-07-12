@@ -1,6 +1,7 @@
 package app.classes.relatorios;
 
 import app.Main;
+import app.classes.Produto;
 import app.classes.Venda;
 import app.classes.util.Periodo;
 import javafx.scene.control.Alert;
@@ -30,13 +31,17 @@ public class RelatorioDeVendas extends Relatorio implements Datable {
         int quant = 0;
         StringBuilder sb = new StringBuilder();
         String s;
-        for (Venda v : Main.vendasFechadas)
-            if (v.getDate().isAfter(periodo.getInicio()) && v.getDate().isBefore(periodo.getFim())) {
+        for (Venda v : Main.vendasFechadas) {
+            if ((v.getDate().isAfter(periodo.getInicio()) && v.getDate().isBefore(periodo.getFim())) || (v.getDate().isEqual(periodo.getInicio()) && v.getDate().isEqual(periodo.getFim()))) {
+                for (Produto p : v.getProdutos()) {
+                    sb.append(String.valueOf(p.getCodigo()) + " - " + p.getNome() + " Quantidade: " + String.valueOf(p.getQuantidade()) + "\n");
+                }
                 s = (String) "ID: " + String.valueOf(v.getId()) + " Data:" + String.valueOf(v.getDate()) + " Tipo de pagamento: " + String.valueOf(v.getTipoPag()) + " Valor: " + String.valueOf(v.getValor()) + "\n";
                 sb.append(s);
                 arrecadado += v.getValor();
                 quant++;
             }
+        }
         Alert alerta = new Alert(Alert.AlertType.INFORMATION);
         alerta.setTitle("Relatório de vendas");
         alerta.setHeaderText("Vendas no período de " + this.periodo.getInicio() + " a " + this.periodo.getInicio());

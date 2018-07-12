@@ -57,7 +57,7 @@ public class CSVParser {
         return usuarios;
     }
 
-    public void writeVenda(ObservableList<Venda> vendas) throws Exception {
+    public void writeVenda(ArrayList<Venda> vendas) throws Exception {
         URL url = getClass().getResource("../../resources/data/vendas.csv");
         PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(new File(url.getPath()), false)));
         StringBuilder sb = new StringBuilder();
@@ -67,19 +67,24 @@ public class CSVParser {
     }
 
     public ArrayList<Venda> readVendas() throws FileNotFoundException {
-        ArrayList<Venda> vendas = new ArrayList<>(5);
+        int aux=0;
+        ArrayList<Venda> vendas = new ArrayList<>(50);
         URL url = getClass().getResource("../../resources/data/vendas.csv");
         Scanner scanner = new Scanner(new File(url.getPath()));
         while (scanner.hasNextLine()) {
             String[] info = scanner.nextLine().split(",");
             Venda v = new Venda();
-            v.setPagamento(Double.parseDouble(info[2]));
-            v.setValor(Double.parseDouble(info[5]));
-            v.setTipoPag(info[3].toCharArray()[0]);
-            v.setTroco(Double.parseDouble(info[1]));
-            v.setDate(LocalDate.parse(info[0]));
-            v.setId(Integer.parseInt(info[4]));
-
+            aux=Integer.parseInt(info[0])*3;
+            for (int i=1;i<=aux;i+=3){
+                v.getProdutos().add(new Produto(String.valueOf(info[i+1]), Integer.parseInt(info[i+2]), String.valueOf(info[i])));
+            }
+            aux++;
+            v.setPagamento(Double.parseDouble(info[aux+2]));
+            v.setValor(Double.parseDouble(info[aux+5]));
+            v.setTipoPag(info[aux+3].toCharArray()[0]);
+            v.setTroco(Double.parseDouble(info[aux+1]));
+            v.setDate(LocalDate.parse(info[aux]));
+            v.setId(Integer.parseInt(info[aux+4]));
             vendas.add(v);
 
         }

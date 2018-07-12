@@ -4,6 +4,7 @@ import app.Main;
 import app.classes.Produto;
 import app.classes.Venda;
 import app.classes.usuarios.Vendedor;
+import app.classes.util.CSVParser;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

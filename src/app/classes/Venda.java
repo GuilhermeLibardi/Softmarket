@@ -123,7 +123,15 @@ public class Venda {
     }
 
     public String toCSV() {
-        return   this.date.toString() + ',' + this.troco + ',' + this.pagamento + ',' + this.tipoPag + ',' + this.id + ',' + this.valor + ',' + '\n';
+        StringBuilder vendasLista = new StringBuilder();
+
+        vendasLista.append(String.valueOf(this.produtos.size()) + ',');
+        for (Produto p: this.produtos){
+            vendasLista.append(p.getCodigo() + ',' + p.getNome() + ',' + p.getQuantidade() + ',');
+        }
+        vendasLista.append(this.date.toString() + ',' + this.troco + ',' + this.pagamento + ',' + this.tipoPag + ',' + this.id + ',' + this.valor + ',' + "\n\n");
+
+        return String.valueOf(vendasLista);
     }
 
 }

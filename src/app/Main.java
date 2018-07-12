@@ -39,6 +39,7 @@ public class Main extends Application {
         try {
             estoqueProdutos = parser.readEstoque();
             usuariosCadastrados = parser.readUsuarios();
+            vendasFechadas = parser.readVendas();
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

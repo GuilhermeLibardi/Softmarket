@@ -15,6 +15,12 @@ public class Produto {
         this.codigo = codigo;
     }
 
+    public Produto(String nome, int quantidade, String codigo) {
+        this.nome = nome;
+        this.quantidade = quantidade;
+        this.codigo = codigo;
+    }
+
     public String getNome() {
         return nome;
     }
