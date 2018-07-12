@@ -3,10 +3,11 @@ package app.classes.relatorios;
 import app.Main;
 import app.classes.Venda;
 import app.classes.util.Periodo;
+import javafx.scene.control.Alert;
 
 import java.util.ArrayList;
 
-public class RelatorioDeVendas extends Relatorio implements Datable{
+public class RelatorioDeVendas extends Relatorio implements Datable {
     private ArrayList<Venda> vendas;
     private Periodo periodo;
 
@@ -25,19 +26,22 @@ public class RelatorioDeVendas extends Relatorio implements Datable{
     @Override
     public void gerarRelatorio() {
         //Estrutura do relatório
-        System.out.println("Gerando relatório de vendas");
-        float arrecadado = 0;
+        double arrecadado = 0;
         int quant = 0;
+        StringBuilder sb = new StringBuilder();
+        String s;
         for (Venda v : Main.vendasFechadas)
-        {
-            if(v.getDate().isAfter(periodo.getsInicio()) && v.getDate().isBefore(periodo.getsFim()))
-            {
-                System.out.println("ID: " + v.getId() + " Data:" + v.getDate() + " Tipo de pagamento: " + v.getTipoPag() + " Valor: " + v.getValor() + "\n");
+            if (v.getDate().isAfter(periodo.getInicio()) && v.getDate().isBefore(periodo.getFim())) {
+                s = (String) "ID: " + String.valueOf(v.getId()) + " Data:" + String.valueOf(v.getDate()) + " Tipo de pagamento: " + String.valueOf(v.getTipoPag()) + " Valor: " + String.valueOf(v.getValor()) + "\n";
+                sb.append(s);
                 arrecadado += v.getValor();
                 quant++;
             }
-        }
-        System.out.println("Valor arrecadado com as vendas: " + arrecadado);
-        System.out.println("Quantidade de vendas: " + quant);
+        Alert alerta = new Alert(Alert.AlertType.INFORMATION);
+        alerta.setTitle("Relatório de vendas");
+        alerta.setHeaderText("Vendas no período de " + this.periodo.getInicio() + " a " + this.periodo.getInicio());
+        alerta.setContentText("Valor arrecadado com as vendas: " + arrecadado + "\n" +
+                "Quantidade de vendas: " + quant + "\n" + sb.toString());
+        alerta.showAndWait();
     }
 }
