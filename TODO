@@ -1,0 +1,51 @@
+<====      Softmarket release 2.0      ====>
+
+* Detalhes:
+Tempo estimado de projeto: 8 Semanas
+Data de conclusão: 26/11/2018
+Tamanho da equipe: 4 pessoas
+
+* Tarefas:
+<----    Fazer antes do BD             ---->        Sprint 1 (2 Semanas) {1/10 - 14/10}
+//TODO: Redesenhar a logomarca
+//TODO: Redesenhar o esquema de relatórios
+//TODO: Redesenhar a interface da tela de gerenciamento de estoque
+//TODO: (Opcional) Editar produto com 2 cliques
+//TODO: (Opcional) Clicar com botão direito num produto para listar opções de ações
+
+<----    Modelo conceitual BD          ---->        Sprint 2 (1 Semana) {15/10 - 21/10}
+//TODO: Construir modelo ER dadas as restrições de dados
+
+<----    Mapeamento ER - Relacional    ---->        Sprint 3 (1 Semana) {22/10 - 28/10}
+//TODO: Mapear o DER para modelo relacional
+//TODO: Representação visual do modelo relacional
+
+<----    Implementação do BD           ---->        Sprint 4 (1 Semanas) {29/10 - 04/11}
+//TODO: Gerar o script das consultas, inserções, remoções e alterações das tuplas
+//TODO: Gerar o script de geração das tabelas em SQL
+//TODO: Conectar o software com o banco de dados através do JDBC
+
+<----    Extra                         ---->        Sprint 5 (3 Semanas) {05/11 - 26/11} [Branch extra]
+//TODO: Relatórios geram gráficos
+//TODO: Cadastro de clientes
+//TODO: Venda fiado (Somente para clientes cadastrados)
+//TODO: Venda de receitas
+
+
+Modelo de relatório periódico
+======================================= Relatório Periódico Softmarket =======================================
+
+    Data de emissão: 06/12/2018
+    Período: 01/12/2018 - 06/12/2018
+    Produtos vendidos:
+
+    Cód. Barras     Nome        Quantidade      Total Vendido       Custo total     Lucro (R$)      Lucro (%)
+    123             Coca-cola   3               R$15,00             R$12,00         R$3,00          20%
+
+
+
+
+    Faturamento bruto: R$15,00
+    Lucro total (R$): R$3,00
+
+==============================================================================================================

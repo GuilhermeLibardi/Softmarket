@@ -15,6 +15,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
+import java.io.File;
 import java.io.IOException;
 
 public class LoginController {
@@ -53,6 +54,7 @@ public class LoginController {
 
     private void changeScreen(String fxml, Usuario usuario) throws IOException {
         btnLogin.getScene().getWindow().hide();
+        File f = new File("out/production/Softmarket/app/resources/styles/style.css");
         Stage stage = new Stage();
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource(fxml));
@@ -63,6 +65,8 @@ public class LoginController {
 
         Scene scene = new Scene(root);
         stage.setScene(scene);
+        scene.getStylesheets().clear();
+        scene.getStylesheets().add("file:///" + f.getAbsolutePath().replace("\\", "/"));
         stage.show();
         stage.setResizable(true);
         stage.setMaximized(true);

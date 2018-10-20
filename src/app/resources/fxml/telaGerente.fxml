@@ -8,9 +8,9 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
-<SplitPane dividerPositions="0.29797979797979796" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.GerenteController">
+<SplitPane dividerPositions="0.27699530516431925" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.GerenteController">
   <items>
-    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" style="-fx-background-color: #004;">
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="718.0" prefWidth="367.0" style="-fx-background-color: #004;">
          <children>
             <ImageView fitHeight="181.0" fitWidth="300.0" layoutX="74.0" layoutY="34.0" pickOnBounds="true" preserveRatio="true">
                <viewport>
@@ -70,7 +70,7 @@
             </Pane>
             <Pane fx:id="painelEstoque" prefHeight="766.0" prefWidth="955.0" style="-fx-background-color: #ffffff;">
                <children>
-                  <TableView fx:id="tabelaProdutos" layoutX="14.0" layoutY="182.0" prefHeight="485.0" prefWidth="863.0" style="-fx-background-color: #fff;">
+                  <TableView fx:id="tabelaProdutos" layoutX="14.0" layoutY="182.0" prefHeight="485.0" prefWidth="848.0">
                     <columns>
                       <TableColumn fx:id="colCodBarras" prefWidth="132.0" text="Cód. Barras" />
                       <TableColumn fx:id="colNome" prefWidth="401.0" text="Nome" />

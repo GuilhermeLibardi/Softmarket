@@ -5,7 +5,7 @@ import app.classes.Venda;
 import app.classes.usuarios.Gerente;
 import app.classes.usuarios.Usuario;
 import app.classes.usuarios.Vendedor;
-import com.sun.javafx.collections.ObservableListWrapper;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.io.*;
@@ -17,7 +17,7 @@ import java.util.Scanner;
 public class CSVParser {
 
     public ObservableList<Produto> readEstoque() throws java.io.FileNotFoundException {
-        ArrayList<Produto> estoque = new ArrayList<>(50);
+        ObservableList<Produto> estoque = FXCollections.observableArrayList();
         URL url = getClass().getResource("../../resources/data/estoque.csv");
         Scanner scanner = new Scanner(new File(url.getPath()));
         while (scanner.hasNextLine()) {
@@ -25,8 +25,7 @@ public class CSVParser {
             estoque.add(new Produto(info[1], Integer.parseInt(info[4]), Double.parseDouble(info[2]), Double.parseDouble(info[3]), info[0]));
         }
         scanner.close();
-        ObservableList observableEstoque = new ObservableListWrapper(estoque);
-        return observableEstoque;
+        return estoque;
     }
 
     public void writeEstoque(ObservableList<Produto> estoque) throws Exception {

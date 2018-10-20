@@ -39,9 +39,9 @@ public class EditarProdutoController {
                 lblQuantidade.setVisible(true);
 
                 txtNome.setText(Main.estoqueProdutos.get(i).getNome());
-                txtPrecoCompra.setText(String.valueOf(Main.estoqueProdutos.get(i).getValorCusto()));
+                txtPrecoCompra.setText(String.valueOf(Main.estoqueProdutos.get(i).getValorCusto()).replace(".",","));
                 txtQuantidade.setText(String.valueOf(Main.estoqueProdutos.get(i).getQuantidade()));
-                txtPrecoVenda.setText(String.valueOf(Main.estoqueProdutos.get(i).getValorVenda()));
+                txtPrecoVenda.setText(String.valueOf(Main.estoqueProdutos.get(i).getValorVenda()).replace(".",","));
                 this.productIndex = i;
                 return;
             }
@@ -68,7 +68,7 @@ public class EditarProdutoController {
     void submit() {
         if (this.txtNome.isVisible()) {
             Produto old = Main.estoqueProdutos.remove(this.productIndex);
-            Main.estoqueProdutos.add(new Produto(this.txtNome.getText(), Integer.parseInt(this.txtQuantidade.getText()), Double.parseDouble(this.txtPrecoCompra.getText()), Double.parseDouble(this.txtPrecoVenda.getText()), old.getCodigo()));
+            Main.estoqueProdutos.add(new Produto(this.txtNome.getText(), Integer.parseInt(this.txtQuantidade.getText()), Double.parseDouble(this.txtPrecoCompra.getText().replace(",",".")), Double.parseDouble(this.txtPrecoVenda.getText().replace(",",".")), old.getCodigo()));
             CSVParser parser = new CSVParser();
             try {
                 parser.writeEstoque(Main.estoqueProdutos);

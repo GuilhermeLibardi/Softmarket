@@ -20,8 +20,8 @@ public class AdicionarProdutoController {
     @FXML
     void submit() {
         CSVParser parser = new CSVParser();
-        Double valorCompra = Double.parseDouble(txtPreco.getText());
-        Double valorVenda = Double.parseDouble(txtPrecoVenda.getText());
+        Double valorCompra = Double.parseDouble(txtPreco.getText().replace(",","."));
+        Double valorVenda = Double.parseDouble(txtPrecoVenda.getText().replace(",","."));
         Main.estoqueProdutos.add(new Produto(txtNome.getText(), Integer.parseInt(txtQuantidade.getText()), valorCompra, valorVenda, txtCodBarras.getText()));
         try {
             parser.writeEstoque(Main.estoqueProdutos);
