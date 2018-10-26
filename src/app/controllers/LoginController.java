@@ -6,25 +6,33 @@ import app.classes.usuarios.Usuario;
 import app.classes.usuarios.Vendedor;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class LoginController {
+public class LoginController implements Initializable {
     @FXML
     Button btnLogin;
     @FXML
     TextField txtUsuario;
     @FXML
     TextField txtSenha;
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+    }
 
     @FXML
     public void handleLogin() throws java.io.IOException {
@@ -56,6 +64,7 @@ public class LoginController {
         btnLogin.getScene().getWindow().hide();
         File f = new File("out/production/Softmarket/app/resources/styles/style.css");
         Stage stage = new Stage();
+        stage.getIcons().add(new Image(Main.class.getResourceAsStream("resources/images/SoftMarket.png")));
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource(fxml));
         Parent root = loader.load();

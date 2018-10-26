@@ -9,6 +9,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
@@ -24,6 +25,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("resources/fxml/telaLogin.fxml"));
+            primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream("resources/images/SoftMarket.png")));
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);
             primaryStage.show();

@@ -8,6 +8,7 @@ Tamanho da equipe: 4 pessoas
 * Tarefas:
 <----    Fazer antes do BD             ---->        Sprint 1 (2 Semanas) {1/10 - 14/10}
 //TODO: Redesenhar a logomarca
+//DONE: Aceitar vírgulas para casas decimais (15,50 ao invés de 15.50)
 //TODO: Redesenhar o esquema de relatórios
 //TODO: Redesenhar a interface da tela de gerenciamento de estoque
 //TODO: (Opcional) Editar produto com 2 cliques
@@ -32,20 +33,36 @@ Tamanho da equipe: 4 pessoas
 //TODO: Venda de receitas
 
 
-Modelo de relatório periódico
-======================================= Relatório Periódico Softmarket =======================================
+Modelo de relatório periódico de vendas
+=================================== Relatório Periódico de Vendas Softmarket =====================================
+=                                                                                                               =
+=    Data de emissão: 06/12/2018                                                                                =
+=    Período: 01/12/2018 - 06/12/2018                                                                           =
+=    Produtos vendidos:                                                                                         =
+=                                                                                                               =
+=    Cód. Barras     Nome        Quantidade      Total Vendido       Custo total     Lucro (R$)      Lucro (%)  =
+=    123             Coca-cola   3               R$15,00             R$12,00         R$3,00          20%        =
+=                                                                                                               =
+=                                                                                                               =
+=                                                                                                               =
+=                                                                                                               =
+=    Faturamento bruto: R$15,00                                                                                 =
+=    Lucro total (R$): R$3,00                                                                                   =
+=                                                                                                               =
+=================================================================================================================
 
-    Data de emissão: 06/12/2018
-    Período: 01/12/2018 - 06/12/2018
-    Produtos vendidos:
 
-    Cód. Barras     Nome        Quantidade      Total Vendido       Custo total     Lucro (R$)      Lucro (%)
-    123             Coca-cola   3               R$15,00             R$12,00         R$3,00          20%
-
-
-
-
-    Faturamento bruto: R$15,00
-    Lucro total (R$): R$3,00
-
-==============================================================================================================
+Modelo de relatório de estoque
+======================================= Relatório De Estoque Softmarket ==========================================
+=                                                                                                               =
+=    Data de emissão: 06/12/2018                                                                                =
+=    Produtos vendidos:                                                                                         =
+=                                                                                                               =
+=    Cód. Barras        Nome                Quantidade                                                          =
+=    123                Coca-cola           3                                                                   =
+=                                                                                                               =
+=                                                                                                               =
+=                                                                                                               =
+=                                                                                                               =
+=                                                                                                               =
+=================================================================================================================
