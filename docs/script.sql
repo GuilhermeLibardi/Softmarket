@@ -1,5 +1,4 @@
 /* Testes */
-
 CREATE SCHEMA IF NOT EXISTS `softmarketdb` DEFAULT CHARACTER SET utf8 ;
 USE `softmarketdb` ;
 
@@ -8,7 +7,8 @@ CREATE TABLE IF NOT EXISTS `softmarketdb`.`usuarios` (
   `senha` VARCHAR(30) NOT NULL,
   `nome` VARCHAR(30) NOT NULL,
   `tipo` ENUM('g','v') NOT NULL,
-  PRIMARY KEY (`login`));
+  PRIMARY KEY (`login`))
+  ENGINE = INNODB;
 
 
 CREATE TABLE IF NOT EXISTS `softmarketdb`.`vendas` (
@@ -16,14 +16,16 @@ CREATE TABLE IF NOT EXISTS `softmarketdb`.`vendas` (
   `data` DATETIME NOT NULL DEFAULT NOW(),
   `total` DECIMAL(6,2) NOT NULL,
   `formaPagamento` ENUM('Cartão', 'Dinheiro') NOT NULL,
-  PRIMARY KEY (`cod`));
+  PRIMARY KEY (`cod`))
+  ENGINE = INNODB;
 
 
 CREATE TABLE IF NOT EXISTS `softmarketdb`.`ingredientes` (
   `cod` INT NOT NULL,
   `nome` VARCHAR(45) NOT NULL,
   `quantidade` INT NOT NULL,
-  PRIMARY KEY (`cod`));
+  PRIMARY KEY (`cod`))
+  ENGINE = INNODB;
 
 
 CREATE TABLE IF NOT EXISTS `softmarketdb`.`produtos` (
@@ -34,12 +36,13 @@ CREATE TABLE IF NOT EXISTS `softmarketdb`.`produtos` (
   `peso` INT NOT NULL,
   `quantidade` INT(4) NOT NULL,
   `codIngrediente` INT,
-  PRIMARY KEY (`codBarras`, `codIngrediente`),
+  PRIMARY KEY (`codBarras`),
   CONSTRAINT `fk_produtos_ingredientes`
   FOREIGN KEY (`codIngrediente`)
   REFERENCES `softmarketdb`.`ingredientes` (`cod`)
     ON DELETE SET NULL
-    ON UPDATE CASCADE);
+    ON UPDATE CASCADE)
+ENGINE = INNODB;
 
 
 CREATE TABLE IF NOT EXISTS `softmarketdb`.`receitas` (
@@ -47,7 +50,8 @@ CREATE TABLE IF NOT EXISTS `softmarketdb`.`receitas` (
   `pCusto` DECIMAL(6,2) NOT NULL,
   `pVenda` DECIMAL(6,2) NOT NULL,
   `nome` VARCHAR(45) NOT NULL,
-  PRIMARY KEY (`codBarras`));
+  PRIMARY KEY (`codBarras`))
+  ENGINE = INNODB;
 
 
 CREATE TABLE IF NOT EXISTS `softmarketdb`.`ingredientes_contem_receitas` (
@@ -64,7 +68,8 @@ CREATE TABLE IF NOT EXISTS `softmarketdb`.`ingredientes_contem_receitas` (
   FOREIGN KEY (`receitas_codBarras`)
   REFERENCES `softmarketdb`.`receitas` (`codBarras`)
     ON DELETE RESTRICT
-    ON UPDATE CASCADE );
+    ON UPDATE CASCADE )
+  ENGINE = INNODB;
 
 
 CREATE TABLE IF NOT EXISTS `softmarketdb`.`vendas_contem_receitas` (
@@ -81,7 +86,8 @@ CREATE TABLE IF NOT EXISTS `softmarketdb`.`vendas_contem_receitas` (
   FOREIGN KEY (`receitas_codBarras`)
   REFERENCES `softmarketdb`.`receitas` (`codBarras`)
     ON DELETE RESTRICT
-    ON UPDATE CASCADE );
+    ON UPDATE CASCADE )
+  ENGINE = INNODB;
 
 
 CREATE TABLE IF NOT EXISTS `softmarketdb`.`vendas_contem_produtos` (
@@ -98,4 +104,5 @@ CREATE TABLE IF NOT EXISTS `softmarketdb`.`vendas_contem_produtos` (
   FOREIGN KEY (`produtos_codBarras`)
   REFERENCES `softmarketdb`.`produtos` (`codBarras`)
     ON DELETE RESTRICT
-    ON UPDATE CASCADE );
+    ON UPDATE CASCADE )
+  ENGINE = INNODB;
