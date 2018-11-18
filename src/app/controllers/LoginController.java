@@ -32,22 +32,28 @@ public class LoginController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+
     }
 
     @FXML
     public void handleLogin() throws java.io.IOException {
-        for (Usuario user : Main.usuariosCadastrados) {
-            if (txtUsuario.getText().equals(user.getLogin()) && txtSenha.getText().equals(user.getSenha())) {
-                if (user instanceof Gerente) changeScreen("../resources/fxml/telaGerente.fxml", user);
-                else if (user instanceof Vendedor) changeScreen("../resources/fxml/telaVendas.fxml", user);
-                return;
-            }
+        Usuario usuario = new Usuario(txtUsuario.getText(), txtSenha.getText());
+        switch(usuario.verificaLogin()){
+            case "g":
+                Gerente g = new Gerente(usuario.getNome(), txtUsuario.getText(), txtSenha.getText());
+                changeScreen("../resources/fxml/telaGerente.fxml", g);
+                break;
+            case "v":
+                Vendedor v = new Vendedor(usuario.getNome(), txtUsuario.getText(), txtSenha.getText());
+                changeScreen("../resources/fxml/telaVendas.fxml", v);
+                break;
+            default:
+                Alert erroEst = new Alert(Alert.AlertType.ERROR);
+                erroEst.setTitle("Erro de login");
+                erroEst.setHeaderText("Erro ao tentar logar");
+                erroEst.setContentText("Usuário e/ou senha incorretos");
+                erroEst.showAndWait();
         }
-        Alert erroEst = new Alert(Alert.AlertType.ERROR);
-        erroEst.setTitle("Erro de login");
-        erroEst.setHeaderText("Erro ao tentar logar");
-        erroEst.setContentText("Usuário e/ou senha incorretos");
-        erroEst.showAndWait();
     }
 
     @FXML
