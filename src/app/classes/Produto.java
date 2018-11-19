@@ -6,6 +6,8 @@ public class Produto {
     private double valorCusto;
     private double valorVenda;
     private String codigo;
+    private double peso;
+    private String pesavel;
 
     public Produto(String nome, int quantidade, double valorCusto, double valorVenda, String codigo) {
         this.nome = nome;
@@ -13,6 +15,16 @@ public class Produto {
         this.valorCusto = valorCusto;
         this.valorVenda = valorVenda;
         this.codigo = codigo;
+    }
+
+    public Produto(String nome, int quantidade, double valorCusto, double valorVenda, String codigo, double peso, String pesavel) {
+        this.nome = nome;
+        this.quantidade = quantidade;
+        this.valorCusto = valorCusto;
+        this.valorVenda = valorVenda;
+        this.codigo = codigo;
+        this.peso = peso;
+        this.pesavel = pesavel;
     }
 
     public Produto(String nome, int quantidade, String codigo) {
@@ -59,6 +71,22 @@ public class Produto {
 
     public void setCodigo(String codigo) {
         this.codigo = codigo;
+    }
+
+    public double getPeso() {
+        return peso;
+    }
+
+    public void setPeso(double peso) {
+        this.peso = peso;
+    }
+
+    public String getPesavel() {
+        return pesavel;
+    }
+
+    public void setPesavel(String pesavel) {
+        this.pesavel = pesavel;
     }
 
     @Override

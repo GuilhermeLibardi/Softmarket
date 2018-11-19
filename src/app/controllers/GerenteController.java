@@ -48,10 +48,10 @@ public class GerenteController implements Initializable {
     private Pane painelEstoque, painelRelatorios;
 
     @FXML
-    private TableColumn<Produto, String> colCodBarras, colNome;
+    private TableColumn<Produto, String> colCodBarras, colNome, colPesavel;
 
     @FXML
-    private TableColumn<Produto, Double> colCompra, colVenda;
+    private TableColumn<Produto, Double> colCompra, colVenda, colPeso;
 
     @FXML
     private TableColumn<Produto, Integer> colEstoque;
@@ -79,6 +79,8 @@ public class GerenteController implements Initializable {
         colEstoque.setCellValueFactory(new PropertyValueFactory<Produto, Integer>("quantidade"));
         colVenda.setCellValueFactory(new PropertyValueFactory<Produto, Double>("valorVenda"));
         colCompra.setCellValueFactory(new PropertyValueFactory<Produto, Double>("valorCusto"));
+        colPeso.setCellValueFactory(new PropertyValueFactory<Produto, Double>("peso"));
+        colPesavel.setCellValueFactory(new PropertyValueFactory<Produto, String>("pesavel"));
 
         txtPesquisa.setPromptText("Procure por produtos");
 

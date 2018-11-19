@@ -31,9 +31,9 @@ public class Estoque {
                 double pvenda = resultados.getDouble("pVenda");
                 String codbarras = resultados.getString("codBarras");
                 int quantidade = resultados.getInt("quantidade");
-                // Double peso = resultados.getDouble("peso");
-                // String pesavel = resultados.getString("pesavel");
-                produto = new Produto(nome, quantidade, pcusto, pvenda, codbarras);
+                double peso = resultados.getDouble("peso");
+                String pesavel = resultados.getString("pesavel");
+                produto = new Produto(nome, quantidade, pcusto, pvenda, codbarras, peso, pesavel);
                 estoque.add(produto);
             }
 
