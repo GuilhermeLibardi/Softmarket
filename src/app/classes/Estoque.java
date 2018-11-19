@@ -1,5 +1,6 @@
 package app.classes;
 
+import app.classes.exceptions.ProdutoNaoEncontradoException;
 import app.dao.ConnectionFactory;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -55,8 +56,6 @@ public class Estoque {
     }
 
     public void adicionarProduto(Produto p) {
-        Produto produto;
-
         try (Connection con = new ConnectionFactory().getConnection()) {
             String sql = "INSERT INTO softmarketdb.produtos (codBarras, pCusto, pVenda, nome, peso, quantidade, pesavel, codIngrediente) VALUES(?,?,?,?,?,?,?, NULL)";
             PreparedStatement stmt = con.prepareStatement(sql);
@@ -79,6 +78,42 @@ public class Estoque {
     }
 
     public void removerProduto(String codBarras) {
+        try (Connection con = new ConnectionFactory().getConnection()) {
+            String sql = "DELETE FROM softmarketdb.produtos WHERE codBarras = ?";
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setString(1, codBarras);
+            stmt.execute();
+        } catch (SQLException e) {
+            System.out.print("Erro ao preparar STMT: ");
+            System.out.println(e.getMessage());
+        }
 
+        atualizarEstoque();
+    }
+
+    public Produto pesquisarProduto(String codBarras) throws ProdutoNaoEncontradoException {
+        Produto p = null;
+        try (Connection con = new ConnectionFactory().getConnection()) {
+            String sql = "SELECT * FROM softmarketdb.produtos WHERE codBarras = ?";
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setString(1, codBarras);
+            ResultSet resultados = stmt.executeQuery();
+
+            while (resultados.next()) {
+                String nome = resultados.getString("nome");
+                double pcusto = resultados.getDouble("pCusto");
+                double pvenda = resultados.getDouble("pVenda");
+                String codbarras = resultados.getString("codBarras");
+                int quantidade = resultados.getInt("quantidade");
+                double peso = resultados.getDouble("peso");
+                String pesavel = resultados.getString("pesavel");
+                p = new Produto(nome, quantidade, pcusto, pvenda, codbarras, peso, pesavel);
+            }
+
+        } catch (SQLException e) {
+            System.out.print("Erro ao preparar STMT: ");
+            System.out.println(e.getMessage());
+        }
+        return p;
     }
 }
