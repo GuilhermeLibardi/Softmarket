@@ -2,7 +2,6 @@ package app.controllers;
 
 import app.classes.Estoque;
 import app.classes.Produto;
-import app.classes.util.CSVParser;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -13,7 +12,7 @@ import javafx.stage.Stage;
 public class AdicionarProdutoController {
 
     @FXML
-    private TextField txtCodBarras, txtNome, txtPreco, txtPrecoVenda, txtQuantidade;
+    private TextField txtCodBarras, txtNome, txtPreco, txtPrecoVenda, txtQuantidade, txtPeso, txtPesavel;
 
     @FXML
     private Button btnCadastrar;
@@ -38,15 +37,9 @@ public class AdicionarProdutoController {
                 return;
             }
         }
-        CSVParser parser = new CSVParser();
-        Double valorCompra = Double.parseDouble(txtPreco.getText().replace(",","."));
-        Double valorVenda = Double.parseDouble(txtPrecoVenda.getText().replace(",","."));
-        Estoque.getInstance().getEstoque().add(new Produto(txtNome.getText(), Integer.parseInt(txtQuantidade.getText()), valorCompra, valorVenda, txtCodBarras.getText()));
-        try {
-            parser.writeEstoque(Estoque.getInstance().getEstoque());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        double valorCompra = Double.parseDouble(txtPreco.getText().replace(",","."));
+        double valorVenda = Double.parseDouble(txtPrecoVenda.getText().replace(",","."));
+        Estoque.getInstance().adicionarProduto(new Produto(txtNome.getText(), Integer.parseInt(txtQuantidade.getText()), valorCompra, valorVenda, txtCodBarras.getText(), Double.parseDouble(txtPeso.getText()), txtPesavel.getText()));
         Stage stage = (Stage) btnCadastrar.getScene().getWindow();
         stage.close();
     }
