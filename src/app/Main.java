@@ -25,7 +25,7 @@ public class Main extends Application {
     public void start(Stage primaryStage) {
         try {
             Parent root = FXMLLoader.load(getClass().getResource("resources/fxml/telaLogin.fxml"));
-            primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream("resources/images/SoftMarket.png")));
+            primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream("resources/images/ICONE.png")));
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);
             primaryStage.show();
