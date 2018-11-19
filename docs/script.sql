@@ -54,7 +54,7 @@ CREATE TABLE IF NOT EXISTS `softmarketdb`.`receitas` (
   ENGINE = INNODB;
 
 
-CREATE TABLE IF NOT EXISTS `softmarketdb`.`ingredientes_contem_receitas` (
+CREATE TABLE IF NOT EXISTS `softmarketdb`.`receitas_contem_ingredientes` (
   `ingredientes_cod` INT NOT NULL,
   `receitas_codBarras` VARCHAR(30) NOT NULL,
   `peso` INT NOT NULL,
@@ -106,3 +106,6 @@ CREATE TABLE IF NOT EXISTS `softmarketdb`.`vendas_contem_produtos` (
     ON DELETE RESTRICT
     ON UPDATE CASCADE )
   ENGINE = INNODB;
+
+INSERT INTO usuarios (login, senha, nome, tipo) VALUES('gerente01', 'gerencia1', 'Guilherme', 'g');
+INSERT INTO usuarios (login, senha, nome, tipo) VALUES('vendedor01', 'vendas1', 'Italo', 'v');
