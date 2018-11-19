@@ -1,6 +1,7 @@
 package app.controllers;
 
 import app.Main;
+import app.classes.Estoque;
 import app.classes.Produto;
 import app.classes.relatorios.RelatorioDeEstoque;
 import app.classes.relatorios.RelatorioDeVendas;
@@ -81,7 +82,7 @@ public class GerenteController implements Initializable {
 
         txtPesquisa.setPromptText("Procure por produtos");
 
-        FilteredList<Produto> filteredData = new FilteredList<>(Main.estoqueProdutos, p -> true);
+        FilteredList<Produto> filteredData = new FilteredList<>(Estoque.getInstance().getEstoque(),p -> true);
 
         txtPesquisa.textProperty().addListener((observable, oldValue, newValue) -> {
             filteredData.setPredicate(produto -> {
@@ -125,7 +126,7 @@ public class GerenteController implements Initializable {
             RelatorioDeVendas relVendas = new RelatorioDeVendas(p, Main.vendasFechadas);
             relVendas.gerarRelatorio();
         } else if (comboTipo.getValue().toString().equals("Relatório de Estoque")) {
-            RelatorioDeEstoque relatorio = new RelatorioDeEstoque(Main.estoqueProdutos);
+            RelatorioDeEstoque relatorio = new RelatorioDeEstoque(Estoque.getInstance().getEstoque());
             relatorio.gerarRelatorio();
         }
     }

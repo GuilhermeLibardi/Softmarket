@@ -1,6 +1,6 @@
 package app.controllers;
 
-import app.Main;
+import app.classes.Estoque;
 import app.classes.Produto;
 import app.classes.util.CSVParser;
 import javafx.fxml.FXML;
@@ -20,7 +20,7 @@ public class AdicionarProdutoController {
 
     @FXML
     void submit() {
-        for(Produto p : Main.estoqueProdutos) {
+        for(Produto p : Estoque.getInstance().getEstoque()) {
             if (p.getCodigo().equals(txtCodBarras.getText())) {
                 Alert alerta = new Alert(Alert.AlertType.ERROR);
                 alerta.setTitle("Erro de inserção");
@@ -41,9 +41,9 @@ public class AdicionarProdutoController {
         CSVParser parser = new CSVParser();
         Double valorCompra = Double.parseDouble(txtPreco.getText().replace(",","."));
         Double valorVenda = Double.parseDouble(txtPrecoVenda.getText().replace(",","."));
-        Main.estoqueProdutos.add(new Produto(txtNome.getText(), Integer.parseInt(txtQuantidade.getText()), valorCompra, valorVenda, txtCodBarras.getText()));
+        Estoque.getInstance().getEstoque().add(new Produto(txtNome.getText(), Integer.parseInt(txtQuantidade.getText()), valorCompra, valorVenda, txtCodBarras.getText()));
         try {
-            parser.writeEstoque(Main.estoqueProdutos);
+            parser.writeEstoque(Estoque.getInstance().getEstoque());
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -1,10 +1,9 @@
 package app.controllers;
 
-import app.Main;
+import app.classes.Estoque;
 import app.classes.Produto;
 import app.classes.Venda;
 import app.classes.usuarios.Vendedor;
-import app.classes.util.CSVParser;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -14,7 +13,10 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.util.Callback;
-import java.util.*;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Optional;
 
 public class VendasController {
 
@@ -74,7 +76,7 @@ public class VendasController {
             }
         });
         if(event.getCode().equals(KeyCode.ENTER) || event.getCode().equals(KeyCode.TAB)) {
-            for(Produto procurar : Main.estoqueProdutos) {
+            for(Produto procurar : Estoque.getInstance().getEstoque()) {
                 if (procurar.getCodigo().equals(txtCodBarras.getText())) {
                     txtQuantidade.requestFocus();
                     return;
@@ -99,7 +101,7 @@ public class VendasController {
         });
         if(event.getCode().equals(KeyCode.ENTER) || event.getCode().equals(KeyCode.TAB)) {
             if(!txtQuantidade.getText().equals("")) {
-                for (Produto procurar1 : Main.estoqueProdutos) {
+                for (Produto procurar1 : Estoque.getInstance().getEstoque()) {
                     if (procurar1.getCodigo().equals(txtCodBarras.getText())) {
                         if (procurar1.getQuantidade() >= (Integer.parseInt(txtQuantidade.getText()))) {
                             if (statusVenda.equals("Ativa")) {
@@ -170,7 +172,7 @@ public class VendasController {
             if (statusVenda.equals("Ocioso")) {
                 statusVenda = ("Ativa");
                 venda = vendedor.iniciarVenda();
-                for (Produto mainP : Main.estoqueProdutos) {
+                for (Produto mainP : Estoque.getInstance().getEstoque()) {
                     if (mainP.getCodigo().equals(txtCodBarras.getText())) {
                         produto1 = new Produto(mainP.getNome(), Integer.parseInt(txtQuantidade.getText()), mainP.getValorCusto(), mainP.getValorVenda(), mainP.getCodigo());
                         produtoE = new Produto(mainP.getNome(), mainP.getQuantidade() - Integer.parseInt(txtQuantidade.getText()), mainP.getValorCusto(), mainP.getValorVenda(), mainP.getCodigo());
@@ -214,7 +216,7 @@ public class VendasController {
                         }
                     }
                 }
-                for (Produto mainP : Main.estoqueProdutos) {
+                for (Produto mainP : Estoque.getInstance().getEstoque()) {
                     if (mainP.getCodigo().equals(txtCodBarras.getText())) {
                         produto1 = new Produto(mainP.getNome(), Integer.parseInt(txtQuantidade.getText()), mainP.getValorCusto(), mainP.getValorVenda(), mainP.getCodigo());
                         produtoE = new Produto(mainP.getNome(), mainP.getQuantidade() - Integer.parseInt(txtQuantidade.getText()), mainP.getValorCusto(), mainP.getValorVenda(), mainP.getCodigo());

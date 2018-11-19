@@ -1,11 +1,10 @@
 package app.classes.usuarios;
 
 import app.Main;
+import app.classes.Estoque;
 import app.classes.Produto;
 import app.classes.Venda;
 import app.classes.util.CSVParser;
-
-import java.util.Date;
 
 public class Vendedor extends Usuario {
 
@@ -22,7 +21,7 @@ public class Vendedor extends Usuario {
         Main.vendasFechadas.add(v);
         CSVParser parser = new CSVParser();
         for (Produto produto : v.getProdutos()){
-            for(Produto mainP : Main.estoqueProdutos){
+            for(Produto mainP : Estoque.getInstance().getEstoque()){
                 if(produto.getCodigo().equals(mainP.getCodigo())){
                     mainP.setQuantidade(mainP.getQuantidade()-produto.getQuantidade());
                 }
@@ -30,7 +29,7 @@ public class Vendedor extends Usuario {
         }
         try {
             parser.writeVenda(Main.vendasFechadas);
-            parser.writeEstoque(Main.estoqueProdutos);
+            parser.writeEstoque(Estoque.getInstance().getEstoque());
         } catch (Exception e) {
             e.printStackTrace();
         }

@@ -1,6 +1,6 @@
 package app.controllers;
 
-import app.Main;
+import app.classes.Estoque;
 import app.classes.Produto;
 import app.classes.util.CSVParser;
 import javafx.fxml.FXML;
@@ -31,9 +31,9 @@ public class RemoverProdutoController {
 
     @FXML
     void handleRemover() {
-        for (int i = 0; i < Main.estoqueProdutos.size(); i++) {
-            if (Main.estoqueProdutos.get(i).getCodigo().equals(this.txtCodBarras.getText())) {
-                Produto produto = Main.estoqueProdutos.get(i);
+        for (int i = 0; i < Estoque.getInstance().getEstoque().size(); i++) {
+            if (Estoque.getInstance().getEstoque().get(i).getCodigo().equals(this.txtCodBarras.getText())) {
+                Produto produto = Estoque.getInstance().getEstoque().get(i);
                 Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
                 alerta.setTitle("Confirme sua ação");
                 alerta.setHeaderText("Remover " + produto.toString() + " do seu estoque?");
@@ -41,10 +41,10 @@ public class RemoverProdutoController {
 
                 Optional<ButtonType> result = alerta.showAndWait();
                 if (result.isPresent() && result.get() == ButtonType.OK) {
-                    Main.estoqueProdutos.remove(produto);
+                    Estoque.getInstance().getEstoque().remove(produto);
                     CSVParser parser = new CSVParser();
                     try {
-                        parser.writeEstoque(Main.estoqueProdutos);
+                        parser.writeEstoque(Estoque.getInstance().getEstoque());
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

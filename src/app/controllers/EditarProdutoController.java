@@ -1,6 +1,6 @@
 package app.controllers;
 
-import app.Main;
+import app.classes.Estoque;
 import app.classes.Produto;
 import app.classes.util.CSVParser;
 import javafx.fxml.FXML;
@@ -25,8 +25,8 @@ public class EditarProdutoController {
 
     @FXML
     void searchButton() {
-        for (int i = 0; i < Main.estoqueProdutos.size(); i++) {
-            if (Main.estoqueProdutos.get(i).getCodigo().equals(txtCodBarras.getText())) {
+        for (int i = 0; i < Estoque.getInstance().getEstoque().size(); i++) {
+            if (Estoque.getInstance().getEstoque().get(i).getCodigo().equals(txtCodBarras.getText())) {
                 txtNome.setVisible(true);
                 txtPrecoCompra.setVisible(true);
                 txtPrecoVenda.setVisible(true);
@@ -38,10 +38,10 @@ public class EditarProdutoController {
                 lblVenda.setVisible(true);
                 lblQuantidade.setVisible(true);
 
-                txtNome.setText(Main.estoqueProdutos.get(i).getNome());
-                txtPrecoCompra.setText(String.valueOf(Main.estoqueProdutos.get(i).getValorCusto()).replace(".",","));
-                txtQuantidade.setText(String.valueOf(Main.estoqueProdutos.get(i).getQuantidade()));
-                txtPrecoVenda.setText(String.valueOf(Main.estoqueProdutos.get(i).getValorVenda()).replace(".",","));
+                txtNome.setText(Estoque.getInstance().getEstoque().get(i).getNome());
+                txtPrecoCompra.setText(String.valueOf(Estoque.getInstance().getEstoque().get(i).getValorCusto()).replace(".",","));
+                txtQuantidade.setText(String.valueOf(Estoque.getInstance().getEstoque().get(i).getQuantidade()));
+                txtPrecoVenda.setText(String.valueOf(Estoque.getInstance().getEstoque().get(i).getValorVenda()).replace(".",","));
                 this.productIndex = i;
                 return;
             }
@@ -67,11 +67,11 @@ public class EditarProdutoController {
     @FXML
     void submit() {
         if (this.txtNome.isVisible()) {
-            Produto old = Main.estoqueProdutos.remove(this.productIndex);
-            Main.estoqueProdutos.add(new Produto(this.txtNome.getText(), Integer.parseInt(this.txtQuantidade.getText()), Double.parseDouble(this.txtPrecoCompra.getText().replace(",",".")), Double.parseDouble(this.txtPrecoVenda.getText().replace(",",".")), old.getCodigo()));
+            Produto old = Estoque.getInstance().getEstoque().remove(this.productIndex);
+            Estoque.getInstance().getEstoque().add(new Produto(this.txtNome.getText(), Integer.parseInt(this.txtQuantidade.getText()), Double.parseDouble(this.txtPrecoCompra.getText().replace(",",".")), Double.parseDouble(this.txtPrecoVenda.getText().replace(",",".")), old.getCodigo()));
             CSVParser parser = new CSVParser();
             try {
-                parser.writeEstoque(Main.estoqueProdutos);
+                parser.writeEstoque(Estoque.getInstance().getEstoque());
             } catch (Exception e) {
                 e.printStackTrace();
             }

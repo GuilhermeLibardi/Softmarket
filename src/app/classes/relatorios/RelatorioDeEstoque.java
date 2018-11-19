@@ -1,6 +1,6 @@
 package app.classes.relatorios;
 
-import app.Main;
+import app.classes.Estoque;
 import app.classes.Produto;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
@@ -22,7 +22,7 @@ public class RelatorioDeEstoque extends Relatorio {
         float valorc = 0, valorl = 0;
         StringBuilder sb = new StringBuilder();
         String s;
-        for (Produto p : Main.estoqueProdutos)
+        for (Produto p : Estoque.getInstance().getEstoque())
         {
             s = "Produto: " + p.getNome() + " Código: " + p.getCodigo() + " Quantidade: " +  p.getQuantidade() + "\n";
             sb.append(s);
