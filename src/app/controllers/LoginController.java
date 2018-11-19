@@ -70,7 +70,7 @@ public class LoginController implements Initializable {
         btnLogin.getScene().getWindow().hide();
         File f = new File("out/production/Softmarket/app/resources/styles/style.css");
         Stage stage = new Stage();
-        stage.getIcons().add(new Image(Main.class.getResourceAsStream("resources/images/SoftMarket.png")));
+        stage.getIcons().add(new Image(Main.class.getResourceAsStream("resources/images/ICONE.png")));
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource(fxml));
         Parent root = loader.load();

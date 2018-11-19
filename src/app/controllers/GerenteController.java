@@ -173,7 +173,7 @@ public class GerenteController implements Initializable {
     private void changeScreen(String fxml) throws IOException {
         Stage stage = new Stage();
 
-        stage.getIcons().add(new Image(Main.class.getResourceAsStream("resources/images/SoftMarket.png")));
+        stage.getIcons().add(new Image(Main.class.getResourceAsStream("resources/images/ICONE.png")));
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource(fxml));
         Parent root = loader.load();
