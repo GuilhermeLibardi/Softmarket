@@ -114,6 +114,26 @@ public class Estoque {
             System.out.print("Erro ao preparar STMT: ");
             System.out.println(e.getMessage());
         }
+        if (p == null) throw new ProdutoNaoEncontradoException("ao pesquisar produto");
         return p;
+    }
+
+    public void editarProduto(Produto p) throws ProdutoNaoEncontradoException {
+        try (Connection con = new ConnectionFactory().getConnection()) {
+            String sql = "UPDATE softmarketdb.produtos SET produtos.pCusto = ?, produtos.peso = ?, produtos.pVenda = ?, produtos.nome = ?, produtos.pesavel = ?, produtos.quantidade = ? WHERE produtos.codBarras = ?";
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setDouble(1, p.getValorCusto());
+            stmt.setDouble(2, p.getPeso());
+            stmt.setDouble(3, p.getValorVenda());
+            stmt.setString(4, p.getNome());
+            stmt.setString(5, p.getPesavel());
+            stmt.setInt(6, p.getQuantidade());
+            stmt.setString(7, p.getCodigo());
+            stmt.execute();
+        } catch (SQLException e) {
+            System.out.print("Erro ao preparar STMT: ");
+            System.out.println(e.getMessage());
+        }
+        atualizarEstoque();
     }
 }
