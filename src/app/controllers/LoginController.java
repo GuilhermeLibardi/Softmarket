@@ -12,6 +12,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.stage.Screen;
@@ -20,19 +21,24 @@ import javafx.stage.Stage;
 import java.io.File;
 import java.io.IOException;
 import java.net.URL;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
     @FXML
-    Button btnLogin;
+    Button btnLogin, btnFechar;
     @FXML
     TextField txtUsuario;
     @FXML
     TextField txtSenha;
+    @FXML
+    Label lblData;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        java.util.Calendar c = Calendar.getInstance();
+        lblData.setText(String.format("Data: %tc", new Date()));
     }
 
     @FXML
@@ -62,6 +68,13 @@ public class LoginController implements Initializable {
     }
 
     @FXML
+    public void fecharPrograma(){
+        Stage stage = (Stage) btnFechar.getScene().getWindow();
+        // do what you have to do
+        stage.close();
+    }
+
+    @FXML
     public void handleEnterUsuario() {
         txtSenha.requestFocus();
     }
@@ -86,11 +99,11 @@ public class LoginController implements Initializable {
         stage.setResizable(true);
         stage.setMaximized(true);
         if (fxml.contains("Gerente")) {
-            stage.setTitle("Sistema de gerenciamento");
+            stage.setTitle("Softmarket | Módulo Gerente");
             GerenteController controladorGerente = (GerenteController) loader.getController();
             controladorGerente.changeUser((Gerente) usuario);
         } else if (fxml.contains("Vendas")) {
-            stage.setTitle("Sistema de vendas");
+            stage.setTitle("Softmarket | Módulo Vendedor");
             VendasController controladorVendas = (VendasController) loader.getController();
             controladorVendas.changeUser((Vendedor) usuario);
         }

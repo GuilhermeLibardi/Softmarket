@@ -8,6 +8,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 
 import java.util.ArrayList;
 
@@ -22,8 +23,9 @@ public class Main extends Application {
             primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream("resources/images/ICONE.png")));
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);
+            primaryStage.initStyle(StageStyle.UNDECORATED);
             primaryStage.show();
-            primaryStage.setTitle("Softmarket Login");
+            primaryStage.setTitle("Softmarket |  Login");
             primaryStage.setResizable(false);
         } catch (Exception e) {
             e.printStackTrace();

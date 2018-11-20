@@ -115,14 +115,51 @@ CREATE TABLE IF NOT EXISTS `softmarketdb`.`vendas_contem_produtos` (
     ON UPDATE CASCADE
 )
   ENGINE = INNODB;
-/* Inserção de usuários */
+
+
+CREATE VIEW RELATORIO_VENDAS AS
+  SELECT v.cod,
+         v.data,
+         v.total,
+         v.formaPagamento,
+         p.codBarras,
+         p.nome,
+         p.pCusto,
+         p.pVenda,
+         produto.quantidade,
+         ((pVenda / pCusto) - 1) * 100 AS lucro_porcento,
+         pVenda - pCusto               AS lucro_real
+  FROM vendas v
+         JOIN vendas_contem_produtos produto on v.cod = produto.vendas_cod
+         JOIN produtos p on produto.produtos_codBarras = p.codBarras
+
+  UNION
+
+  SELECT v1.cod,
+         v1.data,
+         v1.total,
+         v1.formaPagamento,
+         r.codBarras,
+         r.nome,
+         r.pCusto,
+         r.pVenda,
+         receita.quantidade,
+         ((pVenda / pCusto) - 1) * 100 AS lucro,
+         pVenda - pCusto               AS lucro_real
+  FROM vendas v1
+         JOIN vendas_contem_receitas receita on v1.cod = receita.vendas_cod
+         JOIN receitas r on receita.receitas_codBarras = r.codBarras
+  ORDER BY cod, nome;
+
+
+#Populando o BD
+
 INSERT INTO softmarketdb.usuarios (login, senha, nome, tipo)
 VALUES ('gerente01', 'gerencia1', 'Guilherme', 'g');
 INSERT INTO softmarketdb.usuarios (login, senha, nome, tipo)
 VALUES ('vendedor01', 'vendas1', 'Italo', 'v');
 
 
-/* Inserção de ingredientes */
 INSERT INTO softmarketdb.ingredientes
 VALUES ('123', 'Arroz', 5.0);
 INSERT INTO softmarketdb.ingredientes
@@ -141,7 +178,6 @@ INSERT INTO softmarketdb.ingredientes
 VALUES ('531', 'Tomate', 0.5);
 
 
-/* Inserção de produtos */
 INSERT INTO softmarketdb.produtos
 VALUES ('1', 15.99, 19.99, 'Arroz Sepé 5KG', 5.0, 40, 'n', 123);
 
@@ -166,12 +202,8 @@ VALUES ('7', 15.99, 19.99, 'Picanha Friboi', 1.0, 1, 's', 12345);
 INSERT INTO softmarketdb.produtos
 VALUES ('8', 15.99, 19.99, 'Batata Palha Elma Chips 300gr', 0.3, 25, 'n', 54321);
 
-# Inserção receitas
-
 INSERT INTO receitas
 VALUES ('1', 5.99, 11.99, 'Strogonoff de Frango');
-
-# Inserção receitas_contem_ingredientes
 
 INSERT INTO receitas_contem_ingredientes (ingredientes_cod, receitas_codBarras, peso)
 VALUES ('123', '1', 0.100);
@@ -179,3 +211,49 @@ INSERT INTO receitas_contem_ingredientes (ingredientes_cod, receitas_codBarras, 
 VALUES ('321', '1', 0.150);
 INSERT INTO receitas_contem_ingredientes (ingredientes_cod, receitas_codBarras, peso)
 VALUES ('54321', '1', 0.050);
+
+INSERT INTO vendas (cod, data, total, formaPagamento)
+values (default, '2018-11-06 12:40:00', 30.0, 'Dinheiro');
+INSERT INTO vendas (cod, data, total, formaPagamento)
+values (default, '2018-11-10 12:40:00', 100.0, 'Cartão');
+INSERT INTO vendas (cod, data, total, formaPagamento)
+values (default, '2018-11-13 13:10:00', 300.0, 'Cartão');
+INSERT INTO vendas (cod, data, total, formaPagamento)
+values (default, '2018-11-18 15:30:00', 1000.0, 'Cartão');
+INSERT INTO vendas (cod, data, total, formaPagamento)
+values (default, '2018-11-20 10:30:00', 35.0, 'Dinheiro');
+INSERT INTO vendas (cod, data, total, formaPagamento)
+values (default, '2018-11-23 09:20:00', 40.0, 'Cartão');
+INSERT INTO vendas (cod, data, total, formaPagamento)
+values (default, '2018-11-26 07:40:00', 12.0, 'Cartão');
+
+
+INSERT INTO vendas_contem_produtos (vendas_cod, produtos_codBarras, quantidade)
+VALUES (1, 2, 4);
+INSERT INTO vendas_contem_produtos (vendas_cod, produtos_codBarras, quantidade)
+VALUES (2, 1, 4);
+INSERT INTO vendas_contem_produtos (vendas_cod, produtos_codBarras, quantidade)
+VALUES (2, 2, 4);
+INSERT INTO vendas_contem_produtos (vendas_cod, produtos_codBarras, quantidade)
+VALUES (2, 3, 4);
+INSERT INTO vendas_contem_produtos (vendas_cod, produtos_codBarras, quantidade)
+VALUES (3, 3, 4);
+INSERT INTO vendas_contem_produtos (vendas_cod, produtos_codBarras, quantidade)
+VALUES (4, 5, 4);
+INSERT INTO vendas_contem_produtos (vendas_cod, produtos_codBarras, quantidade)
+VALUES (4, 6, 4);
+
+INSERT INTO vendas_contem_receitas (vendas_cod, receitas_codBarras, quantidade)
+VALUES (1, 1, 1);
+INSERT INTO vendas_contem_receitas (vendas_cod, receitas_codBarras, quantidade)
+VALUES (2, 1, 3);
+INSERT INTO vendas_contem_receitas (vendas_cod, receitas_codBarras, quantidade)
+VALUES (3, 1, 2);
+INSERT INTO vendas_contem_receitas (vendas_cod, receitas_codBarras, quantidade)
+VALUES (4, 1, 1);
+INSERT INTO vendas_contem_receitas (vendas_cod, receitas_codBarras, quantidade)
+VALUES (8, 1, 1);
+INSERT INTO vendas_contem_receitas (vendas_cod, receitas_codBarras, quantidade)
+VALUES (6, 1, 1);
+INSERT INTO vendas_contem_receitas (vendas_cod, receitas_codBarras, quantidade)
+VALUES (7, 1, 2);
