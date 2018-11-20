@@ -13,9 +13,35 @@ import java.sql.SQLException;
 public class Estoque {
     private static Estoque instancia;
     private static ObservableList<Produto> estoque;
+    private static ObservableList<Receitas> estoqueR;
 
     private Estoque() {
         estoque = FXCollections.observableArrayList();
+        estoqueR = FXCollections.observableArrayList();
+    }
+
+    private static void atualizarEstoqueR() {
+        Receitas receitas;
+
+        try (Connection con = new ConnectionFactory().getConnection()) {
+            String sql = "SELECT * FROM softmarketdb.receitas;";
+            PreparedStatement stmt = con.prepareStatement(sql);
+            ResultSet resultados = stmt.executeQuery();
+            estoqueR.clear();
+            while (resultados.next()) {
+                String nome = resultados.getString("nome");
+                double pcusto = resultados.getDouble("pCusto");
+                double pvenda = resultados.getDouble("pVenda");
+                String codbarras = resultados.getString("codBarras");
+                receitas = new Receitas(nome, pcusto, pvenda, codbarras);
+                estoqueR.add(receitas);
+            }
+
+
+        } catch (SQLException e) {
+            System.out.print("Erro ao preparar STMT: ");
+            System.out.println(e.getMessage());
+        }
     }
 
     private static void atualizarEstoque() {
@@ -48,11 +74,16 @@ public class Estoque {
     public static synchronized Estoque getInstance() {
         if (instancia == null) instancia = new Estoque();
         atualizarEstoque();
+        atualizarEstoqueR();
         return instancia;
     }
 
     public ObservableList<Produto> getEstoque() {
         return estoque;
+    }
+
+    public ObservableList<Receitas> getEstoqueR() {
+        return estoqueR;
     }
 
     public void adicionarProduto(Produto p) {

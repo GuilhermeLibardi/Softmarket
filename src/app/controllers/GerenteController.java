@@ -3,6 +3,7 @@ package app.controllers;
 import app.Main;
 import app.classes.Estoque;
 import app.classes.Produto;
+import app.classes.Receitas;
 import app.classes.relatorios.RelatorioDeEstoque;
 import app.classes.relatorios.RelatorioDeVendas;
 import app.classes.usuarios.Usuario;
@@ -30,13 +31,13 @@ public class GerenteController implements Initializable {
 
     @FXML
     private Button btnGerenciarEstoque, btnGerarRelatorios, btnRelatorio,
-            btnAddProd, btnEditProd, btnRemoveProd;
+            btnAddProd, btnEditProd, btnRemoveProd, btnAddProd1, btnEditProd1, btnRemoveProd1;
 
     @FXML
     private Label lblGerente, periodoR, deL, aL;
 
     @FXML
-    private TextField txtDataInicial, txtDataFinal, txtPesquisa;
+    private TextField txtDataInicial, txtDataFinal, txtPesquisa, txtPesquisa1;
 
     @FXML
     private ComboBox comboTipo;
@@ -45,13 +46,22 @@ public class GerenteController implements Initializable {
     private TableView<Produto> tabelaProdutos;
 
     @FXML
-    private Pane painelEstoque, painelRelatorios;
+    private TableView<Receitas> tabelaReceitas;
 
     @FXML
-    private TableColumn<Produto, String> colCodBarras, colNome, colPesavel;
+    private Pane painelEstoque, painelRelatorios, painelReceitas;
+
+    @FXML
+    private TableColumn<Produto, String> colCodBarras, colNome, colPesavel ;
+
+    @FXML
+    private TableColumn<Receitas, String> colCodBarras1, colNome1;
 
     @FXML
     private TableColumn<Produto, Double> colCompra, colVenda, colPeso;
+
+    @FXML
+    private TableColumn<Receitas, Double> colCusto1, colVenda1;
 
     @FXML
     private TableColumn<Produto, Integer> colEstoque;
@@ -74,6 +84,11 @@ public class GerenteController implements Initializable {
         );
         this.comboTipo.setItems(options);
 
+        colCodBarras1.setCellValueFactory(new PropertyValueFactory<Receitas, String>("codigo"));
+        colNome1.setCellValueFactory(new PropertyValueFactory<Receitas, String>("nome"));
+        colCusto1.setCellValueFactory(new PropertyValueFactory<Receitas, Double>("valorCusto"));
+        colVenda1.setCellValueFactory(new PropertyValueFactory<Receitas, Double>("valorVenda"));
+
         colCodBarras.setCellValueFactory(new PropertyValueFactory<Produto, String>("codigo"));
         colNome.setCellValueFactory(new PropertyValueFactory<Produto, String>("nome"));
         colEstoque.setCellValueFactory(new PropertyValueFactory<Produto, Integer>("quantidade"));
@@ -84,7 +99,16 @@ public class GerenteController implements Initializable {
 
         txtPesquisa.setPromptText("Procure por produtos");
 
+        FilteredList<Receitas> filteredData2 = new FilteredList<>(Estoque.getInstance().getEstoqueR(),r -> true);
         FilteredList<Produto> filteredData = new FilteredList<>(Estoque.getInstance().getEstoque(),p -> true);
+
+        txtPesquisa1.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData2.setPredicate(receitas -> {
+                if (newValue == null || newValue.isEmpty()) return true;
+                String lowerCaseFilter = newValue.toLowerCase();
+                return receitas.getNome().toLowerCase().contains(lowerCaseFilter);
+            });
+        });
 
         txtPesquisa.textProperty().addListener((observable, oldValue, newValue) -> {
             filteredData.setPredicate(produto -> {
@@ -94,11 +118,17 @@ public class GerenteController implements Initializable {
             });
         });
 
+
+        SortedList<Receitas> sortedData2 = new SortedList<>(filteredData2);
         SortedList<Produto> sortedData = new SortedList<>(filteredData);
 
+        sortedData2.comparatorProperty().bind(tabelaReceitas.comparatorProperty());
         sortedData.comparatorProperty().bind(tabelaProdutos.comparatorProperty());
 
+
+        tabelaReceitas.setItems(sortedData2);
         tabelaProdutos.setItems(sortedData);
+
 
         comboTipo.setOnAction(new javafx.event.EventHandler<javafx.event.ActionEvent>() {
             @Override
@@ -138,12 +168,21 @@ public class GerenteController implements Initializable {
     void handleGerenciarEstoque() {
         painelRelatorios.setVisible(false);
         painelEstoque.setVisible(true);
+        painelReceitas.setVisible(false);
     }
 
     @FXML
     void handleGerarRelatorios() {
         painelRelatorios.setVisible(true);
         painelEstoque.setVisible(false);
+        painelReceitas.setVisible(false);
+    }
+
+    @FXML
+    void handleGerarReceitas() {
+        painelRelatorios.setVisible(false);
+        painelEstoque.setVisible(false);
+        painelReceitas.setVisible(true);
     }
 
     @FXML
@@ -172,6 +211,34 @@ public class GerenteController implements Initializable {
             e.printStackTrace();
         }
     }
+
+    @FXML
+    void addReceita() {
+        try {
+            changeScreen("../resources/fxml/telaAdicionarProduto.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    void editReceita() {
+        try {
+            changeScreen("../resources/fxml/telaEditarProduto.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    void removeReceita() {
+        try {
+            changeScreen("../resources/fxml/telaRemoverProduto.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     private void changeScreen(String fxml) throws IOException {
         Stage stage = new Stage();
