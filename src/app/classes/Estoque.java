@@ -14,10 +14,35 @@ public class Estoque {
     private static Estoque instancia;
     private static ObservableList<Produto> estoque;
     private static ObservableList<Receitas> estoqueR;
+    private static ObservableList<Ingredientes> estoqueI;
 
     private Estoque() {
         estoque = FXCollections.observableArrayList();
         estoqueR = FXCollections.observableArrayList();
+        estoqueI = FXCollections.observableArrayList();
+    }
+
+    private static void atualizarEstoqueI() {
+        Ingredientes ingredientes;
+
+        try (Connection con = new ConnectionFactory().getConnection()) {
+            String sql = "SELECT * FROM softmarketdb.ingredientes;";
+            PreparedStatement stmt = con.prepareStatement(sql);
+            ResultSet resultados = stmt.executeQuery();
+            estoqueI.clear();
+            while (resultados.next()) {
+                String nome = resultados.getString("nome");
+                double peso = resultados.getDouble("peso");
+                String codigo = resultados.getString("codigo");
+                ingredientes = new Ingredientes(nome, peso, codigo);
+                estoqueI.add(ingredientes);
+            }
+
+
+        } catch (SQLException e) {
+            System.out.print("Erro ao preparar STMT: ");
+            System.out.println(e.getMessage());
+        }
     }
 
     private static void atualizarEstoqueR() {
@@ -75,6 +100,7 @@ public class Estoque {
         if (instancia == null) instancia = new Estoque();
         atualizarEstoque();
         atualizarEstoqueR();
+        atualizarEstoqueI();
         return instancia;
     }
 
@@ -84,6 +110,10 @@ public class Estoque {
 
     public ObservableList<Receitas> getEstoqueR() {
         return estoqueR;
+    }
+
+    public ObservableList<Ingredientes> getEstoqueI() {
+        return estoqueI;
     }
 
     public void adicionarProduto(Produto p) {
@@ -108,6 +138,41 @@ public class Estoque {
         atualizarEstoque();
     }
 
+    public void adicionarIngredientes(Ingredientes i) {
+        try (Connection con = new ConnectionFactory().getConnection()) {
+            String sql = "INSERT INTO softmarketdb.ingredientes VALUES(?,?,?)";
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setString(1, i.getCodigo());
+            stmt.setString(2, i.getNome());
+            stmt.setDouble(3, i.getPeso());
+            stmt.execute();
+
+        } catch (SQLException e) {
+            System.out.print("Erro ao preparar STMT: ");
+            System.out.println(e.getMessage());
+        }
+
+        atualizarEstoqueI();
+    }
+
+    public void adicionarReceita(Receitas r) {
+        try (Connection con = new ConnectionFactory().getConnection()) {
+            String sql = "INSERT INTO softmarketdb.receitas VALUES(?,?,?,?)";
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setString(1, r.getCodigo());
+            stmt.setDouble(2, r.getValorCusto());
+            stmt.setDouble(3, r.getValorVenda());
+            stmt.setString(4, r.getNome());
+            stmt.execute();
+
+        } catch (SQLException e) {
+            System.out.print("Erro ao preparar STMT: ");
+            System.out.println(e.getMessage());
+        }
+
+        atualizarEstoqueR();
+    }
+
     public void removerProduto(String codBarras) {
         try (Connection con = new ConnectionFactory().getConnection()) {
             String sql = "DELETE FROM softmarketdb.produtos WHERE codBarras = ?";
@@ -120,6 +185,34 @@ public class Estoque {
         }
 
         atualizarEstoque();
+    }
+
+    public void removerIngredientes(String codigo) {
+        try (Connection con = new ConnectionFactory().getConnection()) {
+            String sql = "DELETE FROM softmarketdb.ingredientes WHERE codigo = ?";
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setString(1, codigo);
+            stmt.execute();
+        } catch (SQLException e) {
+            System.out.print("Erro ao preparar STMT: ");
+            System.out.println(e.getMessage());
+        }
+
+        atualizarEstoqueI();
+    }
+
+    public void removerReceitas(String codBarras) {
+        try (Connection con = new ConnectionFactory().getConnection()) {
+            String sql = "DELETE FROM softmarketdb.receitas WHERE codBarras = ?";
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setString(1, codBarras);
+            stmt.execute();
+        } catch (SQLException e) {
+            System.out.print("Erro ao preparar STMT: ");
+            System.out.println(e.getMessage());
+        }
+
+        atualizarEstoqueR();
     }
 
     public Produto pesquisarProduto(String codBarras) throws ProdutoNaoEncontradoException {
@@ -166,5 +259,38 @@ public class Estoque {
             System.out.println(e.getMessage());
         }
         atualizarEstoque();
+    }
+
+    public void editarIngrediente(Ingredientes i){
+        try (Connection con = new ConnectionFactory().getConnection()) {
+            String sql = "UPDATE softmarketdb.ingredientes SET ingredientes.cod = ?, ingredientes.nome = ?, ingredientes.peso = ?  WHERE ingrediente.cod = ?";
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setString(1, i.getCodigo());
+            stmt.setString(2, i.getNome());
+            stmt.setDouble(3, i.getPeso());
+            stmt.setString(4, i.getCodigo());
+            stmt.execute();
+        } catch (SQLException e) {
+            System.out.print("Erro ao preparar STMT: ");
+            System.out.println(e.getMessage());
+        }
+        atualizarEstoqueI();
+    }
+
+    public void editarReceitas(Receitas r){
+        try (Connection con = new ConnectionFactory().getConnection()) {
+            String sql = "UPDATE softmarketdb.receitas SET receitas.codBarras = ?, receitas.nome = ?, receitas.pCusto = ?, receitas.pVenda = ?  WHERE receitas.codBarras = ?";
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setString(1, r.getCodigo());
+            stmt.setString(2, r.getNome());
+            stmt.setDouble(3, r.getValorCusto());
+            stmt.setDouble(4, r.getValorVenda());
+            stmt.setString(5, r.getCodigo());
+            stmt.execute();
+        } catch (SQLException e) {
+            System.out.print("Erro ao preparar STMT: ");
+            System.out.println(e.getMessage());
+        }
+        atualizarEstoqueR();
     }
 }
