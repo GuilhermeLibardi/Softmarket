@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="relatorio_mensal_vendas" language="groovy" pageWidth="595" pageHeight="842" columnWidth="535" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="5458b65f-b866-457b-a7c4-661979167af8">
+	<property name="ireport.zoom" value="1.0"/>
+	<property name="ireport.x" value="0"/>
+	<property name="ireport.y" value="0"/>
+	<style name="Title" forecolor="#FFFFFF" fontName="Times New Roman" fontSize="50" isBold="false" pdfFontName="Times-Bold"/>
+	<style name="SubTitle" forecolor="#CCCCCC" fontName="Times New Roman" fontSize="18" isBold="false" pdfFontName="Times-Roman"/>
+	<style name="Column header" forecolor="#666666" fontName="Times New Roman" fontSize="14" isBold="true" pdfFontName="Times-Roman"/>
+	<style name="Detail" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman"/>
+	<style name="Row" mode="Transparent" fontName="Times New Roman" pdfFontName="Times-Roman">
+		<conditionalStyle>
+			<conditionExpression><![CDATA[$V{REPORT_COUNT}%2 == 0]]></conditionExpression>
+			<style mode="Opaque" backcolor="#F0EFEF"/>
+		</conditionalStyle>
+	</style>
+	<subDataset name="ProdutosMaisVendidos" uuid="11822216-c121-4f39-8211-1bca46f240b1">
+		<queryString>
+			<![CDATA[select sum(vendas_contem_produtos.quantidade) as quantidade, nome
+         from vendas_contem_produtos join produtos p on vendas_contem_produtos.produtos_codBarras = p.codBarras
+         group by nome
+         order by quantidade desc
+         limit 10;]]>
+		</queryString>
+		<field name="quantidade" class="java.math.BigDecimal">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="nome" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+	</subDataset>
+	<subDataset name="ReceitasMaisVendidas" uuid="bb6071cf-54f8-4e3e-8ee6-d0fd087c260f">
+		<queryString language="SQL">
+			<![CDATA[select sum(v.quantidade) as quantidade, nome
+from vendas_contem_receitas v join receitas r on v.receitas_codBarras = r.codBarras
+group by nome
+order by quantidade desc
+limit 10;]]>
+		</queryString>
+		<field name="quantidade" class="java.math.BigDecimal">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+		<field name="nome" class="java.lang.String">
+			<fieldDescription><![CDATA[]]></fieldDescription>
+		</field>
+	</subDataset>
+	<queryString language="SQL">
+		<![CDATA[select codBarras, nome, sum(quantidade) as quantidade, pCusto, pVenda, sum(lucro_real * quantidade) as lucro
+from RELATORIO_VENDAS
+where MONTH(data) = MONTH(now()) AND YEAR(data) = YEAR(now())
+group by nome
+order by nome;]]>
+	</queryString>
+	<field name="codBarras" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="nome" class="java.lang.String">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="quantidade" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="pCusto" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="pVenda" class="java.math.BigDecimal">
+		<fieldDescription><![CDATA[]]></fieldDescription>
+	</field>
+	<field name="lucro" class="java.math.BigDecimal"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="102" splitType="Stretch">
+			<frame>
+				<reportElement mode="Opaque" x="0" y="0" width="555" height="66" backcolor="#1B887A" uuid="b7154bc7-9dd2-4ed0-a5e2-2bb27fb1e41a"/>
+				<staticText>
+					<reportElement style="Title" x="96" y="0" width="370" height="66" uuid="d7e72016-850b-4df0-b7fe-fa3597ebf9e3"/>
+					<box topPadding="4" leftPadding="4" bottomPadding="4" rightPadding="4"/>
+					<textElement verticalAlignment="Middle">
+						<font fontName="Corbel" size="48" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Softmarket]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="SubTitle" x="236" y="0" width="316" height="29" forecolor="#FFFFFF" uuid="4f71bc30-e939-4001-915e-64cb75765edf"/>
+					<textElement textAlignment="Right">
+						<font fontName="Corbel" size="22" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Relatório de vendas]]></text>
+				</staticText>
+				<staticText>
+					<reportElement style="Detail" x="239" y="37" width="316" height="29" forecolor="#FFFFFF" uuid="dd6766eb-c6d1-41a1-be71-d8275ea9f62b"/>
+					<textElement textAlignment="Right">
+						<font fontName="Corbel" size="16" isBold="false"/>
+					</textElement>
+					<text><![CDATA[Itens mais vendidos]]></text>
+				</staticText>
+			</frame>
+			<frame>
+				<reportElement mode="Opaque" x="0" y="70" width="555" height="32" forecolor="#000000" backcolor="#343434" uuid="fb2c1ded-6b0d-4f0d-a9f2-f5141c5fffde"/>
+				<textField pattern="EEEEE dd MMMMM yyyy">
+					<reportElement x="408" y="12" width="144" height="20" forecolor="#FFFFFF" uuid="9b52a93b-0bdf-489a-8aac-783e7cf82e61"/>
+					<textElement textAlignment="Right">
+						<font size="12"/>
+					</textElement>
+					<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+				</textField>
+			</frame>
+			<image>
+				<reportElement x="2" y="0" width="76" height="86" uuid="f151507d-854a-4e32-843b-2d53bc9f6dbc"/>
+				<imageExpression><![CDATA["C:\\Users\\guilh\\IdeaProjects\\Softmarket\\src\\app\\resources\\images\\Login.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="2" splitType="Stretch"/>
+	</columnHeader>
+	<summary>
+		<band height="696" splitType="Stretch">
+			<barChart>
+				<chart>
+					<reportElement x="30" y="24" width="496" height="289" uuid="5cae1a9c-ad9c-4908-b732-9c7a0a2dec3b"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<categoryDataset>
+					<dataset>
+						<datasetRun subDataset="ProdutosMaisVendidos" uuid="464f2eb8-f30c-4437-b3e3-c66a03908514"/>
+					</dataset>
+					<categorySeries>
+						<seriesExpression><![CDATA["Produtos mais vendidos"]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{nome}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{quantidade}]]></valueExpression>
+					</categorySeries>
+				</categoryDataset>
+				<barPlot>
+					<plot orientation="Horizontal">
+						<seriesColor seriesOrder="0" color="rgba(27, 133, 122, 0.78431374)"/>
+					</plot>
+					<itemLabel/>
+					<categoryAxisFormat>
+						<axisFormat/>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat/>
+					</valueAxisFormat>
+				</barPlot>
+			</barChart>
+			<barChart>
+				<chart>
+					<reportElement x="30" y="362" width="496" height="299" uuid="97866d51-1d2f-438f-9a3e-3d707da2481d"/>
+					<chartTitle/>
+					<chartSubtitle/>
+					<chartLegend/>
+				</chart>
+				<categoryDataset>
+					<dataset>
+						<datasetRun subDataset="ReceitasMaisVendidas" uuid="dfe75bde-35c1-4f6f-b26d-8adf26b7bd22"/>
+					</dataset>
+					<categorySeries>
+						<seriesExpression><![CDATA["Receitas mais vendidas"
+]]></seriesExpression>
+						<categoryExpression><![CDATA[$F{nome}]]></categoryExpression>
+						<valueExpression><![CDATA[$F{quantidade}]]></valueExpression>
+					</categorySeries>
+				</categoryDataset>
+				<barPlot>
+					<plot orientation="Horizontal"/>
+					<itemLabel/>
+					<categoryAxisFormat>
+						<axisFormat/>
+					</categoryAxisFormat>
+					<valueAxisFormat>
+						<axisFormat/>
+					</valueAxisFormat>
+				</barPlot>
+			</barChart>
+		</band>
+	</summary>
+</jasperReport>

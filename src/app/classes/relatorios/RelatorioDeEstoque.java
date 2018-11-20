@@ -5,7 +5,6 @@ import app.classes.Produto;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Alert;
 
-import java.io.IOException;
 import java.time.LocalDate;
 
 public class RelatorioDeEstoque extends Relatorio {
@@ -16,7 +15,7 @@ public class RelatorioDeEstoque extends Relatorio {
     }
 
     @Override
-    public void gerarRelatorio() throws IOException {
+    public void gerarRelatorio() {
         //Estrutura do relatório
         int quant = 0;
         float valorc = 0, valorl = 0;

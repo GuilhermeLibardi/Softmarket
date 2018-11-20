@@ -1,4 +1,3 @@
-/* Testes */
 CREATE SCHEMA IF NOT EXISTS `softmarketdb`
   DEFAULT CHARACTER SET utf8;
 USE `softmarketdb`;
@@ -41,6 +40,7 @@ CREATE TABLE IF NOT EXISTS `softmarketdb`.`produtos` (
   `quantidade`     INT             NOT NULL,
   `pesavel`        ENUM ('s', 'n') NOT NULL,
   `codIngrediente` VARCHAR(30),
+  CHECK (pVenda > pCusto),
   PRIMARY KEY (`codBarras`),
   CONSTRAINT `fk_produtos_ingredientes`
   FOREIGN KEY (`codIngrediente`)
@@ -56,7 +56,8 @@ CREATE TABLE IF NOT EXISTS `softmarketdb`.`receitas` (
   `pCusto`    DECIMAL(6, 2) NOT NULL,
   `pVenda`    DECIMAL(6, 2) NOT NULL,
   `nome`      VARCHAR(45)   NOT NULL,
-  PRIMARY KEY (`codBarras`)
+  PRIMARY KEY (`codBarras`),
+  CHECK (pVenda > pCusto)
 )
   ENGINE = INNODB;
 
@@ -152,6 +153,29 @@ CREATE VIEW RELATORIO_VENDAS AS
   ORDER BY cod, nome;
 
 
+#Triggers
+CREATE TRIGGER RestricaoProduto
+  BEFORE INSERT
+  ON produtos
+  FOR EACH ROW
+  BEGIN
+    IF (SELECT count(*) from receitas WHERE receitas.codBarras = NEW.codBarras > 0)
+    THEN
+      SIGNAL SQLSTATE '45000';
+    END IF;
+  END;
+
+CREATE TRIGGER RestricaoReceita
+  BEFORE INSERT
+  ON receitas
+  FOR EACH ROW
+  BEGIN
+    IF (SELECT count(*) from produtos WHERE produtos.codBarras = NEW.codBarras > 0)
+    THEN
+      SIGNAL SQLSTATE '45000';
+    END IF;
+  END;
+
 #Populando o BD
 
 INSERT INTO softmarketdb.usuarios (login, senha, nome, tipo)
@@ -203,14 +227,14 @@ INSERT INTO softmarketdb.produtos
 VALUES ('8', 15.99, 19.99, 'Batata Palha Elma Chips 300gr', 0.3, 25, 'n', 54321);
 
 INSERT INTO receitas
-VALUES ('1', 5.99, 11.99, 'Strogonoff de Frango');
+VALUES ('9', 5.99, 11.99, 'Strogonoff de Frango');
 
 INSERT INTO receitas_contem_ingredientes (ingredientes_cod, receitas_codBarras, peso)
-VALUES ('123', '1', 0.100);
+VALUES ('123', '9', 0.100);
 INSERT INTO receitas_contem_ingredientes (ingredientes_cod, receitas_codBarras, peso)
-VALUES ('321', '1', 0.150);
+VALUES ('321', '9', 0.150);
 INSERT INTO receitas_contem_ingredientes (ingredientes_cod, receitas_codBarras, peso)
-VALUES ('54321', '1', 0.050);
+VALUES ('54321', '9', 0.050);
 
 INSERT INTO vendas (cod, data, total, formaPagamento)
 values (default, '2018-11-06 12:40:00', 30.0, 'Dinheiro');
@@ -244,16 +268,45 @@ INSERT INTO vendas_contem_produtos (vendas_cod, produtos_codBarras, quantidade)
 VALUES (4, 6, 4);
 
 INSERT INTO vendas_contem_receitas (vendas_cod, receitas_codBarras, quantidade)
-VALUES (1, 1, 1);
+VALUES (1, '9', 1);
 INSERT INTO vendas_contem_receitas (vendas_cod, receitas_codBarras, quantidade)
-VALUES (2, 1, 3);
+VALUES (2, '9', 3);
 INSERT INTO vendas_contem_receitas (vendas_cod, receitas_codBarras, quantidade)
-VALUES (3, 1, 2);
+VALUES (3, '9', 2);
 INSERT INTO vendas_contem_receitas (vendas_cod, receitas_codBarras, quantidade)
-VALUES (4, 1, 1);
+VALUES (4, '9', 1);
 INSERT INTO vendas_contem_receitas (vendas_cod, receitas_codBarras, quantidade)
-VALUES (8, 1, 1);
+VALUES (5, '9', 1);
 INSERT INTO vendas_contem_receitas (vendas_cod, receitas_codBarras, quantidade)
-VALUES (6, 1, 1);
+VALUES (6, '9', 1);
 INSERT INTO vendas_contem_receitas (vendas_cod, receitas_codBarras, quantidade)
-VALUES (7, 1, 2);
+VALUES (7, '9', 2);
+
+#Relatório diário de vendas
+select codBarras,
+       data,
+       date_format(data, '%H:%i')   as hora,
+       nome,
+       sum(quantidade)              as quantidade,
+       pCusto,
+       pVenda,
+       sum(lucro_real * quantidade) as lucro
+from RELATORIO_VENDAS
+where Day(data) = Day(curdate())
+group by nome
+order by nome;
+
+#Relatório mensal de vendas
+select codBarras, nome, sum(quantidade) as quantidade, pCusto, pVenda, sum(lucro_real * quantidade) as lucro
+from RELATORIO_VENDAS
+where MONTH(data) = MONTH(now()) AND YEAR(data) = YEAR(now())
+group by nome
+order by nome;
+
+
+#Relatório anual de vendas
+select codBarras, nome, sum(quantidade) as quantidade, pCusto, pVenda, sum(lucro_real * quantidade) as lucro
+from RELATORIO_VENDAS
+where YEAR(data) = YEAR(now())
+group by nome
+order by nome;

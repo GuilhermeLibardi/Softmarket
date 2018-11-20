@@ -5,10 +5,11 @@ import app.classes.Estoque;
 import app.classes.Ingredientes;
 import app.classes.Produto;
 import app.classes.Receitas;
-import app.classes.relatorios.RelatorioDeEstoque;
-import app.classes.relatorios.RelatorioDeVendas;
+import app.classes.relatorios.RelatorioAnualVendas;
+import app.classes.relatorios.RelatorioDiarioVendas;
+import app.classes.relatorios.RelatorioItensMaisVendidos;
+import app.classes.relatorios.RelatorioMensalVendas;
 import app.classes.usuarios.Usuario;
-import app.classes.util.Periodo;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -16,6 +17,7 @@ import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -23,6 +25,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import net.sf.jasperreports.engine.JRException;
 
 import java.io.IOException;
 import java.net.URL;
@@ -57,7 +60,7 @@ public class GerenteController implements Initializable {
     private Pane painelEstoque, painelRelatorios, painelReceitas, painelIngredientes;
 
     @FXML
-    private TableColumn<Produto, String> colCodBarras, colNome, colPesavel ;
+    private TableColumn<Produto, String> colCodBarras, colNome, colPesavel;
 
     @FXML
     private TableColumn<Ingredientes, String> colCodI, colNomeI;
@@ -91,7 +94,7 @@ public class GerenteController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         ObservableList<String> options = FXCollections.observableArrayList(
-                "Relatório de Vendas", "Relatório de Estoque"
+                "Relatório diário de vendas", "Relatório mensal de vendas", "Relatório de itens mais vendidos"
         );
         this.comboTipo.setItems(options);
 
@@ -114,9 +117,9 @@ public class GerenteController implements Initializable {
 
         txtPesquisa.setPromptText("Procure por produtos");
 
-        FilteredList<Receitas> filteredData2 = new FilteredList<>(Estoque.getInstance().getEstoqueR(),r -> true);
-        FilteredList<Ingredientes> filteredData3 = new FilteredList<>(Estoque.getInstance().getEstoqueI(),i -> true);
-        FilteredList<Produto> filteredData = new FilteredList<>(Estoque.getInstance().getEstoque(),p -> true);
+        FilteredList<Receitas> filteredData2 = new FilteredList<>(Estoque.getInstance().getEstoqueR(), r -> true);
+        FilteredList<Ingredientes> filteredData3 = new FilteredList<>(Estoque.getInstance().getEstoqueI(), i -> true);
+        FilteredList<Produto> filteredData = new FilteredList<>(Estoque.getInstance().getEstoque(), p -> true);
 
         txtPesquisa11.textProperty().addListener((observable, oldValue, newValue) -> {
             filteredData3.setPredicate(ingredientes -> {
@@ -160,13 +163,13 @@ public class GerenteController implements Initializable {
         comboTipo.setOnAction(new javafx.event.EventHandler<javafx.event.ActionEvent>() {
             @Override
             public void handle(javafx.event.ActionEvent event) {
-                if (comboTipo.getValue().toString().equals("Relatório de Vendas")) {
+                if (comboTipo.getValue().toString().equals("Relatório periódico de vendas")) {
                     periodoR.setVisible(true);
                     deL.setVisible(true);
                     aL.setVisible(true);
                     dataFinal.setVisible(true);
                     dataInicial.setVisible(true);
-                } else if (comboTipo.getValue().toString().equals("Relatório de Estoque")) {
+                } else {
                     periodoR.setVisible(false);
                     deL.setVisible(false);
                     aL.setVisible(false);
@@ -179,15 +182,61 @@ public class GerenteController implements Initializable {
 
 
     @FXML
-    void gerarRelatorio() throws IOException {
-        if (comboTipo.getValue().toString().equals("Relatório de Vendas")) {
-            Periodo p = new Periodo(dataInicial.getValue(), dataFinal.getValue());
-            RelatorioDeVendas relVendas = new RelatorioDeVendas(p, Main.vendasFechadas);
-            relVendas.gerarRelatorio();
-        } else if (comboTipo.getValue().toString().equals("Relatório de Estoque")) {
-            RelatorioDeEstoque relatorio = new RelatorioDeEstoque(Estoque.getInstance().getEstoque());
-            relatorio.gerarRelatorio();
+    void gerarRelatorio() {
+        Scene cena = lblGerente.getScene();
+        cena.setCursor(Cursor.WAIT);
+        switch (comboTipo.getValue().toString()) {
+            case "Relatório diário de vendas":
+                RelatorioDiarioVendas rdv = new RelatorioDiarioVendas();
+                try {
+                    rdv.gerarRelatorio();
+                } catch (JRException e) {
+                    Alert alerta = new Alert(Alert.AlertType.ERROR);
+                    alerta.setTitle("Erro ao gerar relatório diário de vendas");
+                    alerta.setHeaderText("Erro ao gerar relatório diário de vendas");
+                    alerta.setContentText(e.getMessage());
+                    alerta.showAndWait();
+                }
+                break;
+            case "Relatório mensal de vendas":
+                RelatorioMensalVendas rmv = new RelatorioMensalVendas();
+                try {
+                    rmv.gerarRelatorio();
+                } catch (JRException e) {
+                    Alert alerta = new Alert(Alert.AlertType.ERROR);
+                    alerta.setTitle("Erro ao gerar relatório mensal de vendas");
+                    alerta.setHeaderText("Erro ao gerar relatório mensal de vendas");
+                    alerta.setContentText(e.getMessage());
+                    alerta.showAndWait();
+                }
+                break;
+            case "Relatório anual de vendas":
+                RelatorioAnualVendas rav = new RelatorioAnualVendas();
+                try {
+                    rav.gerarRelatorio();
+                } catch (JRException e) {
+                    Alert alerta = new Alert(Alert.AlertType.ERROR);
+                    alerta.setTitle("Erro ao gerar relatório anual de vendas");
+                    alerta.setHeaderText("Erro ao gerar relatório anual de vendas");
+                    alerta.setContentText(e.getMessage());
+                    alerta.showAndWait();
+                }
+                break;
+            case "Relatório de itens mais vendidos":
+                RelatorioItensMaisVendidos riv = new RelatorioItensMaisVendidos();
+                try {
+                    riv.gerarRelatorio();
+                } catch (JRException e) {
+                    Alert alerta = new Alert(Alert.AlertType.ERROR);
+                    alerta.setTitle("Erro ao gerar relatório anual de vendas");
+                    alerta.setHeaderText("Erro ao gerar relatório anual de vendas");
+                    alerta.setContentText(e.getMessage());
+                    alerta.showAndWait();
+                }
+                break;
+
         }
+        cena.setCursor(Cursor.DEFAULT);
     }
 
 
