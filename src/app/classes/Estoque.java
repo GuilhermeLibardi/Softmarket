@@ -33,7 +33,7 @@ public class Estoque {
             while (resultados.next()) {
                 String nome = resultados.getString("nome");
                 double peso = resultados.getDouble("peso");
-                String codigo = resultados.getString("codigo");
+                String codigo = resultados.getString("cod");
                 ingredientes = new Ingredientes(nome, peso, codigo);
                 estoqueI.add(ingredientes);
             }
@@ -189,7 +189,7 @@ public class Estoque {
 
     public void removerIngredientes(String codigo) {
         try (Connection con = new ConnectionFactory().getConnection()) {
-            String sql = "DELETE FROM softmarketdb.ingredientes WHERE codigo = ?";
+            String sql = "DELETE FROM softmarketdb.ingredientes WHERE cod = ?";
             PreparedStatement stmt = con.prepareStatement(sql);
             stmt.setString(1, codigo);
             stmt.execute();

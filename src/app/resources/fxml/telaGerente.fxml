@@ -63,12 +63,15 @@
          <children>
             <Pane fx:id="painelRelatorios" prefHeight="766.0" prefWidth="955.0" style="-fx-background-color: #ffffff;" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <Label layoutX="343.0" layoutY="61.0" text="GERAR RELATÓRIOS" textAlignment="CENTER">
+                  <Label layoutX="343.0" layoutY="61.0" text="GERAR RELATÓRIOS" textAlignment="CENTER" textFill="#1c8577">
                      <font>
-                        <Font size="30.0" />
+                        <Font name="System Bold" size="30.0" />
                      </font>
                   </Label>
-                  <Button fx:id="btnRelatorio" layoutX="472.0" layoutY="462.0" mnemonicParsing="false" onAction="#gerarRelatorio" prefHeight="38.0" prefWidth="78.0" text="Gerar" />
+                  <Button fx:id="btnRelatorio" layoutX="472.0" layoutY="462.0" mnemonicParsing="false" onAction="#gerarRelatorio" prefHeight="38.0" prefWidth="78.0" style="-fx-background-color: #1b8678;" text="Gerar" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font></Button>
                   <Label fx:id="periodoR" layoutX="212.0" layoutY="243.0" text="Período" visible="false">
                      <font>
                         <Font size="18.0" />
