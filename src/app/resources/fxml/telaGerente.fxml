@@ -45,12 +45,20 @@
                   <Font name="System Bold" size="21.0" />
                </font>
             </Button>
-            <Label fx:id="lblGerente" alignment="CENTER" layoutX="-2.0" layoutY="606.0" prefHeight="26.0" prefWidth="397.0" style="-fx-background-color: #e1e1e1;" textAlignment="CENTER" textFill="#1c8577">
+            <Label fx:id="lblGerente" alignment="CENTER" layoutX="-23.0" layoutY="227.0" prefHeight="26.0" prefWidth="397.0" style="-fx-background-color: #e1e1e1;" textAlignment="CENTER" textFill="#1c8577">
                <font>
                   <Font name="System Bold" size="17.0" />
                </font>
             </Label>
             <Button fx:id="btnGerarReceitas" layoutX="-2.0" layoutY="454.0" mnemonicParsing="false" onAction="#handleGerarReceitas" prefHeight="86.0" prefWidth="423.0" style="-fx-background-color: #1b8678;" text="GERENCIAR RECEITAS" textFill="WHITE">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <font>
+                  <Font name="System Bold" size="21.0" />
+               </font>
+            </Button>
+            <Button fx:id="btnGerarIngredientes" layoutX="-26.0" layoutY="547.0" mnemonicParsing="false" onAction="#handleGerarIngredientes" prefHeight="86.0" prefWidth="423.0" style="-fx-background-color: #1b8678;" text="GERENCIAR INGREDIENTES" textFill="WHITE">
                <opaqueInsets>
                   <Insets />
                </opaqueInsets>
@@ -235,6 +243,81 @@
                      </cursor>
                   </Button>
                   <Button fx:id="btnRemoveProd1" layoutX="189.0" layoutY="105.0" mnemonicParsing="false" onAction="#removeReceita" opacity="0.0" prefHeight="0.0" prefWidth="36.0" style="-fx-background-color: #fff; -fx-background-radius: 200;" text="-" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS" wrapText="true">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+               </children>
+            </Pane>
+            <Pane fx:id="painelIngredientes" prefHeight="766.0" prefWidth="955.0" style="-fx-background-color: #f1f1f1;" visible="false">
+               <children>
+                  <TableView fx:id="tabelaIngrediente" layoutX="38.0" layoutY="186.0" prefHeight="485.0" prefWidth="848.0">
+                     <columns>
+                        <TableColumn fx:id="colCodI" prefWidth="133.0" text="Código" />
+                        <TableColumn fx:id="colNomeI" prefWidth="343.0" text="Nome" />
+                        <TableColumn fx:id="colPesoI" prefWidth="92.0" text="Peso" />
+                     </columns>
+                  </TableView>
+                  <TextField fx:id="txtPesquisa11" layoutX="382.0" layoutY="112.0" prefHeight="25.0" prefWidth="417.0" />
+                  <Label layoutX="385.0" layoutY="31.0" text="Seu estoque" textFill="#1c8577">
+                     <font>
+                        <Font name="Tahoma Bold" size="30.0" />
+                     </font>
+                  </Label>
+                  <ImageView layoutX="81.0" layoutY="105.0" pickOnBounds="true" preserveRatio="true">
+                     <viewport>
+                        <Rectangle2D height="40.0" width="40.0" />
+                     </viewport>
+                  </ImageView>
+                  <ImageView layoutX="135.0" layoutY="105.0" pickOnBounds="true" preserveRatio="true">
+                     <viewport>
+                        <Rectangle2D height="40.0" width="40.0" />
+                     </viewport>
+                  </ImageView>
+                  <ImageView layoutX="78.0" layoutY="105.0" pickOnBounds="true" preserveRatio="true">
+                     <viewport>
+                        <Rectangle2D height="40.0" width="40.0" />
+                     </viewport>
+                     <image>
+                        <Image url="@../images/ADD.png" />
+                     </image>
+                  </ImageView>
+                  <Button fx:id="btnAddProduto11" layoutX="81.0" layoutY="105.0" mnemonicParsing="false" onAction="#addIngrediente" opacity="0.0" prefHeight="0.0" prefWidth="36.0" style="-fx-background-color: #fff; -fx-background-radius: 200;" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS" wrapText="true">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <ImageView layoutX="135.0" layoutY="105.0" pickOnBounds="true" preserveRatio="true">
+                     <viewport>
+                        <Rectangle2D height="40.0" width="40.0" />
+                     </viewport>
+                     <image>
+                        <Image url="@../images/EDIT.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView layoutX="187.0" layoutY="105.0" pickOnBounds="true" preserveRatio="true">
+                     <viewport>
+                        <Rectangle2D height="40.0" width="40.0" />
+                     </viewport>
+                     <image>
+                        <Image url="@../images/REMOVE.png" />
+                     </image>
+                  </ImageView>
+                  <Button fx:id="btnEditProd11" layoutX="137.0" layoutY="105.0" mnemonicParsing="false" onAction="#editIngrediente" opacity="0.0" prefHeight="0.0" prefWidth="36.0" style="-fx-background-color: #fff; -fx-background-radius: 200;" text="/" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS" wrapText="true">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                  </Button>
+                  <Button fx:id="btnRemoveProd11" layoutX="189.0" layoutY="105.0" mnemonicParsing="false" onAction="#removeIngrediente" opacity="0.0" prefHeight="0.0" prefWidth="36.0" style="-fx-background-color: #fff; -fx-background-radius: 200;" text="-" textAlignment="CENTER" textOverrun="CENTER_ELLIPSIS" wrapText="true">
                      <font>
                         <Font name="System Bold" size="18.0" />
                      </font>

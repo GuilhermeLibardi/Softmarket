@@ -2,6 +2,7 @@ package app.controllers;
 
 import app.Main;
 import app.classes.Estoque;
+import app.classes.Ingredientes;
 import app.classes.Produto;
 import app.classes.Receitas;
 import app.classes.relatorios.RelatorioDeEstoque;
@@ -31,13 +32,14 @@ public class GerenteController implements Initializable {
 
     @FXML
     private Button btnGerenciarEstoque, btnGerarRelatorios, btnRelatorio,
-            btnAddProd, btnEditProd, btnRemoveProd, btnAddProd1, btnEditProd1, btnRemoveProd1;
+            btnAddProd, btnEditProd, btnRemoveProd, btnAddProd1, btnEditProd1,
+            btnRemoveProd1, btnAddProduto11, btnEditProd11, btnRemoveProd11;
 
     @FXML
     private Label lblGerente, periodoR, deL, aL;
 
     @FXML
-    private TextField txtDataInicial, txtDataFinal, txtPesquisa, txtPesquisa1;
+    private TextField txtDataInicial, txtDataFinal, txtPesquisa, txtPesquisa1, txtPesquisa11;
 
     @FXML
     private ComboBox comboTipo;
@@ -49,10 +51,19 @@ public class GerenteController implements Initializable {
     private TableView<Receitas> tabelaReceitas;
 
     @FXML
-    private Pane painelEstoque, painelRelatorios, painelReceitas;
+    private TableView<Ingredientes> tabelaIngrediente;
+
+    @FXML
+    private Pane painelEstoque, painelRelatorios, painelReceitas, painelIngredientes;
 
     @FXML
     private TableColumn<Produto, String> colCodBarras, colNome, colPesavel ;
+
+    @FXML
+    private TableColumn<Ingredientes, String> colCodI, colNomeI;
+
+    @FXML
+    private TableColumn<Ingredientes, Double> colPesoI;
 
     @FXML
     private TableColumn<Receitas, String> colCodBarras1, colNome1;
@@ -89,6 +100,10 @@ public class GerenteController implements Initializable {
         colCusto1.setCellValueFactory(new PropertyValueFactory<Receitas, Double>("valorCusto"));
         colVenda1.setCellValueFactory(new PropertyValueFactory<Receitas, Double>("valorVenda"));
 
+        colCodI.setCellValueFactory(new PropertyValueFactory<Ingredientes, String>("codigo"));
+        colNomeI.setCellValueFactory(new PropertyValueFactory<Ingredientes, String>("nome"));
+        colPesoI.setCellValueFactory(new PropertyValueFactory<Ingredientes, Double>("peso"));
+
         colCodBarras.setCellValueFactory(new PropertyValueFactory<Produto, String>("codigo"));
         colNome.setCellValueFactory(new PropertyValueFactory<Produto, String>("nome"));
         colEstoque.setCellValueFactory(new PropertyValueFactory<Produto, Integer>("quantidade"));
@@ -100,7 +115,16 @@ public class GerenteController implements Initializable {
         txtPesquisa.setPromptText("Procure por produtos");
 
         FilteredList<Receitas> filteredData2 = new FilteredList<>(Estoque.getInstance().getEstoqueR(),r -> true);
+        FilteredList<Ingredientes> filteredData3 = new FilteredList<>(Estoque.getInstance().getEstoqueI(),i -> true);
         FilteredList<Produto> filteredData = new FilteredList<>(Estoque.getInstance().getEstoque(),p -> true);
+
+        txtPesquisa11.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredData3.setPredicate(ingredientes -> {
+                if (newValue == null || newValue.isEmpty()) return true;
+                String lowerCaseFilter = newValue.toLowerCase();
+                return ingredientes.getNome().toLowerCase().contains(lowerCaseFilter);
+            });
+        });
 
         txtPesquisa1.textProperty().addListener((observable, oldValue, newValue) -> {
             filteredData2.setPredicate(receitas -> {
@@ -121,13 +145,16 @@ public class GerenteController implements Initializable {
 
         SortedList<Receitas> sortedData2 = new SortedList<>(filteredData2);
         SortedList<Produto> sortedData = new SortedList<>(filteredData);
+        SortedList<Ingredientes> sortedData3 = new SortedList<>(filteredData3);
 
         sortedData2.comparatorProperty().bind(tabelaReceitas.comparatorProperty());
         sortedData.comparatorProperty().bind(tabelaProdutos.comparatorProperty());
+        sortedData3.comparatorProperty().bind(tabelaIngrediente.comparatorProperty());
 
 
         tabelaReceitas.setItems(sortedData2);
         tabelaProdutos.setItems(sortedData);
+        tabelaIngrediente.setItems(sortedData3);
 
 
         comboTipo.setOnAction(new javafx.event.EventHandler<javafx.event.ActionEvent>() {
@@ -169,6 +196,15 @@ public class GerenteController implements Initializable {
         painelRelatorios.setVisible(false);
         painelEstoque.setVisible(true);
         painelReceitas.setVisible(false);
+        painelIngredientes.setVisible(false);
+    }
+
+    @FXML
+    void handleGerarIngredientes() {
+        painelRelatorios.setVisible(false);
+        painelEstoque.setVisible(false);
+        painelReceitas.setVisible(false);
+        painelIngredientes.setVisible(true);
     }
 
     @FXML
@@ -176,6 +212,7 @@ public class GerenteController implements Initializable {
         painelRelatorios.setVisible(true);
         painelEstoque.setVisible(false);
         painelReceitas.setVisible(false);
+        painelIngredientes.setVisible(false);
     }
 
     @FXML
@@ -183,6 +220,7 @@ public class GerenteController implements Initializable {
         painelRelatorios.setVisible(false);
         painelEstoque.setVisible(false);
         painelReceitas.setVisible(true);
+        painelIngredientes.setVisible(false);
     }
 
     @FXML
@@ -232,6 +270,33 @@ public class GerenteController implements Initializable {
 
     @FXML
     void removeReceita() {
+        try {
+            changeScreen("../resources/fxml/telaRemoverProduto.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    void addIngrediente() {
+        try {
+            changeScreen("../resources/fxml/telaAdicionarProduto.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    void editIngrediente() {
+        try {
+            changeScreen("../resources/fxml/telaEditarProduto.fxml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    void removeIngrediente() {
         try {
             changeScreen("../resources/fxml/telaRemoverProduto.fxml");
         } catch (IOException e) {
