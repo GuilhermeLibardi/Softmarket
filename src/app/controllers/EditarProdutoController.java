@@ -1,25 +1,45 @@
 package app.controllers;
 
 import app.classes.Estoque;
+import app.classes.Ingredientes;
 import app.classes.Produto;
 import app.classes.exceptions.ProdutoNaoEncontradoException;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.fxml.Initializable;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
-public class EditarProdutoController {
+import java.net.URL;
+import java.util.ResourceBundle;
+
+public class EditarProdutoController implements Initializable {
 
     @FXML
     private TextField txtCodBarras, txtNome, txtPrecoCompra, txtPrecoVenda, txtQuantidade, txtPeso, txtPesavel;
 
     @FXML
-    private Label lblNome, lblCompra, lblVenda, lblQuantidade, lblPesavel, lblPeso;
+    private Label lblNome, lblCompra, lblVenda, lblQuantidade, lblPesavel, lblPeso, lblIng;
 
     @FXML
     private Button btnCadastrar, btnSearch;
+
+    @FXML
+    private ComboBox comboIng;
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        ObservableList<String> ingredientes = FXCollections.observableArrayList();
+
+        ingredientes.add("Nenhum");
+
+        for(Ingredientes ingrediente: Estoque.getInstance().getEstoqueI()){
+            ingredientes.add(ingrediente.getNome());
+        }
+
+        this.comboIng.setItems(ingredientes);
+    }
 
     @FXML
     void searchButton() {
@@ -39,6 +59,14 @@ public class EditarProdutoController {
             lblQuantidade.setVisible(true);
             lblPesavel.setVisible(true);
             lblPeso.setVisible(true);
+            lblIng.setVisible(true);
+            comboIng.setVisible(true);
+
+            for(Ingredientes ing: Estoque.getInstance().getEstoqueI()){
+                if(ing.getCodigo().equals(p.getIngredienteId())){
+                    comboIng.setValue(ing.getNome());
+                }
+            }
 
             txtNome.setText(p.getNome());
             txtPrecoCompra.setText(String.valueOf(p.getValorCusto()).replace(".", ","));
@@ -74,7 +102,20 @@ public class EditarProdutoController {
     void submit() {
         if (this.txtNome.isVisible()) {
             try {
-                Estoque.getInstance().editarProduto(new Produto(this.txtNome.getText(), Integer.parseInt(this.txtQuantidade.getText()), Double.parseDouble(this.txtPrecoCompra.getText().replace(",", ".")), Double.parseDouble(this.txtPrecoVenda.getText().replace(",", ".")), txtCodBarras.getText(), Double.parseDouble(this.txtPeso.getText().replace(",", ".")), this.txtPesavel.getText(), null));
+
+                String codIng="";
+
+                for(Ingredientes ing : Estoque.getInstance().getEstoqueI()){
+                    if(ing.getNome().equals(comboIng.getValue().toString())){
+                        codIng = ing.getCodigo();
+                        break;
+                    }else if(ing.getNome().equals("Nenhum")){
+                        codIng = null;
+                        break;
+                    }
+                }
+
+                Estoque.getInstance().editarProduto(new Produto(this.txtNome.getText(), Integer.parseInt(this.txtQuantidade.getText()), Double.parseDouble(this.txtPrecoCompra.getText().replace(",", ".")), Double.parseDouble(this.txtPrecoVenda.getText().replace(",", ".")), txtCodBarras.getText(), Double.parseDouble(this.txtPeso.getText().replace(",", ".")), this.txtPesavel.getText(), codIng));
             } catch (ProdutoNaoEncontradoException e) {
                 System.out.println(e.getMessage());
             }
