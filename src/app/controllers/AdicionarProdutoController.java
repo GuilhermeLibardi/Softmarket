@@ -39,6 +39,8 @@ public class AdicionarProdutoController implements Initializable {
         }
 
         this.comboIng.setItems(ingredientes);
+
+        comboIng.setValue("Nenhum");
     }
 
     @FXML
