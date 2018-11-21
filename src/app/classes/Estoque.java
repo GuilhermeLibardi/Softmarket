@@ -73,7 +73,7 @@ public class Estoque {
         Produto produto;
 
         try (Connection con = new ConnectionFactory().getConnection()) {
-            String sql = "SELECT * FROM softmarketdb.produtos;";
+            String sql = "SELECT * FROM softmarketdb.produtos ORDER BY produtos.nome;";
             PreparedStatement stmt = con.prepareStatement(sql);
             ResultSet resultados = stmt.executeQuery();
             estoque.clear();
@@ -128,7 +128,7 @@ public class Estoque {
             stmt.setDouble(5, p.getPeso());
             stmt.setInt(6, p.getQuantidade());
             stmt.setString(7, p.getPesavel());
-            stmt.setString(8, p.getCodigo());
+            stmt.setString(8, p.getIngredienteId());
             stmt.execute();
 
         } catch (SQLException e) {

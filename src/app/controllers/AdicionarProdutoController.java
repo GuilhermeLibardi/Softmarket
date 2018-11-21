@@ -63,20 +63,18 @@ public class AdicionarProdutoController implements Initializable {
         }
         double valorCompra = Double.parseDouble(txtPreco.getText().replace(",","."));
         double valorVenda = Double.parseDouble(txtPrecoVenda.getText().replace(",","."));
-        String codIng="";
+        double peso = Double.parseDouble(txtPeso.getText().replace(",","."));
+        String codIng = null;
 
         for(Ingredientes ing : Estoque.getInstance().getEstoqueI()){
-            if(ing.getNome().equals(comboIng.getItems().toString())){
+            if(ing.getNome().equals(comboIng.getValue().toString())){
+                System.out.println("Entrou!");
                 codIng = ing.getCodigo();
-                break;
-            }else if(ing.getNome().equals("Nenhum")){
-                codIng = null;
                 break;
             }
         }
 
-
-        Estoque.getInstance().adicionarProduto(new Produto(txtNome.getText(), Integer.parseInt(txtQuantidade.getText()), valorCompra, valorVenda, txtCodBarras.getText(), Double.parseDouble(txtPeso.getText()), txtPesavel.getText(), codIng));
+        Estoque.getInstance().adicionarProduto(new Produto(txtNome.getText(), Integer.parseInt(txtQuantidade.getText()), valorCompra, valorVenda, txtCodBarras.getText(), peso, txtPesavel.getText(), codIng));
         Stage stage = (Stage) btnCadastrar.getScene().getWindow();
         stage.close();
     }
