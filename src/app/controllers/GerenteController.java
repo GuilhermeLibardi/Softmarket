@@ -326,7 +326,7 @@ public class GerenteController implements Initializable {
     @FXML
     void addIngrediente() {
         try {
-            changeScreen("../resources/fxml/telaAdicionarProduto.fxml");
+            changeScreen("../resources/fxml/telaAdicionarIngrediente.fxml");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -335,7 +335,7 @@ public class GerenteController implements Initializable {
     @FXML
     void editIngrediente() {
         try {
-            changeScreen("../resources/fxml/telaEditarProduto.fxml");
+            changeScreen("../resources/fxml/telaEditarIngrediente.fxml");
         } catch (IOException e) {
             e.printStackTrace();
         }
