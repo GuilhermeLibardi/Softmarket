@@ -174,8 +174,8 @@ public class VendasController {
                 venda = vendedor.iniciarVenda();
                 for (Produto mainP : Estoque.getInstance().getEstoque()) {
                     if (mainP.getCodigo().equals(txtCodBarras.getText())) {
-                        produto1 = new Produto(mainP.getNome(), Integer.parseInt(txtQuantidade.getText()), mainP.getValorCusto(), mainP.getValorVenda(), mainP.getCodigo());
-                        produtoE = new Produto(mainP.getNome(), mainP.getQuantidade() - Integer.parseInt(txtQuantidade.getText()), mainP.getValorCusto(), mainP.getValorVenda(), mainP.getCodigo());
+                        produto1 = new Produto(mainP.getNome(), Integer.parseInt(txtQuantidade.getText()), mainP.getValorCusto(), mainP.getValorVenda(), mainP.getCodigo(), mainP.getIngredienteId());
+                        produtoE = new Produto(mainP.getNome(), mainP.getQuantidade() - Integer.parseInt(txtQuantidade.getText()), mainP.getValorCusto(), mainP.getValorVenda(), mainP.getCodigo(), mainP.getIngredienteId());
                         estoqueProdutos.add(produtoE);
                         venda.setValor(venda.getValor() + mainP.getValorVenda() * Double.parseDouble(txtQuantidade.getText()));
                         listaProdutos.add(produto1);
@@ -197,7 +197,7 @@ public class VendasController {
                     if (procurar.getCodigo().equals(txtCodBarras.getText())) {
                         for (Produto tableP : listaProdutos) {
                             if (tableP.getCodigo().equals(procurar.getCodigo())) {
-                                produto1 = new Produto(tableP.getNome(), tableP.getQuantidade(), tableP.getValorCusto(), tableP.getValorVenda(), tableP.getCodigo());
+                                produto1 = new Produto(tableP.getNome(), tableP.getQuantidade(), tableP.getValorCusto(), tableP.getValorVenda(), tableP.getCodigo(), tableP.getIngredienteId());
                                 produto1.setQuantidade(produto1.getQuantidade() + Integer.parseInt(txtQuantidade.getText()));
                                 listaProdutos.remove(tableP);
                                 listaProdutos.add(produto1);
@@ -218,8 +218,8 @@ public class VendasController {
                 }
                 for (Produto mainP : Estoque.getInstance().getEstoque()) {
                     if (mainP.getCodigo().equals(txtCodBarras.getText())) {
-                        produto1 = new Produto(mainP.getNome(), Integer.parseInt(txtQuantidade.getText()), mainP.getValorCusto(), mainP.getValorVenda(), mainP.getCodigo());
-                        produtoE = new Produto(mainP.getNome(), mainP.getQuantidade() - Integer.parseInt(txtQuantidade.getText()), mainP.getValorCusto(), mainP.getValorVenda(), mainP.getCodigo());
+                        produto1 = new Produto(mainP.getNome(), Integer.parseInt(txtQuantidade.getText()), mainP.getValorCusto(), mainP.getValorVenda(), mainP.getCodigo(), mainP.getIngredienteId());
+                        produtoE = new Produto(mainP.getNome(), mainP.getQuantidade() - Integer.parseInt(txtQuantidade.getText()), mainP.getValorCusto(), mainP.getValorVenda(), mainP.getCodigo(), mainP.getIngredienteId());
                         estoqueProdutos.add(produtoE);
                         venda.setValor(venda.getValor() + mainP.getValorVenda() * Double.parseDouble(txtQuantidade.getText()));
                         listaProdutos.add(produto1);

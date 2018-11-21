@@ -22,7 +22,7 @@ public class CSVParser {
         Scanner scanner = new Scanner(new File(url.getPath()));
         while (scanner.hasNextLine()) {
             String[] info = scanner.nextLine().split(",");
-            estoque.add(new Produto(info[1], Integer.parseInt(info[4]), Double.parseDouble(info[2]), Double.parseDouble(info[3]), info[0]));
+
         }
         scanner.close();
         return estoque;
