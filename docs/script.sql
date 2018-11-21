@@ -154,6 +154,7 @@ CREATE VIEW RELATORIO_VENDAS AS
 
 
 #Triggers
+DELIMITER $
 CREATE TRIGGER RestricaoProduto
   BEFORE INSERT
   ON produtos
@@ -163,7 +164,7 @@ CREATE TRIGGER RestricaoProduto
     THEN
       SIGNAL SQLSTATE '45000';
     END IF;
-  END;
+  END$
 
 CREATE TRIGGER RestricaoReceita
   BEFORE INSERT
@@ -174,7 +175,8 @@ CREATE TRIGGER RestricaoReceita
     THEN
       SIGNAL SQLSTATE '45000';
     END IF;
-  END;
+  END$
+  DELIMITER ;
 
 #Populando o BD
 
