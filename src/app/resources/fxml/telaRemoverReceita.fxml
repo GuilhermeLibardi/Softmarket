@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<AnchorPane prefHeight="250.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.resources.fxml.TelaRemoverReceita">
+   <children>
+      <Button layoutX="115.0" layoutY="163.0" mnemonicParsing="false" text="Cancelar" />
+      <Button layoutX="250.0" layoutY="163.0" mnemonicParsing="false" text="Remover" />
+      <Label layoutX="153.0" layoutY="23.0" text="REMOVER PRODUTO" />
+      <TextField layoutX="165.0" layoutY="87.0" prefHeight="25.0" prefWidth="186.0" />
+      <Label layoutX="71.0" layoutY="91.0" text="Código" />
+   </children>
+</AnchorPane>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<AnchorPane prefHeight="265.0" prefWidth="350.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.resources.fxml.TelaEditarIngrediente">
+   <children>
+      <Button layoutX="223.0" layoutY="214.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="65.0" styleClass="toldoBackground" text="Editar" />
+      <TextField layoutX="128.0" layoutY="61.0" prefHeight="25.0" prefWidth="170.0" />
+      <Label layoutX="34.0" layoutY="65.0" text="Código" />
+      <TextField layoutX="128.0" layoutY="97.0" prefHeight="25.0" prefWidth="170.0" visible="false" />
+      <TextField layoutX="128.0" layoutY="131.0" prefHeight="25.0" prefWidth="170.0" visible="false" />
+      <TextField layoutX="128.0" layoutY="170.0" prefHeight="25.0" prefWidth="170.0" visible="false" />
+      <Label layoutX="34.0" layoutY="101.0" text="Nome" visible="false" />
+      <Label layoutX="34.0" layoutY="135.0" text="Valor de custo" visible="false" />
+      <Label layoutX="34.0" layoutY="174.0" text="Valor de venda" visible="false" />
+      <Label layoutX="72.0" layoutY="8.0" text="Edição de ingrediente">
+         <font>
+            <Font name="Corbel" size="24.0" />
+         </font>
+      </Label>
+      <Button cancelButton="true" layoutX="88.0" layoutY="214.0" mnemonicParsing="false" text="Cancelar" />
+   </children>
+</AnchorPane>

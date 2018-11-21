@@ -160,22 +160,19 @@ public class GerenteController implements Initializable {
         tabelaIngrediente.setItems(sortedData3);
 
 
-        comboTipo.setOnAction(new javafx.event.EventHandler<javafx.event.ActionEvent>() {
-            @Override
-            public void handle(javafx.event.ActionEvent event) {
-                if (comboTipo.getValue().toString().equals("Relatório periódico de vendas")) {
-                    periodoR.setVisible(true);
-                    deL.setVisible(true);
-                    aL.setVisible(true);
-                    dataFinal.setVisible(true);
-                    dataInicial.setVisible(true);
-                } else {
-                    periodoR.setVisible(false);
-                    deL.setVisible(false);
-                    aL.setVisible(false);
-                    dataFinal.setVisible(false);
-                    dataInicial.setVisible(false);
-                }
+        comboTipo.setOnAction(event -> {
+            if (comboTipo.getValue().toString().equals("Relatório periódico de vendas")) {
+                periodoR.setVisible(true);
+                deL.setVisible(true);
+                aL.setVisible(true);
+                dataFinal.setVisible(true);
+                dataInicial.setVisible(true);
+            } else {
+                periodoR.setVisible(false);
+                deL.setVisible(false);
+                aL.setVisible(false);
+                dataFinal.setVisible(false);
+                dataInicial.setVisible(false);
             }
         });
     }
