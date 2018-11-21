@@ -8,16 +8,26 @@ public class Produto {
     private String codigo;
     private double peso;
     private String pesavel;
+    private String ingredienteId;
 
-    public Produto(String nome, int quantidade, double valorCusto, double valorVenda, String codigo) {
+    public String getIngredienteId() {
+        return ingredienteId;
+    }
+
+    public void setIngredienteId(String ingredienteId) {
+        this.ingredienteId = ingredienteId;
+    }
+
+    public Produto(String nome, int quantidade, double valorCusto, double valorVenda, String codigo, String ingredienteId) {
         this.nome = nome;
         this.quantidade = quantidade;
         this.valorCusto = valorCusto;
         this.valorVenda = valorVenda;
         this.codigo = codigo;
+        this.ingredienteId = ingredienteId;
     }
 
-    public Produto(String nome, int quantidade, double valorCusto, double valorVenda, String codigo, double peso, String pesavel) {
+    public Produto(String nome, int quantidade, double valorCusto, double valorVenda, String codigo, double peso, String pesavel, String ingredienteId) {
         this.nome = nome;
         this.quantidade = quantidade;
         this.valorCusto = valorCusto;
@@ -25,6 +35,7 @@ public class Produto {
         this.codigo = codigo;
         this.peso = peso;
         this.pesavel = pesavel;
+        this.ingredienteId = ingredienteId;
     }
 
     public Produto(String nome, int quantidade, String codigo) {

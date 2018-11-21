@@ -85,7 +85,8 @@ public class Estoque {
                 int quantidade = resultados.getInt("quantidade");
                 double peso = resultados.getDouble("peso");
                 String pesavel = resultados.getString("pesavel");
-                produto = new Produto(nome, quantidade, pcusto, pvenda, codbarras, peso, pesavel);
+                String codIng = resultados.getString("codIngrediente");
+                produto = new Produto(nome, quantidade, pcusto, pvenda, codbarras, peso, pesavel, codIng);
                 estoque.add(produto);
             }
 
@@ -118,7 +119,7 @@ public class Estoque {
 
     public void adicionarProduto(Produto p) {
         try (Connection con = new ConnectionFactory().getConnection()) {
-            String sql = "INSERT INTO softmarketdb.produtos (codBarras, pCusto, pVenda, nome, peso, quantidade, pesavel, codIngrediente) VALUES(?,?,?,?,?,?,?, NULL)";
+            String sql = "INSERT INTO softmarketdb.produtos (codBarras, pCusto, pVenda, nome, peso, quantidade, pesavel, codIngrediente) VALUES(?,?,?,?,?,?,?,?)";
             PreparedStatement stmt = con.prepareStatement(sql);
             stmt.setString(1, p.getCodigo());
             stmt.setDouble(2, p.getValorCusto());
@@ -127,7 +128,7 @@ public class Estoque {
             stmt.setDouble(5, p.getPeso());
             stmt.setInt(6, p.getQuantidade());
             stmt.setString(7, p.getPesavel());
-            //stmt.setString(8, p.getCodigo());
+            stmt.setString(8, p.getCodigo());
             stmt.execute();
 
         } catch (SQLException e) {
@@ -231,7 +232,8 @@ public class Estoque {
                 int quantidade = resultados.getInt("quantidade");
                 double peso = resultados.getDouble("peso");
                 String pesavel = resultados.getString("pesavel");
-                p = new Produto(nome, quantidade, pcusto, pvenda, codbarras, peso, pesavel);
+                String codIng = resultados.getString("codIngrediente");
+                p = new Produto(nome, quantidade, pcusto, pvenda, codbarras, peso, pesavel, codIng);
             }
 
         } catch (SQLException e) {

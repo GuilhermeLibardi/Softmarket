@@ -1,21 +1,45 @@
 package app.controllers;
 
 import app.classes.Estoque;
+import app.classes.Ingredientes;
 import app.classes.Produto;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class AdicionarProdutoController {
+
+public class AdicionarProdutoController implements Initializable {
 
     @FXML
     private TextField txtCodBarras, txtNome, txtPreco, txtPrecoVenda, txtQuantidade, txtPeso, txtPesavel;
 
     @FXML
     private Button btnCadastrar;
+
+    @FXML
+    private ComboBox comboIng;
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        ObservableList<String> ingredientes = FXCollections.observableArrayList();
+
+        ingredientes.add("Nenhum");
+
+        for(Ingredientes ingrediente: Estoque.getInstance().getEstoqueI()){
+            ingredientes.add(ingrediente.getNome());
+        }
+
+        this.comboIng.setItems(ingredientes);
+    }
 
     @FXML
     void submit() {
@@ -39,7 +63,20 @@ public class AdicionarProdutoController {
         }
         double valorCompra = Double.parseDouble(txtPreco.getText().replace(",","."));
         double valorVenda = Double.parseDouble(txtPrecoVenda.getText().replace(",","."));
-        Estoque.getInstance().adicionarProduto(new Produto(txtNome.getText(), Integer.parseInt(txtQuantidade.getText()), valorCompra, valorVenda, txtCodBarras.getText(), Double.parseDouble(txtPeso.getText()), txtPesavel.getText()));
+        String codIng="";
+
+        for(Ingredientes ing : Estoque.getInstance().getEstoqueI()){
+            if(ing.getNome().equals(comboIng.getItems().toString())){
+                codIng = ing.getCodigo();
+                break;
+            }else if(ing.getNome().equals("Nenhum")){
+                codIng = null;
+                break;
+            }
+        }
+
+
+        Estoque.getInstance().adicionarProduto(new Produto(txtNome.getText(), Integer.parseInt(txtQuantidade.getText()), valorCompra, valorVenda, txtCodBarras.getText(), Double.parseDouble(txtPeso.getText()), txtPesavel.getText(), codIng));
         Stage stage = (Stage) btnCadastrar.getScene().getWindow();
         stage.close();
     }
