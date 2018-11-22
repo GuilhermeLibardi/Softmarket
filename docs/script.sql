@@ -117,7 +117,7 @@ CREATE TABLE IF NOT EXISTS `softmarketdb`.`vendas_contem_produtos` (
 )
   ENGINE = INNODB;
 
-
+  USE softmarketdb;
 CREATE VIEW RELATORIO_VENDAS AS
   SELECT v.cod,
          v.data,
@@ -151,7 +151,7 @@ CREATE VIEW RELATORIO_VENDAS AS
          JOIN vendas_contem_receitas receita on v1.cod = receita.vendas_cod
          JOIN receitas r on receita.receitas_codBarras = r.codBarras
   ORDER BY cod, nome;
-
+  USE softmarketdb;
 
 #Triggers
 DELIMITER $
@@ -312,3 +312,4 @@ from RELATORIO_VENDAS
 where YEAR(data) = YEAR(now())
 group by nome
 order by nome;
+

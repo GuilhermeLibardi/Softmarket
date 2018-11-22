@@ -6,20 +6,20 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="250.0" prefWidth="300.0" styleClass="nodeBackground" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.AdicionarReceitaController">
+<AnchorPane prefHeight="262.0" prefWidth="351.0" styleClass="nodeBackground" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.AdicionarReceitaController">
    <children>
-      <Button fx:id="btnCadastrar" layoutX="117.0" layoutY="208.0" mnemonicParsing="false" onAction="#submit" styleClass="toldoBackground" text="Cadastrar" />
-      <TextField fx:id="txtNome" layoutX="124.0" layoutY="97.0" />
-      <TextField fx:id="txtCodBarras" layoutX="124.0" layoutY="66.0" />
-      <TextField fx:id="txtPdc" layoutX="124.0" layoutY="131.0" />
-      <TextField fx:id="txtPdv" layoutX="124.0" layoutY="166.0" />
-      <Label layoutX="24.0" layoutY="170.0" text="Preço de venda" />
-      <Label layoutX="25.0" layoutY="135.0" text="Preço de custo" />
-      <Label layoutX="25.0" layoutY="101.0" text="Nome" />
-      <Label layoutX="25.0" layoutY="70.0" text="Código de barras" />
-      <Label layoutX="51.0" layoutY="14.0" text="Cadastro de Receita">
+      <Button fx:id="btnCadastrar" layoutX="134.0" layoutY="217.0" mnemonicParsing="false" onAction="#submit" style="-fx-background-color: #1b8678" text="Cadastrar" textFill="WHITE" />
+      <TextField fx:id="txtNome" layoutX="150.0" layoutY="101.0" />
+      <TextField fx:id="txtCodBarras" layoutX="150.0" layoutY="70.0" />
+      <TextField fx:id="txtPdc" layoutX="150.0" layoutY="135.0" />
+      <TextField fx:id="txtPdv" layoutX="150.0" layoutY="170.0" />
+      <Label layoutX="15.0" layoutY="170.0" text="Preço de venda" />
+      <Label layoutX="16.0" layoutY="135.0" text="Preço de custo" />
+      <Label layoutX="16.0" layoutY="101.0" text="Nome" />
+      <Label layoutX="16.0" layoutY="70.0" text="Código de barras" />
+      <Label layoutX="42.0" layoutY="14.0" prefHeight="35.0" prefWidth="267.0" text="CADASTRO DE RECEITA" textFill="#1b8678">
          <font>
-            <Font name="Corbel" size="24.0" />
+            <Font name="System Bold" size="24.0" />
          </font>
       </Label>
    </children>

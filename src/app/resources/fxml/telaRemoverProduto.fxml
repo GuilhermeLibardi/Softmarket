@@ -17,11 +17,11 @@
          <font>
             <Font name="System Bold" size="12.0" />
          </font></Button>
-      <TextField fx:id="txtCodBarras" layoutX="155.0" layoutY="94.0" onAction="#handleEnter" prefHeight="25.0" prefWidth="193.0" />
-      <Label layoutX="42.0" layoutY="98.0" text="Código de Barras" />
-      <Label layoutX="116.0" layoutY="33.0" text="REMOVER PRODUTO" textFill="#1c8577">
+      <TextField fx:id="txtCodBarras" layoutX="175.0" layoutY="94.0" onAction="#handleEnter" prefHeight="25.0" prefWidth="193.0" />
+      <Label layoutX="32.0" layoutY="99.0" text="Código de Barras" />
+      <Label layoutX="76.0" layoutY="33.0" prefHeight="36.0" prefWidth="248.0" text="REMOVER PRODUTO" textFill="#1c8577">
          <font>
-            <Font name="System Bold" size="17.0" />
+            <Font name="System Bold" size="25.0" />
          </font>
       </Label>
    </children>
