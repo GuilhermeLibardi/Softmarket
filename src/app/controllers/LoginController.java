@@ -18,7 +18,6 @@ import javafx.scene.image.Image;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
 
-import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.Calendar;
@@ -47,11 +46,11 @@ public class LoginController implements Initializable {
         switch(usuario.verificaLogin()){
             case "g":
                 Gerente g = new Gerente(usuario.getNome(), txtUsuario.getText(), txtSenha.getText());
-                changeScreen("../resources/fxml/telaGerente.fxml", g);
+                changeScreen("/app/resources/fxml/telaGerente.fxml", g);
                 break;
             case "v":
                 Vendedor v = new Vendedor(usuario.getNome(), txtUsuario.getText(), txtSenha.getText());
-                changeScreen("../resources/fxml/telaVendas.fxml", v);
+                changeScreen("/app/resources/fxml/telaVendas.fxml", v);
                 break;
             default:
                 Alert erroEst = new Alert(Alert.AlertType.ERROR);
@@ -81,9 +80,8 @@ public class LoginController implements Initializable {
 
     private void changeScreen(String fxml, Usuario usuario) throws IOException {
         btnLogin.getScene().getWindow().hide();
-        File f = new File("out/production/Softmarket/app/resources/styles/style.css");
         Stage stage = new Stage();
-        stage.getIcons().add(new Image(Main.class.getResourceAsStream("resources/images/ICONE.png")));
+        stage.getIcons().add(new Image(Main.class.getResourceAsStream("/app/resources/images/ICONE.png")));
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource(fxml));
         Parent root = loader.load();
@@ -93,8 +91,6 @@ public class LoginController implements Initializable {
 
         Scene scene = new Scene(root);
         stage.setScene(scene);
-        scene.getStylesheets().clear();
-        scene.getStylesheets().add("file:///" + f.getAbsolutePath().replace("\\", "/"));
         stage.show();
         stage.setResizable(true);
         stage.setMaximized(true);

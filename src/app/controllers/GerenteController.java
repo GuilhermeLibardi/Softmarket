@@ -272,7 +272,7 @@ public class GerenteController implements Initializable {
     @FXML
     void addProduto() {
         try {
-            changeScreen("../resources/fxml/telaAdicionarProduto.fxml");
+            changeScreen("/app/resources/fxml/telaAdicionarProduto.fxml");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -281,7 +281,7 @@ public class GerenteController implements Initializable {
     @FXML
     void editProduto() {
         try {
-            changeScreen("../resources/fxml/telaEditarProduto.fxml");
+            changeScreen("/app/resources/fxml/telaEditarProduto.fxml");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -290,7 +290,7 @@ public class GerenteController implements Initializable {
     @FXML
     void removeProduto() {
         try {
-            changeScreen("../resources/fxml/telaRemoverProduto.fxml");
+            changeScreen("/app/resources/fxml/telaRemoverProduto.fxml");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -299,7 +299,7 @@ public class GerenteController implements Initializable {
     @FXML
     void addReceita() {
         try {
-            changeScreen("../resources/fxml/telaAdicionarReceita.fxml");
+            changeScreen("/app/resources/fxml/telaAdicionarReceita.fxml");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -308,7 +308,7 @@ public class GerenteController implements Initializable {
     @FXML
     void editReceita() {
         try {
-            changeScreen("../resources/fxml/telaEditarReceita.fxml");
+            changeScreen("/app/resources/fxml/telaEditarReceita.fxml");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -317,7 +317,7 @@ public class GerenteController implements Initializable {
     @FXML
     void removeReceita() {
         try {
-            changeScreen("../resources/fxml/telaRemoverReceita.fxml");
+            changeScreen("/app/resources/fxml/telaRemoverReceita.fxml");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -326,7 +326,7 @@ public class GerenteController implements Initializable {
     @FXML
     void addIngrediente() {
         try {
-            changeScreen("../resources/fxml/telaAdicionarIngrediente.fxml");
+            changeScreen("/app/resources/fxml/telaAdicionarIngrediente.fxml");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -335,7 +335,7 @@ public class GerenteController implements Initializable {
     @FXML
     void editIngrediente() {
         try {
-            changeScreen("../resources/fxml/telaEditarIngrediente.fxml");
+            changeScreen("/app/resources/fxml/telaEditarIngrediente.fxml");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -344,7 +344,7 @@ public class GerenteController implements Initializable {
     @FXML
     void removeIngrediente() {
         try {
-            changeScreen("../resources/fxml/telaRemoverIngrediente.fxml");
+            changeScreen("/app/resources//fxml/telaRemoverIngrediente.fxml");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -354,7 +354,7 @@ public class GerenteController implements Initializable {
     private void changeScreen(String fxml) throws IOException {
         Stage stage = new Stage();
 
-        stage.getIcons().add(new Image(Main.class.getResourceAsStream("resources/images/ICONE.png")));
+        stage.getIcons().add(new Image(Main.class.getResourceAsStream("/app/resources/images/ICONE.png")));
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource(fxml));
         Parent root = loader.load();
