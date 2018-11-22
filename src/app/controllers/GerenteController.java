@@ -299,7 +299,7 @@ public class GerenteController implements Initializable {
     @FXML
     void addReceita() {
         try {
-            changeScreen("../resources/fxml/telaAdicionarProduto.fxml");
+            changeScreen("../resources/fxml/telaAdicionarReceita.fxml");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -308,7 +308,7 @@ public class GerenteController implements Initializable {
     @FXML
     void editReceita() {
         try {
-            changeScreen("../resources/fxml/telaEditarProduto.fxml");
+            changeScreen("../resources/fxml/telaEditarReceita.fxml");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -317,7 +317,7 @@ public class GerenteController implements Initializable {
     @FXML
     void removeReceita() {
         try {
-            changeScreen("../resources/fxml/telaRemoverProduto.fxml");
+            changeScreen("../resources/fxml/telaRemoverReceita.fxml");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -344,7 +344,7 @@ public class GerenteController implements Initializable {
     @FXML
     void removeIngrediente() {
         try {
-            changeScreen("../resources/fxml/telaRemoverProduto.fxml");
+            changeScreen("../resources/fxml/telaRemoverIngrediente.fxml");
         } catch (IOException e) {
             e.printStackTrace();
         }
