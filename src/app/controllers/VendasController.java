@@ -1,5 +1,6 @@
 package app.controllers;
 
+import app.Main;
 import app.classes.Estoque;
 import app.classes.Produto;
 import app.classes.Venda;
@@ -8,12 +9,18 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Optional;
@@ -297,7 +304,27 @@ public class VendasController {
                     pressF5();
                     break;
             }
+        }else if(event.getCode() == KeyCode.F6){
+            try {
+                changeScreen("../resources/fxml/telaVenderReceita.fxml");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
+    }
+
+    private void changeScreen(String fxml) throws IOException {
+        Stage stage = new Stage();
+
+        stage.getIcons().add(new Image(Main.class.getResourceAsStream("resources/images/ICONE.png")));
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource(fxml));
+        Parent root = loader.load();
+
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+        stage.setResizable(false);
     }
 
     public void alertaEstoque(Produto produto) {

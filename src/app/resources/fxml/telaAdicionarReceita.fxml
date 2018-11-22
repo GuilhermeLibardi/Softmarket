@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="250.0" prefWidth="300.0" styleClass="nodeBackground" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.AdicionarIngredienteController">
+<AnchorPane prefHeight="250.0" prefWidth="300.0" styleClass="nodeBackground" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.AdicionarReceitaController">
    <children>
       <Button fx:id="btnCadastrar" layoutX="117.0" layoutY="208.0" mnemonicParsing="false" onAction="#submit" styleClass="toldoBackground" text="Cadastrar" />
       <TextField fx:id="txtNome" layoutX="124.0" layoutY="97.0" />
@@ -17,7 +17,7 @@
       <Label layoutX="25.0" layoutY="135.0" text="Preço de custo" />
       <Label layoutX="25.0" layoutY="101.0" text="Nome" />
       <Label layoutX="25.0" layoutY="70.0" text="Código de barras" />
-      <Label layoutX="31.0" layoutY="14.0" text="Cadastro de Ingrediente">
+      <Label layoutX="51.0" layoutY="14.0" text="Cadastro de Receita">
          <font>
             <Font name="Corbel" size="24.0" />
          </font>
