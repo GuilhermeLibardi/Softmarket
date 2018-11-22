@@ -38,6 +38,13 @@ public class Produto {
         this.ingredienteId = ingredienteId;
     }
 
+    public Produto(String cod, String nome, int quantidade, double preco) {
+        this.codigo = cod;
+        this.nome = nome;
+        this.quantidade = quantidade;
+        this.valorVenda = preco;
+    }
+
     public Produto(String nome, int quantidade, String codigo) {
         this.nome = nome;
         this.quantidade = quantidade;

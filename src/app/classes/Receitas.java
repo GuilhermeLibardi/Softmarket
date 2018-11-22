@@ -18,6 +18,14 @@ public class Receitas {
         this.codigo = codigo;
     }
 
+    public ArrayList<Ingredientes> getIngredientes() {
+        return ingredientes;
+    }
+
+    public void setIngredientes(ArrayList<Ingredientes> ingredientes) {
+        this.ingredientes = ingredientes;
+    }
+
     public String getNome() {
         return nome;
     }

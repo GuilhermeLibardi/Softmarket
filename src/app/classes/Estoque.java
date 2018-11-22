@@ -45,8 +45,9 @@ public class Estoque {
         }
     }
 
-    private static void atualizarEstoqueR() {
+    public static void atualizarEstoqueR() {
         Receitas receitas;
+        Ingredientes ing;
 
         try (Connection con = new ConnectionFactory().getConnection()) {
             String sql = "SELECT * FROM softmarketdb.receitas;";
@@ -61,8 +62,25 @@ public class Estoque {
                 receitas = new Receitas(nome, pcusto, pvenda, codbarras);
                 estoqueR.add(receitas);
             }
-
-
+            for (Receitas rec : estoqueR) {
+                try (Connection con1 = new ConnectionFactory().getConnection()) {
+                    String sq2 = "select i.cod, i.nome, receitas_contem_ingredientes.peso from receitas_contem_ingredientes join ingredientes i on receitas_contem_ingredientes.ingredientes_cod = i.cod where receitas_codBarras = ?";
+                    PreparedStatement stmt2 = con.prepareStatement(sq2);
+                    stmt2.setString(1,rec.getCodigo());
+                    ResultSet resultados2 = stmt2.executeQuery();
+                    rec.getIngredientes().clear();
+                    while (resultados2.next()){
+                        String cod2 = resultados2.getString("cod");
+                        String nome2 = resultados2.getString("nome");
+                        double peso = resultados2.getDouble("peso");
+                        ing = new Ingredientes(nome2, peso, cod2);
+                        rec.getIngredientes().add(ing);
+                    }
+                } catch (SQLException e) {
+                    System.out.print("Erro ao preparar STMT: ");
+                    System.out.println(e.getMessage());
+                }
+            }
         } catch (SQLException e) {
             System.out.print("Erro ao preparar STMT: ");
             System.out.println(e.getMessage());
