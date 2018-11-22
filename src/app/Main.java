@@ -21,8 +21,8 @@ public class Main extends Application {
     public void start(Stage primaryStage) {
         try {
             Platform.setImplicitExit(false);
-            Parent root = FXMLLoader.load(getClass().getResource("resources/fxml/telaLogin.fxml"));
-            primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream("resources/images/ICONE.png")));
+            Parent root = FXMLLoader.load(getClass().getResource("/app/resources/fxml/telaLogin.fxml"));
+            primaryStage.getIcons().add(new Image(Main.class.getResourceAsStream("/app/resources/images/ICONE.png")));
             Scene scene = new Scene(root);
             primaryStage.setScene(scene);
             primaryStage.initStyle(StageStyle.UNDECORATED);
