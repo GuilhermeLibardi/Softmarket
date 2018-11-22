@@ -4,6 +4,7 @@ import app.classes.Estoque;
 import app.classes.Ingredientes;
 import app.classes.Produto;
 import app.classes.Receitas;
+import javafx.beans.binding.Bindings;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -56,21 +57,22 @@ public class VenderReceita implements Initializable {
     @FXML
     void digitarReceita(KeyEvent event) {
 
-        txtReceita.textProperty().addListener((ObservableValue<? extends String> observable, String oldValue, String newValue) -> {
-            if (!newValue.matches("\\d*")) {
-                txtReceita.setText(newValue.replaceAll("[^\\d]", ""));
-            }
-        });
-        if(event.getCode().equals(KeyCode.ENTER) || event.getCode().equals(KeyCode.TAB)) {
-
-            Alert erroCdB = new Alert(Alert.AlertType.ERROR);
-            erroCdB.setTitle("Produto não encontrado!");
-            erroCdB.setHeaderText("Código de barras não encontrado");
-            erroCdB.setContentText("Digite um código de barras de um produto cadastrado no sistema.");
-            erroCdB.showAndWait();
+        if(event.getCode().equals(KeyCode.ENTER)) {
+            System.out.println("Teste");
+        }else if(event.getCode().isLetterKey()) {
             txtReceita.requestFocus();
         }
 
+    }
+
+    @FXML
+    void pesquisarReceita (KeyEvent event){
+        if(event.getCode().equals(KeyCode.ENTER)) {
+            if(!(listReceitas.getItems().isEmpty())){
+                listReceitas.requestFocus();
+                System.out.println("Teste");
+            }
+        }
     }
 
     @FXML

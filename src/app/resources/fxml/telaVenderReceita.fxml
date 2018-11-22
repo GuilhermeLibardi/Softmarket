@@ -14,8 +14,8 @@
             <Font name="System Bold" size="25.0" />
          </font>
       </Label>
-      <ListView fx:id="listReceitas" focusTraversable="false" layoutX="27.0" layoutY="122.0" prefHeight="288.0" prefWidth="284.0" />
+      <ListView fx:id="listReceitas" accessibleRole="LIST_ITEM" layoutX="27.0" layoutY="122.0" onKeyPressed="#digitarReceita" prefHeight="288.0" prefWidth="284.0" />
       <Button fx:id="btnReceita" layoutX="114.0" layoutY="423.0" mnemonicParsing="false" onAction="#submit" prefHeight="36.0" prefWidth="111.0" style="-fx-background-color: #1b8678;" text="CONFIRMAR" textFill="WHITE" />
-      <TextField fx:id="txtReceita" layoutX="27.0" layoutY="84.0" onKeyPressed="#digitarReceita" prefHeight="25.0" prefWidth="284.0" />
+      <TextField fx:id="txtReceita" layoutX="27.0" layoutY="84.0" onKeyPressed="#pesquisarReceita" prefHeight="25.0" prefWidth="284.0" />
    </children>
 </AnchorPane>
