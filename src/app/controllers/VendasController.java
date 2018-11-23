@@ -51,6 +51,7 @@ public class VendasController {
     @FXML
     private TextField txtQuantidade;
 
+
     private ObservableList<Produto> listaProdutos = FXCollections.observableArrayList();
     private ArrayList<Produto> estoqueProdutos = new ArrayList<>();
 
@@ -73,6 +74,13 @@ public class VendasController {
     private Venda venda;
 
 
+    public ObservableList<Produto> getListaProdutos() {
+        return listaProdutos;
+    }
+
+    public void setListaProdutos(ObservableList<Produto> listaProdutos) {
+        this.listaProdutos = listaProdutos;
+    }
 
     @FXML
     void digitarCdb(KeyEvent event){
@@ -162,6 +170,12 @@ public class VendasController {
                 txtCodBarras.requestFocus();
             }
         }
+    }
+
+    @FXML
+    public void inserirReceita(Produto produto){
+        listaProdutos.add(produto);
+        creatTable();
     }
 
     @FXML
@@ -306,7 +320,7 @@ public class VendasController {
             }
         }else if(event.getCode() == KeyCode.F6){
             try {
-                changeScreen("../resources/fxml/telaVenderReceita.fxml");
+                changeScreen("/app/resources/fxml/telaVenderReceita.fxml");
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -316,7 +330,7 @@ public class VendasController {
     private void changeScreen(String fxml) throws IOException {
         Stage stage = new Stage();
 
-        stage.getIcons().add(new Image(Main.class.getResourceAsStream("resources/images/ICONE.png")));
+        stage.getIcons().add(new Image(Main.class.getResourceAsStream("/app/resources/images/ICONE.png")));
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource(fxml));
         Parent root = loader.load();
