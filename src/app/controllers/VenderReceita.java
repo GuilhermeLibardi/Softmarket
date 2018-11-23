@@ -19,9 +19,12 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
+import org.jfree.util.Log;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.ResourceBundle;
 
 
@@ -121,13 +124,32 @@ public class VenderReceita implements Initializable {
                         }
                         Receitas receita = new Receitas(receitas.getNome(),receitas.getValorCusto()*qnt,receitas.getValorVenda()*qnt,receitas.getCodigo(),qnt);
 
-                        LoginController.vc.getListaProdutos().add(receita);
+                        descontarEstoque(receitas.getIngredientes());
 
+                        LoginController.vc.getListaProdutos().add(receita);
                         Stage stage = (Stage) txtQnt.getScene().getWindow();
                         stage.close();
                     }
                 }
             }
+        }
+    }
+
+    void descontarEstoque (ArrayList<Ingredientes> ingredientes){
+        ArrayList<Ingredientes> ingre = new ArrayList<>();
+        Ingredientes ingrediente;
+        for(Ingredientes ing : ingredientes) {
+            for (Iterator<Ingredientes> it = Estoque.getInstance().getEstoqueI().iterator(); it.hasNext(); ) {
+                ingrediente = (Ingredientes) it.next();
+                if (ingrediente.getCodigo().equals(ing.getCodigo())){
+                    ingre.add(new Ingredientes(ingrediente.getNome(), (ingrediente.getPeso() - (ing.getPeso()*qnt)), ingrediente.getCodigo()));
+                    it.remove();
+                }
+            }
+        }
+
+        for (Ingredientes ingredient : ingre){
+            Estoque.getInstance().getEstoqueI().add(ingredient);
         }
     }
 
