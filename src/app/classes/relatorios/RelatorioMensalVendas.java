@@ -12,7 +12,7 @@ public class RelatorioMensalVendas extends Relatorio {
 
     @Override
     public void gerarRelatorio() throws JRException {
-        String src = "./relatorios/relatorio_mensal_vendas.jasper";
+        String src = "relatorios/relatorio_mensal_vendas.jasper";
         JasperPrint jasperPrint = null;
         ConnectionFactory cf = new ConnectionFactory();
         Connection conn = cf.getConnection();

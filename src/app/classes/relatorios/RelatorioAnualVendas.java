@@ -13,7 +13,7 @@ public class RelatorioAnualVendas extends Relatorio {
     public void gerarRelatorio() throws JRException {
         ConnectionFactory cf = new ConnectionFactory();
         Connection conn = cf.getConnection();
-        String src = "./relatorios/relatorio_anual_vendas.jasper";
+        String src = "relatorios/relatorio_anual_vendas.jasper";
         JasperPrint jasperPrint = null;
         jasperPrint = JasperFillManager.fillReport(src, null, conn);
         JasperViewer viewer = new JasperViewer(jasperPrint, false);
