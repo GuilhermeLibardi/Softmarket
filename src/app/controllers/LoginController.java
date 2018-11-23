@@ -34,6 +34,8 @@ public class LoginController implements Initializable {
     @FXML
     Label lblData;
 
+    public static VendasController vc;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         java.util.Calendar c = Calendar.getInstance();
@@ -101,6 +103,7 @@ public class LoginController implements Initializable {
         } else if (fxml.contains("Vendas")) {
             stage.setTitle("Softmarket | Módulo Vendedor");
             VendasController controladorVendas = (VendasController) loader.getController();
+            vc = controladorVendas;
             controladorVendas.changeUser((Vendedor) usuario);
         }
         stage.setX(bounds.getMinX());

@@ -1,10 +1,7 @@
 package app.controllers;
 
 import app.Main;
-import app.classes.Estoque;
-import app.classes.Ingredientes;
-import app.classes.Produto;
-import app.classes.Receitas;
+import app.classes.*;
 import javafx.beans.binding.Bindings;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -20,6 +17,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -40,6 +38,8 @@ public class VenderReceita implements Initializable {
 
     @FXML
     private TextField txtReceita, txtQnt;
+
+    private int qnt;
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -99,10 +99,10 @@ public class VenderReceita implements Initializable {
     }
 
     @FXML
-    void pressQnt (KeyEvent event){
+    void pressQnt (KeyEvent event) throws IOException {
         if (!txtQnt.getText().isEmpty()) {
             if (event.getCode().equals(KeyCode.ENTER)) {
-                int qnt = Integer.parseInt(txtQnt.getText());
+                qnt = Integer.parseInt(txtQnt.getText());
                 for (Receitas receitas : Estoque.getInstance().getEstoqueR()) {
                     if (receitas.getNome().equals(lblReceita.getText())) {
                         for (Ingredientes ingR : receitas.getIngredientes()) {
@@ -119,20 +119,16 @@ public class VenderReceita implements Initializable {
                                 }
                             }
                         }
-                        Produto receitaP = new Produto(receitas.getNome(), qnt,receitas.getValorCusto(), receitas.getValorVenda(), receitas.getCodigo(), "Nenhum");
-                        //Continuar
-                        break;
+                        Receitas receita = new Receitas(receitas.getNome(),receitas.getValorCusto()*qnt,receitas.getValorVenda()*qnt,receitas.getCodigo(),qnt);
+
+                        LoginController.vc.getListaProdutos().add(receita);
+
+                        Stage stage = (Stage) txtQnt.getScene().getWindow();
+                        stage.close();
                     }
                 }
             }
         }
-    }
-
-    @FXML
-    public void fecharPrograma(){
-        Stage stage = (Stage) bntReceita.getScene().getWindow();
-        // do what you have to do
-        stage.close();
     }
 
     @FXML

@@ -1,11 +1,6 @@
 package app.classes;
 
-public class Produto {
-    private String nome;
-    private int quantidade;
-    private double valorCusto;
-    private double valorVenda;
-    private String codigo;
+public class Produto extends  Itens{
     private double peso;
     private String pesavel;
     private String ingredienteId;
@@ -19,76 +14,23 @@ public class Produto {
     }
 
     public Produto(String nome, int quantidade, double valorCusto, double valorVenda, String codigo, String ingredienteId) {
-        this.nome = nome;
-        this.quantidade = quantidade;
-        this.valorCusto = valorCusto;
-        this.valorVenda = valorVenda;
-        this.codigo = codigo;
+        super(nome, codigo,valorCusto,valorVenda, quantidade);
         this.ingredienteId = ingredienteId;
     }
 
     public Produto(String nome, int quantidade, double valorCusto, double valorVenda, String codigo, double peso, String pesavel, String ingredienteId) {
-        this.nome = nome;
-        this.quantidade = quantidade;
-        this.valorCusto = valorCusto;
-        this.valorVenda = valorVenda;
-        this.codigo = codigo;
+        super(nome, codigo,valorCusto,valorVenda,quantidade);
         this.peso = peso;
         this.pesavel = pesavel;
         this.ingredienteId = ingredienteId;
     }
 
     public Produto(String cod, String nome, int quantidade, double preco) {
-        this.codigo = cod;
-        this.nome = nome;
-        this.quantidade = quantidade;
-        this.valorVenda = preco;
+        super(nome, cod, 0, preco, quantidade);
     }
 
     public Produto(String nome, int quantidade, String codigo) {
-        this.nome = nome;
-        this.quantidade = quantidade;
-        this.codigo = codigo;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public int getQuantidade() {
-        return quantidade;
-    }
-
-    public void setQuantidade(int quantidade) {
-        this.quantidade = quantidade;
-    }
-
-    public double getValorCusto() {
-        return valorCusto;
-    }
-
-    public void setValorCusto(double valorCusto) {
-        this.valorCusto = valorCusto;
-    }
-
-    public double getValorVenda() {
-        return valorVenda;
-    }
-
-    public void setValorVenda(double valorVenda) {
-        this.valorVenda = valorVenda;
-    }
-
-    public String getCodigo() {
-        return codigo;
-    }
-
-    public void setCodigo(String codigo) {
-        this.codigo = codigo;
+        super(nome, codigo, quantidade);
     }
 
     public double getPeso() {
@@ -109,10 +51,10 @@ public class Produto {
 
     @Override
     public String toString() {
-        return this.nome;
+        return getNome();
     }
 
     public String toCSV() {
-        return this.codigo + ',' + this.nome + ',' + this.valorCusto + ',' + this.valorVenda + ',' + this.quantidade + '\n';
+        return getCodigo() + ',' + getNome() + ',' + getValorCusto() + ',' + getValorVenda() + ',' + getQuantidade() + '\n';
     }
 }

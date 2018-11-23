@@ -2,6 +2,7 @@ package app.controllers;
 
 import app.Main;
 import app.classes.Estoque;
+import app.classes.Itens;
 import app.classes.Produto;
 import app.classes.Venda;
 import app.classes.usuarios.Vendedor;
@@ -10,6 +11,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
@@ -21,11 +23,13 @@ import javafx.stage.Stage;
 import javafx.util.Callback;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Optional;
+import java.util.ResourceBundle;
 
-public class VendasController {
+public class VendasController implements Initializable{
 
     @FXML
     private Label lblQuantidade;
@@ -43,7 +47,7 @@ public class VendasController {
     private Label xVisible, realVisible1, realVisible2;
 
     @FXML
-    private TableView<Produto> tableProdutos;
+    private TableView<Itens> tableProdutos;
 
     @FXML
     private TextField txtCodBarras;
@@ -51,18 +55,18 @@ public class VendasController {
     @FXML
     private TextField txtQuantidade;
 
+    private ObservableList<Itens> listaProdutos = FXCollections.observableArrayList();
 
-    private ObservableList<Produto> listaProdutos = FXCollections.observableArrayList();
     private ArrayList<Produto> estoqueProdutos = new ArrayList<>();
 
     @FXML
-    private TableColumn<Produto, String> colCodBarras, colNome;
+    private TableColumn<Itens, String> colCodBarras, colNome;
 
     @FXML
-    private TableColumn<Produto, Double> colVenda;
+    private TableColumn<Itens, Double> colVenda;
 
     @FXML
-    private TableColumn<Produto, Integer> colEstoque;
+    private TableColumn<Itens, Integer> colEstoque;
 
     @FXML
     private Button inserir;
@@ -74,13 +78,23 @@ public class VendasController {
     private Venda venda;
 
 
-    public ObservableList<Produto> getListaProdutos() {
+    public ObservableList<Itens> getListaProdutos() {
         return listaProdutos;
     }
 
-    public void setListaProdutos(ObservableList<Produto> listaProdutos) {
+    public void setListaProdutos(ObservableList<Itens> listaProdutos) {
         this.listaProdutos = listaProdutos;
     }
+
+    public TableView<Itens> getTableProdutos() {
+        return tableProdutos;
+    }
+
+    public void setTableProdutos(TableView<Itens> tableProdutos) {
+        this.tableProdutos = tableProdutos;
+    }
+
+
 
     @FXML
     void digitarCdb(KeyEvent event){
@@ -103,6 +117,12 @@ public class VendasController {
             erroCdB.setContentText("Digite um código de barras de um produto cadastrado no sistema.");
             erroCdB.showAndWait();
             txtCodBarras.requestFocus();
+        } else if(event.getCode().equals(KeyCode.F6)){
+            try {
+                changeScreen("/app/resources/fxml/telaVenderReceita.fxml");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -173,12 +193,6 @@ public class VendasController {
     }
 
     @FXML
-    public void inserirReceita(Produto produto){
-        listaProdutos.add(produto);
-        creatTable();
-    }
-
-    @FXML
     public void inserirProduto(){
         Produto produto1, produtoE;
 
@@ -210,29 +224,31 @@ public class VendasController {
                         txtCodBarras.clear();
                         txtQuantidade.clear();
                         txtCodBarras.requestFocus();
-                        creatTable();
                     }
                 }
             }else if(statusVenda.equals("Ativa")){
                 for (Produto procurar : estoqueProdutos) {
                     if (procurar.getCodigo().equals(txtCodBarras.getText())) {
-                        for (Produto tableP : listaProdutos) {
-                            if (tableP.getCodigo().equals(procurar.getCodigo())) {
-                                produto1 = new Produto(tableP.getNome(), tableP.getQuantidade(), tableP.getValorCusto(), tableP.getValorVenda(), tableP.getCodigo(), tableP.getIngredienteId());
-                                produto1.setQuantidade(produto1.getQuantidade() + Integer.parseInt(txtQuantidade.getText()));
-                                listaProdutos.remove(tableP);
-                                listaProdutos.add(produto1);
-                                procurar.setQuantidade(procurar.getQuantidade() - Integer.parseInt(txtQuantidade.getText()));
-                                venda.setValor(venda.getValor()+produto1.getValorVenda() * Double.parseDouble(txtQuantidade.getText()));
-                                txtQuantidade.clear();
-                                txtCodBarras.clear();
-                                txtCodBarras.requestFocus();
-                                lblQuantidade.setText(Integer.toString(produto1.getQuantidade()));
-                                lblNomeProduto.setText(produto1.getNome());
-                                lblSubtotal.setText(String.format("%.2f", produto1.getValorVenda() * produto1.getQuantidade()));
-                                lblTotal.setText(String.format("%.2f", venda.getValor()));
+                        for (int i = 0; i<listaProdutos.size(); i++) {
+                            if(listaProdutos.get(i) instanceof Produto) {
+                                Produto produtop = (Produto) listaProdutos.get(i);
+                                if (produtop.getCodigo().equals(procurar.getCodigo())) {
+                                    produto1 = new Produto(produtop.getNome(), produtop.getQuantidade(), produtop.getValorCusto(), produtop.getValorVenda(), produtop.getCodigo(), produtop.getIngredienteId());
+                                    produto1.setQuantidade(produto1.getQuantidade() + Integer.parseInt(txtQuantidade.getText()));
+                                    listaProdutos.remove(produtop);
+                                    listaProdutos.add(produto1);
+                                    procurar.setQuantidade(procurar.getQuantidade() - Integer.parseInt(txtQuantidade.getText()));
+                                    venda.setValor(venda.getValor() + produto1.getValorVenda() * Double.parseDouble(txtQuantidade.getText()));
+                                    txtQuantidade.clear();
+                                    txtCodBarras.clear();
+                                    txtCodBarras.requestFocus();
+                                    lblQuantidade.setText(Integer.toString(produto1.getQuantidade()));
+                                    lblNomeProduto.setText(produto1.getNome());
+                                    lblSubtotal.setText(String.format("%.2f", produto1.getValorVenda() * produto1.getQuantidade()));
+                                    lblTotal.setText(String.format("%.2f", venda.getValor()));
 
-                                return;
+                                    return;
+                                }
                             }
                         }
                     }
@@ -262,15 +278,15 @@ public class VendasController {
 
 
     public void creatTable() {
-        colCodBarras.setCellValueFactory(new PropertyValueFactory<Produto, String>("codigo"));
-        colNome.setCellValueFactory(new PropertyValueFactory<Produto, String>("nome"));
-        colEstoque.setCellValueFactory(new PropertyValueFactory<Produto, Integer>("quantidade"));
-        colVenda.setCellValueFactory(new PropertyValueFactory<Produto, Double>("valorVenda"));
+        colCodBarras.setCellValueFactory(new PropertyValueFactory<Itens, String>("codigo"));
+        colNome.setCellValueFactory(new PropertyValueFactory<Itens, String>("nome"));
+        colEstoque.setCellValueFactory(new PropertyValueFactory<Itens, Integer>("quantidade"));
+        colVenda.setCellValueFactory(new PropertyValueFactory<Itens, Double>("valorVenda"));
 
-        Callback<TableColumn<Produto, Double>, TableCell<Produto, Double>> cellFactory = new Callback<TableColumn<Produto, Double>, TableCell<Produto, Double>>() {
+        Callback<TableColumn<Itens, Double>, TableCell<Itens, Double>> cellFactory = new Callback<TableColumn<Itens, Double>, TableCell<Itens, Double>>() {
             @Override
-            public TableCell<Produto, Double> call(TableColumn<Produto, Double> col) {
-                return new TableCell<Produto, Double>() {
+            public TableCell<Itens, Double> call(TableColumn<Itens, Double> col) {
+                return new TableCell<Itens, Double>() {
                     @Override
                     public void updateItem(Double value, boolean empty) {
                         super.updateItem(value, empty) ;
@@ -362,8 +378,8 @@ public class VendasController {
 
         if(result.isPresent()) {
             cDb = result.get();
-            for (Iterator<Produto> it = listaProdutos.iterator(); it.hasNext();) {
-                Produto produto1 = it.next();
+            for (Iterator<Itens> it = listaProdutos.iterator(); it.hasNext();) {
+                Produto produto1 = (Produto) it.next();
                 if (produto1.getCodigo().equals(cDb)) {
                     it.remove();
                     for (Iterator<Produto> i = estoqueProdutos.iterator(); i.hasNext();) {
@@ -376,9 +392,10 @@ public class VendasController {
                     venda.cancelarProduto(produto1);
                     venda.setValor(venda.getValor()-(produto1.getValorVenda()*produto1.getQuantidade()));
                     if(!listaProdutos.isEmpty()){
+                        Produto produto = (Produto) listaProdutos.get(listaProdutos.size()-1);
                         lblNomeProduto.setText(listaProdutos.get(listaProdutos.size()-1).getNome());
-                        lblQuantidade.setText(Integer.toString(listaProdutos.get(listaProdutos.size()-1).getQuantidade()));
-                        lblSubtotal.setText(String.format("%.2f", listaProdutos.get(listaProdutos.size()-1).getValorVenda()*listaProdutos.get(listaProdutos.size()-1).getQuantidade()));
+                        lblQuantidade.setText(Integer.toString(produto.getQuantidade()));
+                        lblSubtotal.setText(String.format("%.2f", listaProdutos.get(listaProdutos.size()-1).getValorVenda()*produto.getQuantidade()));
                         lblTotal.setText(String.format("%.2f", venda.getValor()));
                     }else{
                         lblNomeProduto.setVisible(false);
@@ -500,5 +517,18 @@ public class VendasController {
         } catch (NumberFormatException ex) {
             return false;
         }
+    }
+
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+        creatTable();
+    }
+
+    public Label getLblQuantidade() {
+        return lblQuantidade;
+    }
+
+    public void setLblQuantidade(Label lblQuantidade) {
+        this.lblQuantidade = lblQuantidade;
     }
 }
