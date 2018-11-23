@@ -12,7 +12,7 @@ public class RelatorioItensMaisVendidos extends Relatorio {
 
     @Override
     public void gerarRelatorio() throws JRException {
-        String src = "./relatorios/grafico_produtos_mais_vendidos.jasper";
+        String src = "relatorios/grafico_produtos_mais_vendidos.jasper";
         JasperPrint jasperPrint = null;
         ConnectionFactory cf = new ConnectionFactory();
         Connection conn = cf.getConnection();

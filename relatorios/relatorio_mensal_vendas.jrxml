@@ -78,7 +78,7 @@ order by nome;]]>
 			</frame>
 			<image>
 				<reportElement x="2" y="0" width="76" height="86" uuid="f151507d-854a-4e32-843b-2d53bc9f6dbc"/>
-				<imageExpression><![CDATA["../src/app/resources/images/Login.png"]]></imageExpression>
+				<imageExpression><![CDATA["Login.png"]]></imageExpression>
 			</image>
 		</band>
 	</title>
