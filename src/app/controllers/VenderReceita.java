@@ -44,6 +44,8 @@ public class VenderReceita implements Initializable {
 
     private int qnt;
 
+    private Estoque estoque = Estoque.getInstance();
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         ObservableList<String> receitas = FXCollections.observableArrayList();
@@ -106,11 +108,12 @@ public class VenderReceita implements Initializable {
         if (!txtQnt.getText().isEmpty()) {
             if (event.getCode().equals(KeyCode.ENTER)) {
                 qnt = Integer.parseInt(txtQnt.getText());
-                for (Receitas receitas : Estoque.getInstance().getEstoqueR()) {
+                for (Receitas receitas : estoque.getEstoqueR()) {
                     if (receitas.getNome().equals(lblReceita.getText())) {
                         for (Ingredientes ingR : receitas.getIngredientes()) {
-                            for (Ingredientes ingE : Estoque.getInstance().getEstoqueI()) {
+                            for (Ingredientes ingE : estoque.getEstoqueI()) {
                                 if (ingR.getCodigo().equals(ingE.getCodigo())) {
+                                    System.out.println(ingR.getPeso()*qnt + " - " + ingE.getPeso());
                                     if (ingR.getPeso() * qnt > ingE.getPeso()) {
                                         Alert alerta = new Alert(Alert.AlertType.ERROR);
                                         alerta.setTitle("Quantidade Indisponível");
@@ -124,32 +127,38 @@ public class VenderReceita implements Initializable {
                         }
                         Receitas receita = new Receitas(receitas.getNome(),receitas.getValorCusto()*qnt,receitas.getValorVenda()*qnt,receitas.getCodigo(),qnt);
 
-                        descontarEstoque(receitas.getIngredientes());
+                        Ingredientes ingredientes1;
+
+                        for(Ingredientes ing : receitas.getIngredientes()){
+                            for (int i=0; i<estoque.getEstoqueI().size();i++){
+                                if(estoque.getEstoqueI().get(i).getCodigo().equals(ing.getCodigo())){
+                                    ingredientes1 = estoque.getEstoqueI().remove(i);
+                                    ingredientes1.setPeso(estoque.getEstoqueI().get(i).getPeso()-ing.getPeso()*qnt);
+                                    estoque.getEstoqueI().add(new Ingredientes(ingredientes1.getNome(),ingredientes1.getPeso(),ingredientes1.getCodigo()));
+                                    break;
+                                }
+                            }
+                        }
+                        Estoque.getInstance1().getEstoqueI().setAll(estoque.getEstoqueI());
 
                         LoginController.vc.getListaProdutos().add(receita);
                         Stage stage = (Stage) txtQnt.getScene().getWindow();
                         stage.close();
+                        return;
                     }
                 }
             }
         }
     }
 
-    void descontarEstoque (ArrayList<Ingredientes> ingredientes){
-        ArrayList<Ingredientes> ingre = new ArrayList<>();
-        Ingredientes ingrediente;
-        for(Ingredientes ing : ingredientes) {
-            for (Iterator<Ingredientes> it = Estoque.getInstance().getEstoqueI().iterator(); it.hasNext(); ) {
-                ingrediente = (Ingredientes) it.next();
-                if (ingrediente.getCodigo().equals(ing.getCodigo())){
-                    ingre.add(new Ingredientes(ingrediente.getNome(), (ingrediente.getPeso() - (ing.getPeso()*qnt)), ingrediente.getCodigo()));
-                    it.remove();
-                }
-            }
-        }
+    public void descontarEstoque1 (ArrayList<Ingredientes> ingredientes, int qnt){
 
-        for (Ingredientes ingredient : ingre){
-            Estoque.getInstance().getEstoqueI().add(ingredient);
+    }
+
+    public void descontarEstoque (ArrayList<Ingredientes> ingredientes, int qnt){
+
+        for(int i=0;i<ingredientes.size();i++){
+            Estoque.getInstance().editarIngrediente(new Ingredientes(ingredientes.get(i).getNome(),ingredientes.get(i).getPeso()-ingredientes.get(i).getPeso()*qnt, ingredientes.get(i).getCodigo()));
         }
     }
 

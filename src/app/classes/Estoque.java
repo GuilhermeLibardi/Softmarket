@@ -116,10 +116,21 @@ public class Estoque {
     }
 
     public static synchronized Estoque getInstance() {
-        if (instancia == null) instancia = new Estoque();
+        if (instancia == null)
+            instancia = new Estoque();
         atualizarEstoque();
         atualizarEstoqueR();
         atualizarEstoqueI();
+        return instancia;
+    }
+
+    public static synchronized Estoque getInstance1() {
+        if (instancia == null){
+            instancia = new Estoque();
+            atualizarEstoqueI();
+            atualizarEstoqueR();
+            atualizarEstoque();
+        }
         return instancia;
     }
 
@@ -283,7 +294,7 @@ public class Estoque {
 
     public void editarIngrediente(Ingredientes i){
         try (Connection con = new ConnectionFactory().getConnection()) {
-            String sql = "UPDATE softmarketdb.ingredientes SET ingredientes.cod = ?, ingredientes.nome = ?, ingredientes.peso = ?  WHERE ingrediente.cod = ?";
+            String sql = "UPDATE softmarketdb.ingredientes SET ingredientes.cod = ?, ingredientes.nome = ?, ingredientes.peso = ?  WHERE ingredientes.cod = ?";
             PreparedStatement stmt = con.prepareStatement(sql);
             stmt.setString(1, i.getCodigo());
             stmt.setString(2, i.getNome());
