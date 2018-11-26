@@ -57,7 +57,7 @@ public class VendasController implements Initializable{
 
     private ObservableList<Itens> listaProdutos = FXCollections.observableArrayList();
 
-    private ArrayList<Produto> estoqueProdutos = new ArrayList<>();
+    private ArrayList<Itens> estoqueProdutos = new ArrayList<>();
 
     @FXML
     private TableColumn<Itens, String> colCodBarras, colNome;
@@ -140,14 +140,17 @@ public class VendasController implements Initializable{
                     if (procurar1.getCodigo().equals(txtCodBarras.getText())) {
                         if (procurar1.getQuantidade() >= (Integer.parseInt(txtQuantidade.getText()))) {
                             if (statusVenda.equals("Ativa")) {
-                                if (verificaLista(venda.getProdutos())) {
-                                    for (Produto vendasP : estoqueProdutos) {
-                                        if (vendasP.getCodigo().equals(txtCodBarras.getText())) {
-                                            if (vendasP.getQuantidade() < Integer.parseInt(txtQuantidade.getText())) {
-                                                txtQuantidade.clear();
-                                                alertaEstoque(vendasP);
-                                                txtQuantidade.requestFocus();
-                                                return;
+                                if (verificaLista(venda.getItens())) {
+                                    for (Itens vendasP1 : estoqueProdutos) {
+                                        if(vendasP1 instanceof Produto) {
+                                            Produto vendasP = (Produto) vendasP1;
+                                            if (vendasP.getCodigo().equals(txtCodBarras.getText())) {
+                                                if (vendasP.getQuantidade() < Integer.parseInt(txtQuantidade.getText())) {
+                                                    txtQuantidade.clear();
+                                                    alertaEstoque(vendasP);
+                                                    txtQuantidade.requestFocus();
+                                                    return;
+                                                }
                                             }
                                         }
                                     }
@@ -157,12 +160,14 @@ public class VendasController implements Initializable{
                             return;
                         } else {
                             if (statusVenda.equals("Ativa")) {
-                                for (Produto produtoEst : estoqueProdutos) {
-                                    if (produtoEst.getCodigo().equals(txtCodBarras.getText())) {
-                                        txtQuantidade.clear();
-                                        alertaEstoque(produtoEst);
-                                        txtQuantidade.requestFocus();
-                                        return;
+                                for (Itens produtoEst : estoqueProdutos) {
+                                    if(produtoEst instanceof Produto) {
+                                        if (produtoEst.getCodigo().equals(txtCodBarras.getText())) {
+                                            txtQuantidade.clear();
+                                            alertaEstoque(produtoEst);
+                                            txtQuantidade.requestFocus();
+                                            return;
+                                        }
                                     }
                                 }
                             }
@@ -192,6 +197,54 @@ public class VendasController implements Initializable{
         }
     }
 
+    public Label getLblNomeProduto() {
+        return lblNomeProduto;
+    }
+
+    public void setLblNomeProduto(String string) {
+        this.lblNomeProduto.setText(string);
+    }
+
+    public Label getLblSubtotal() {
+        return lblSubtotal;
+    }
+
+    public void setLblSubtotal(String string) {
+        this.lblSubtotal.setText(string);
+    }
+
+    public Label getLblTotal() {
+        return lblTotal;
+    }
+
+    public void setLblTotal(String string) {
+        this.lblTotal.setText(string);
+    }
+
+    public Label getxVisible() {
+        return xVisible;
+    }
+
+    public void setxVisible(Label xVisible) {
+        this.xVisible = xVisible;
+    }
+
+    public Label getRealVisible1() {
+        return realVisible1;
+    }
+
+    public void setRealVisible1(Label realVisible1) {
+        this.realVisible1 = realVisible1;
+    }
+
+    public Label getRealVisible2() {
+        return realVisible2;
+    }
+
+    public void setRealVisible2(Label realVisible2) {
+        this.realVisible2 = realVisible2;
+    }
+
     @FXML
     public void inserirProduto(){
         Produto produto1, produtoE;
@@ -214,7 +267,7 @@ public class VendasController implements Initializable{
                         estoqueProdutos.add(produtoE);
                         venda.setValor(venda.getValor() + mainP.getValorVenda() * Double.parseDouble(txtQuantidade.getText()));
                         listaProdutos.add(produto1);
-                        venda.inserirProduto(produto1);
+                        venda.inserirItem(produto1);
                         txtQuantidade.clear();
                         txtCodBarras.clear();
                         lblQuantidade.setText(Integer.toString(produto1.getQuantidade()));
@@ -227,7 +280,7 @@ public class VendasController implements Initializable{
                     }
                 }
             }else if(statusVenda.equals("Ativa")){
-                for (Produto procurar : estoqueProdutos) {
+                for (Itens procurar : estoqueProdutos) {
                     if (procurar.getCodigo().equals(txtCodBarras.getText())) {
                         for (int i = 0; i<listaProdutos.size(); i++) {
                             if(listaProdutos.get(i) instanceof Produto) {
@@ -260,7 +313,7 @@ public class VendasController implements Initializable{
                         estoqueProdutos.add(produtoE);
                         venda.setValor(venda.getValor() + mainP.getValorVenda() * Double.parseDouble(txtQuantidade.getText()));
                         listaProdutos.add(produto1);
-                        venda.inserirProduto(produto1);
+                        venda.inserirItem(produto1);
                         txtQuantidade.clear();
                         txtCodBarras.clear();
                         lblQuantidade.setText(Integer.toString(produto1.getQuantidade()));
@@ -303,19 +356,25 @@ public class VendasController implements Initializable{
         tableProdutos.setItems(listaProdutos);
     }
 
-    public boolean verificaLista(ObservableList<Produto> listaP){
-        for (Produto produtos : listaP){
-            if(produtos.getCodigo().equals(txtCodBarras.getText())){
-                return true;
+    public boolean verificaLista(ObservableList<Itens> listaP){
+        for (Itens item1 : listaP){
+            if(item1 instanceof Produto) {
+                Produto item = (Produto) item1;
+                if (item.getCodigo().equals(txtCodBarras.getText())) {
+                    return true;
+                }
             }
         }
         return false;
     }
 
-    public boolean verificaLista(ArrayList<Produto> listaP){
-        for (Produto produtos : listaP){
-            if(produtos.getCodigo().equals(txtCodBarras.getText())){
-                return true;
+    public boolean verificaLista(ArrayList<Itens> listaP){
+        for (Itens produtos3 : listaP){
+            if(produtos3 instanceof Produto) {
+                Produto produtos = (Produto) produtos3;
+                if (produtos.getCodigo().equals(txtCodBarras.getText())) {
+                    return true;
+                }
             }
         }
         return false;
@@ -357,11 +416,11 @@ public class VendasController implements Initializable{
         stage.setResizable(false);
     }
 
-    public void alertaEstoque(Produto produto) {
+    public void alertaEstoque(Itens item) {
         Alert erroEst = new Alert(Alert.AlertType.ERROR);
         erroEst.setTitle("Estoque Indisponível!");
         erroEst.setHeaderText("Quantidade desejada indisponível no estoque.");
-        erroEst.setContentText("Você pode inserir até: " + produto.getQuantidade() + " unidades.");
+        erroEst.setContentText("Você pode inserir até: " + item.getQuantidade() + " unidades.");
         erroEst.showAndWait();
     }
 
@@ -382,8 +441,8 @@ public class VendasController implements Initializable{
                 Produto produto1 = (Produto) it.next();
                 if (produto1.getCodigo().equals(cDb)) {
                     it.remove();
-                    for (Iterator<Produto> i = estoqueProdutos.iterator(); i.hasNext();) {
-                        Produto produto = i.next();
+                    for (Iterator<Itens> i = estoqueProdutos.iterator(); i.hasNext();) {
+                        Itens produto = i.next();
                         if (produto.getCodigo().equals(produto1.getCodigo())) {
                             i.remove();
                             break;
@@ -529,7 +588,47 @@ public class VendasController implements Initializable{
         return lblQuantidade;
     }
 
-    public void setLblQuantidade(Label lblQuantidade) {
-        this.lblQuantidade = lblQuantidade;
+    public void setLblQuantidade(String string) {
+        this.lblQuantidade.setText(string);
+    }
+
+    public Venda getVenda() {
+        return venda;
+    }
+
+    public void setVenda(Venda venda) {
+        this.venda = venda;
+    }
+
+    public String getStatusVenda() {
+        return statusVenda;
+    }
+
+    public void setStatusVenda(String statusVenda) {
+        this.statusVenda = statusVenda;
+    }
+
+    public Vendedor getVendedor() {
+        return vendedor;
+    }
+
+    public void setVendedor(Vendedor vendedor) {
+        this.vendedor = vendedor;
+    }
+
+    public TextField getTxtCodBarras() {
+        return txtCodBarras;
+    }
+
+    public void setTxtCodBarras(TextField txtCodBarras) {
+        this.txtCodBarras = txtCodBarras;
+    }
+
+    public ArrayList<Itens> getEstoqueProdutos() {
+        return estoqueProdutos;
+    }
+
+    public void setEstoqueProdutos(ArrayList<Itens> estoqueProdutos) {
+        this.estoqueProdutos = estoqueProdutos;
     }
 }
