@@ -127,9 +127,6 @@ public class Estoque {
     public static synchronized Estoque getInstance1() {
         if (instancia == null){
             instancia = new Estoque();
-            atualizarEstoqueI();
-            atualizarEstoqueR();
-            atualizarEstoque();
         }
         return instancia;
     }

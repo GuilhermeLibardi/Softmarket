@@ -522,6 +522,7 @@ public class VendasController implements Initializable{
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         creatTable();
+        Estoque.getInstance();
     }
 
     public Label getLblQuantidade() {
