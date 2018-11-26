@@ -1,7 +1,7 @@
 package app.controllers;
 
 import app.classes.Estoque;
-import app.classes.Produto;
+import app.classes.Receitas;
 import app.classes.exceptions.ProdutoNaoEncontradoException;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -21,7 +21,7 @@ public class RemoverReceitaController {
     private Button btnCancelar;
 
     @FXML
-    private TextField txtCodBarras;
+    private TextField txtCodigo;
 
     @FXML
     void handleCancelar() {
@@ -32,24 +32,23 @@ public class RemoverReceitaController {
     @FXML
     void handleRemover() {
         try{
-            Produto produto = Estoque.getInstance().pesquisarProduto(txtCodBarras.getText());
+            Receitas receita = Estoque.getInstance().pesquisarReceita(txtCodigo.getText());
             Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
             alerta.setTitle("Confirme sua ação");
-            alerta.setHeaderText("Remover " + produto.toString() + " do seu estoque?");
-            alerta.setContentText("Confirmar a remoção?");
+            alerta.setHeaderText("Remover " + receita.toString() + " do seu estoque?");
+            alerta.setContentText("Remover esta receita?");
 
             Optional<ButtonType> result = alerta.showAndWait();
             if (result.isPresent() && result.get() == ButtonType.OK) {
-                Estoque.getInstance().removerProduto(produto.getCodigo());
-                Estoque.getInstance().getEstoque().remove(produto);
+                Estoque.getInstance1().removerReceitas(receita.getCodigo());
                 Stage window = (Stage) btnCancelar.getScene().getWindow();
                 window.close();
             }
         } catch (ProdutoNaoEncontradoException e){
             Alert alerta = new Alert(Alert.AlertType.ERROR);
-            alerta.setTitle("Produto não encontrado");
-            alerta.setHeaderText("Produto não encontrado");
-            alerta.setContentText("Não podemos encontrar este produto no estoque, verifique se digitou o código de barras corretamente");
+            alerta.setTitle("Receita não encontrada");
+            alerta.setHeaderText("Receita não encontrada");
+            alerta.setContentText("Não podemos encontrar esta receita no estoque, verifique se digitou o código de barras corretamente");
             alerta.showAndWait();
         }
     }

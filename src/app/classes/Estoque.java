@@ -66,10 +66,10 @@ public class Estoque {
                 try (Connection con1 = new ConnectionFactory().getConnection()) {
                     String sq2 = "select i.cod, i.nome, receitas_contem_ingredientes.peso from receitas_contem_ingredientes join ingredientes i on receitas_contem_ingredientes.ingredientes_cod = i.cod where receitas_codBarras = ?";
                     PreparedStatement stmt2 = con.prepareStatement(sq2);
-                    stmt2.setString(1,rec.getCodigo());
+                    stmt2.setString(1, rec.getCodigo());
                     ResultSet resultados2 = stmt2.executeQuery();
                     rec.getIngredientes().clear();
-                    while (resultados2.next()){
+                    while (resultados2.next()) {
                         String cod2 = resultados2.getString("cod");
                         String nome2 = resultados2.getString("nome");
                         double peso = resultados2.getDouble("peso");
@@ -125,7 +125,7 @@ public class Estoque {
     }
 
     public static synchronized Estoque getInstance1() {
-        if (instancia == null){
+        if (instancia == null) {
             instancia = new Estoque();
         }
         return instancia;
@@ -270,6 +270,30 @@ public class Estoque {
         return p;
     }
 
+    public Receitas pesquisarReceita(String codBarras) throws ProdutoNaoEncontradoException {
+        Receitas r = null;
+        try (Connection con = new ConnectionFactory().getConnection()) {
+            String sql = "SELECT * FROM receitas WHERE codBarras = ?";
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setString(1, codBarras);
+            ResultSet resultados = stmt.executeQuery();
+
+            while (resultados.next()) {
+                String nome = resultados.getString("nome");
+                String codigo = resultados.getString("codBarras");
+                double pCusto = resultados.getDouble("pCusto");
+                double pVenda = resultados.getDouble("pVenda");
+                r = new Receitas(nome, pCusto, pVenda, codigo);
+            }
+
+        } catch (SQLException e) {
+            System.out.print("Erro ao preparar STMT: ");
+            System.out.println(e.getMessage());
+        }
+        if (r == null) throw new ProdutoNaoEncontradoException("ao pesquisar produto");
+        return r;
+    }
+
     public void editarProduto(Produto p) throws ProdutoNaoEncontradoException {
         try (Connection con = new ConnectionFactory().getConnection()) {
             String sql = "UPDATE softmarketdb.produtos SET produtos.pCusto = ?, produtos.peso = ?, produtos.pVenda = ?, produtos.nome = ?, produtos.pesavel = ?, produtos.quantidade = ? WHERE produtos.codBarras = ?";
@@ -289,7 +313,7 @@ public class Estoque {
         atualizarEstoque();
     }
 
-    public void editarIngrediente(Ingredientes i){
+    public void editarIngrediente(Ingredientes i) {
         try (Connection con = new ConnectionFactory().getConnection()) {
             String sql = "UPDATE softmarketdb.ingredientes SET ingredientes.cod = ?, ingredientes.nome = ?, ingredientes.peso = ?  WHERE ingredientes.cod = ?";
             PreparedStatement stmt = con.prepareStatement(sql);
@@ -305,7 +329,7 @@ public class Estoque {
         atualizarEstoqueI();
     }
 
-    public void editarReceitas(Receitas r){
+    public void editarReceitas(Receitas r) {
         try (Connection con = new ConnectionFactory().getConnection()) {
             String sql = "UPDATE softmarketdb.receitas SET receitas.codBarras = ?, receitas.nome = ?, receitas.pCusto = ?, receitas.pVenda = ?  WHERE receitas.codBarras = ?";
             PreparedStatement stmt = con.prepareStatement(sql);
