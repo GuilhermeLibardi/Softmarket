@@ -281,26 +281,28 @@ public class VendasController implements Initializable{
                 }
             }else if(statusVenda.equals("Ativa")){
                 for (Itens procurar : estoqueProdutos) {
-                    if (procurar.getCodigo().equals(txtCodBarras.getText())) {
-                        for (int i = 0; i<listaProdutos.size(); i++) {
-                            if(listaProdutos.get(i) instanceof Produto) {
-                                Produto produtop = (Produto) listaProdutos.get(i);
-                                if (produtop.getCodigo().equals(procurar.getCodigo())) {
-                                    produto1 = new Produto(produtop.getNome(), produtop.getQuantidade(), produtop.getValorCusto(), produtop.getValorVenda(), produtop.getCodigo(), produtop.getIngredienteId());
-                                    produto1.setQuantidade(produto1.getQuantidade() + Integer.parseInt(txtQuantidade.getText()));
-                                    listaProdutos.remove(produtop);
-                                    listaProdutos.add(produto1);
-                                    procurar.setQuantidade(procurar.getQuantidade() - Integer.parseInt(txtQuantidade.getText()));
-                                    venda.setValor(venda.getValor() + produto1.getValorVenda() * Double.parseDouble(txtQuantidade.getText()));
-                                    txtQuantidade.clear();
-                                    txtCodBarras.clear();
-                                    txtCodBarras.requestFocus();
-                                    lblQuantidade.setText(Integer.toString(produto1.getQuantidade()));
-                                    lblNomeProduto.setText(produto1.getNome());
-                                    lblSubtotal.setText(String.format("%.2f", produto1.getValorVenda() * produto1.getQuantidade()));
-                                    lblTotal.setText(String.format("%.2f", venda.getValor()));
+                    if (procurar instanceof Produto){
+                        if (procurar.getCodigo().equals(txtCodBarras.getText())) {
+                            for (int i = 0; i < listaProdutos.size(); i++) {
+                                if (listaProdutos.get(i) instanceof Produto) {
+                                    Produto produtop = (Produto) listaProdutos.get(i);
+                                    if (produtop.getCodigo().equals(procurar.getCodigo())) {
+                                        produto1 = new Produto(produtop.getNome(), produtop.getQuantidade(), produtop.getValorCusto(), produtop.getValorVenda(), produtop.getCodigo(), produtop.getIngredienteId());
+                                        produto1.setQuantidade(produto1.getQuantidade() + Integer.parseInt(txtQuantidade.getText()));
+                                        listaProdutos.remove(produtop);
+                                        listaProdutos.add(produto1);
+                                        procurar.setQuantidade(procurar.getQuantidade() - Integer.parseInt(txtQuantidade.getText()));
+                                        venda.setValor(venda.getValor() + produto1.getValorVenda() * Double.parseDouble(txtQuantidade.getText()));
+                                        txtQuantidade.clear();
+                                        txtCodBarras.clear();
+                                        txtCodBarras.requestFocus();
+                                        lblQuantidade.setText(Integer.toString(produto1.getQuantidade()));
+                                        lblNomeProduto.setText(produto1.getNome());
+                                        lblSubtotal.setText(String.format("%.2f", produto1.getValorVenda() * produto1.getQuantidade()));
+                                        lblTotal.setText(String.format("%.2f", venda.getValor()));
 
-                                    return;
+                                        return;
+                                    }
                                 }
                             }
                         }

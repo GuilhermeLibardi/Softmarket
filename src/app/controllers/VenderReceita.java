@@ -15,9 +15,7 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
-import org.jfree.util.Log;
 
-import javax.security.auth.spi.LoginModule;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -104,19 +102,8 @@ public class VenderReceita implements Initializable {
                 qnt = Integer.parseInt(txtQnt.getText());
                 for (Receitas receitas : Estoque.getInstance1().getEstoqueR()) {
                     if (receitas.getNome().equals(lblReceita.getText())) {
-                        for (Ingredientes ingR : receitas.getIngredientes()) {
-                            for (Ingredientes ingE :  Estoque.getInstance1().getEstoqueI()) {
-                                if (ingR.getCodigo().equals(ingE.getCodigo())) {
-                                    if (ingR.getPeso() * qnt > ingE.getPeso()) {
-                                        Alert alerta = new Alert(Alert.AlertType.ERROR);
-                                        alerta.setTitle("Quantidade Indisponível");
-                                        alerta.setHeaderText("Quantidade Excedeu o Limite");
-                                        alerta.setContentText("Diminua a quantidade de receitas");
-                                        alerta.showAndWait();
-                                        return;
-                                    }
-                                }
-                            }
+                        if(verificaIngredientes(receitas)==0){
+                            return;
                         }
                         Ingredientes ingredientes1;
 
@@ -158,6 +145,7 @@ public class VenderReceita implements Initializable {
                             for (Itens procurar : LoginController.vc.getEstoqueProdutos()){
                                 if(procurar instanceof Receitas){
                                     if(procurar.getCodigo().equals(receitas.getCodigo())){
+                                        if(verificaIngredientes(receitas) == 0) return;
                                         Receitas receitas2 = new Receitas(receitas.getNome(),receitas.getValorCusto(),receitas.getValorVenda(),receitas.getCodigo(),qnt);
                                         LoginController.vc.getListaProdutos().remove(receitas2);
                                         receitas2.setQuantidade(receitas2.getQuantidade() + qnt);
@@ -197,6 +185,24 @@ public class VenderReceita implements Initializable {
 
     public void descontarEstoque1 (ArrayList<Ingredientes> ingredientes, int qnt){
 
+    }
+
+    public int verificaIngredientes (Receitas receitas){
+        for (Ingredientes ingR : receitas.getIngredientes()) {
+            for (Ingredientes ingE :  Estoque.getInstance1().getEstoqueI()) {
+                if (ingR.getCodigo().equals(ingE.getCodigo())) {
+                    if (ingR.getPeso() * qnt > ingE.getPeso()) {
+                        Alert alerta = new Alert(Alert.AlertType.ERROR);
+                        alerta.setTitle("Quantidade Indisponível");
+                        alerta.setHeaderText("Quantidade Excedeu o Limite");
+                        alerta.setContentText("Diminua a quantidade de receitas");
+                        alerta.showAndWait();
+                        return 0;
+                    }
+                }
+            }
+        }
+        return 1;
     }
 
     public void descontarEstoque (ArrayList<Ingredientes> ingredientes, int qnt){
