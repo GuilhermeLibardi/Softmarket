@@ -4,6 +4,7 @@ import app.Main;
 import app.classes.usuarios.Gerente;
 import app.classes.usuarios.Usuario;
 import app.classes.usuarios.Vendedor;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -71,8 +72,8 @@ public class LoginController implements Initializable {
     @FXML
     public void fecharPrograma(){
         Stage stage = (Stage) btnFechar.getScene().getWindow();
-        // do what you have to do
         stage.close();
+        Platform.exit();
     }
 
     @FXML
@@ -93,6 +94,7 @@ public class LoginController implements Initializable {
 
         Scene scene = new Scene(root);
         stage.setScene(scene);
+        stage.setOnCloseRequest(event -> Platform.exit());
         stage.show();
         stage.setResizable(true);
         stage.setMaximized(true);

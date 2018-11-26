@@ -2,7 +2,6 @@ package app.classes;
 
 public class Produto extends  Itens{
     private double peso;
-    private String pesavel;
     private String ingredienteId;
 
     public String getIngredienteId() {
@@ -18,10 +17,9 @@ public class Produto extends  Itens{
         this.ingredienteId = ingredienteId;
     }
 
-    public Produto(String nome, int quantidade, double valorCusto, double valorVenda, String codigo, double peso, String pesavel, String ingredienteId) {
+    public Produto(String nome, int quantidade, double valorCusto, double valorVenda, String codigo, double peso, String ingredienteId) {
         super(nome, codigo,valorCusto,valorVenda,quantidade);
         this.peso = peso;
-        this.pesavel = pesavel;
         this.ingredienteId = ingredienteId;
     }
 
@@ -39,14 +37,6 @@ public class Produto extends  Itens{
 
     public void setPeso(double peso) {
         this.peso = peso;
-    }
-
-    public String getPesavel() {
-        return pesavel;
-    }
-
-    public void setPesavel(String pesavel) {
-        this.pesavel = pesavel;
     }
 
     @Override
