@@ -23,6 +23,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import net.sf.jasperreports.engine.JRException;
@@ -80,10 +81,15 @@ public class GerenteController implements Initializable {
     @FXML
     private TableColumn<Produto, Integer> colEstoque;
 
-    private Usuario usuario;
+    @FXML
+    private ListView<Ingredientes> listaIngredientes;
 
     @FXML
     private DatePicker dataInicial, dataFinal;
+
+    private Usuario usuario;
+
+    private ObservableList<Ingredientes> ingredientesReceita = FXCollections.observableArrayList();
 
 
     public void changeUser(Usuario user) {
@@ -114,6 +120,48 @@ public class GerenteController implements Initializable {
         colCompra.setCellValueFactory(new PropertyValueFactory<Produto, Double>("valorCusto"));
         colPeso.setCellValueFactory(new PropertyValueFactory<Produto, Double>("peso"));
         colPesavel.setCellValueFactory(new PropertyValueFactory<Produto, String>("pesavel"));
+
+        listaIngredientes.setCellFactory(param -> new ListCell<>() {
+            @Override
+            protected void updateItem(Ingredientes item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (empty || item == null || item.getNome() == null) {
+                    setText(null);
+                } else {
+                    setText(item.getNome());
+                }
+            }
+        });
+
+        tabelaReceitas.setRowFactory(tv -> {
+            TableRow<Receitas> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY
+                        && event.getClickCount() == 2) {
+
+                    Receitas r = row.getItem();
+                    ingredientesReceita.clear();
+                    ingredientesReceita.addAll(r.getIngredientes());
+                }
+            });
+            return row;
+        });
+
+        tabelaProdutos.setRowFactory(tv -> {
+            TableRow<Produto> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY
+                        && event.getClickCount() == 2) {
+
+                    Produto r = row.getItem();
+                    editProduto(r.getCodigo());
+                }
+            });
+            return row;
+        });
+
+        listaIngredientes.setItems(ingredientesReceita);
 
         txtPesquisa.setPromptText("Procure por produtos");
 
@@ -288,6 +336,15 @@ public class GerenteController implements Initializable {
     }
 
     @FXML
+    void editProduto(String cod) {
+        try {
+            changeScreen("/app/resources/fxml/telaEditarProduto.fxml", cod);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
     void removeProduto() {
         try {
             changeScreen("/app/resources/fxml/telaRemoverProduto.fxml");
@@ -358,6 +415,25 @@ public class GerenteController implements Initializable {
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(getClass().getResource(fxml));
         Parent root = loader.load();
+
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+        stage.setResizable(false);
+    }
+
+    private void changeScreen(String fxml, String cod) throws IOException {
+        Stage stage = new Stage();
+
+        stage.getIcons().add(new Image(Main.class.getResourceAsStream("/app/resources/images/ICONE.png")));
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(getClass().getResource(fxml));
+        Parent root = loader.load();
+
+        if (fxml.contains("EditarProduto")) {
+            EditarProdutoController produtoController = (EditarProdutoController) loader.getController();
+            produtoController.setCod(cod);
+        }
 
         Scene scene = new Scene(root);
         stage.setScene(scene);

@@ -116,17 +116,13 @@ public class AdicionarReceitaController implements Initializable {
                 estado++;
                 break;
             case 1:
-//                System.out.println("Ingredientes escolhidos: ");
-//                for(Ingredientes i : ingredientesEscolhidos){
-//                    System.out.println(i.getNome() + " " + i.getCodigo() + " " + i.getPeso());
-//                }
                 //Pega os valores
                 Ingredientes ing;
                 for (Ingredientes ingredienteEstoque : ingredientesEstoque) {
-                    for (int i = 0; i < ingredientesEscolhidos.size(); i++) {
-                        if (ingredientesEscolhidos.get(i).getNome().equals(ingredienteEstoque.getNome())) {
-                            ingredientesEscolhidos.get(i).setPeso(0.0);
-                            ingredientesEscolhidos.get(i).setCodigo(ingredienteEstoque.getCodigo());
+                    for (Ingredientes ingredientesEscolhido : ingredientesEscolhidos) {
+                        if (ingredientesEscolhido.getNome().equals(ingredienteEstoque.getNome())) {
+                            ingredientesEscolhido.setPeso(0.0);
+                            ingredientesEscolhido.setCodigo(ingredienteEstoque.getCodigo());
                         }
                     }
                 }

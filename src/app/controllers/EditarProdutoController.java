@@ -28,6 +28,8 @@ public class EditarProdutoController implements Initializable {
     @FXML
     private ComboBox comboIng;
 
+    private String cod;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         ObservableList<String> ingredientes = FXCollections.observableArrayList();
@@ -37,6 +39,7 @@ public class EditarProdutoController implements Initializable {
         for(Ingredientes ingrediente: Estoque.getInstance().getEstoqueI()){
             ingredientes.add(ingrediente.getNome());
         }
+        txtCodBarras.setText(cod);
 
         this.comboIng.setItems(ingredientes);
     }
@@ -123,6 +126,12 @@ public class EditarProdutoController implements Initializable {
             Stage window = (Stage) btnCadastrar.getScene().getWindow();
             window.close();
         }
+    }
+
+    public void setCod(String cod){
+        this.cod = cod;
+        txtCodBarras.setText(cod);
+        btnSearch.fire();
     }
 
 }
