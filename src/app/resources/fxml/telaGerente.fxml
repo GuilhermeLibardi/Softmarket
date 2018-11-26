@@ -86,7 +86,7 @@
                   <ComboBox fx:id="comboTipo" layoutX="318.0" layoutY="188.0" prefWidth="150.0" promptText="Tipo de relatório" />
                </children>
             </Pane>
-            <Pane fx:id="painelEstoque" prefHeight="766.0" prefWidth="955.0" styleClass="paneBackground" visible="false">
+            <Pane fx:id="painelEstoque" prefHeight="766.0" prefWidth="955.0" styleClass="paneBackground">
                <children>
                   <TableView fx:id="tabelaProdutos" layoutX="38.0" layoutY="186.0" prefHeight="485.0" prefWidth="850.0">
                     <columns>
@@ -98,6 +98,14 @@
                         <TableColumn fx:id="colPeso" prefWidth="51.0" text="Peso" />
                         <TableColumn fx:id="colPesavel" prefWidth="59.0" text="Pesável" />
                     </columns>
+                     <contextMenu>
+                        <ContextMenu fx:id="contextMenu">
+                          <items>
+                            <MenuItem fx:id="menuItemEditar" mnemonicParsing="false" onAction="#handleEditarMI" text="Editar" />
+                              <MenuItem fx:id="menuItemRemover" mnemonicParsing="false" onAction="#handleRemoverMI" text="Remover" />
+                          </items>
+                        </ContextMenu>
+                     </contextMenu>
                   </TableView>
                   <TextField fx:id="txtPesquisa" layoutX="382.0" layoutY="112.0" prefHeight="25.0" prefWidth="417.0" promptText="Pesquisar" />
                   <Label layoutX="349.0" layoutY="34.0" text="Estoque de produtos" textAlignment="CENTER" textFill="#1c8577">
@@ -165,7 +173,7 @@
                   </Button>
                </children>
             </Pane>
-            <Pane fx:id="painelReceitas" prefHeight="766.0" prefWidth="955.0" styleClass="paneBackground">
+            <Pane fx:id="painelReceitas" prefHeight="766.0" prefWidth="955.0" styleClass="paneBackground" visible="false">
                <children>
                   <TableView fx:id="tabelaReceitas" layoutX="38.0" layoutY="186.0" prefHeight="485.0" prefWidth="583.0">
                      <columns>

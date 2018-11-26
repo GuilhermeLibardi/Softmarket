@@ -14,6 +14,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -86,6 +87,12 @@ public class GerenteController implements Initializable {
 
     @FXML
     private DatePicker dataInicial, dataFinal;
+
+    @FXML
+    private ContextMenu contextMenu;
+
+    @FXML
+    private MenuItem menuItemRemover, menuItemEditar;
 
     private Usuario usuario;
 
@@ -354,6 +361,15 @@ public class GerenteController implements Initializable {
     }
 
     @FXML
+    void removeProduto(String cod) {
+        try {
+            changeScreen("/app/resources/fxml/telaRemoverProduto.fxml", cod);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
     void addReceita() {
         try {
             changeScreen("/app/resources/fxml/telaAdicionarReceita.fxml");
@@ -433,6 +449,9 @@ public class GerenteController implements Initializable {
         if (fxml.contains("EditarProduto")) {
             EditarProdutoController produtoController = (EditarProdutoController) loader.getController();
             produtoController.setCod(cod);
+        } else if (fxml.contains("RemoverProduto")){
+            RemoverProdutoController rmvProdutoController = (RemoverProdutoController) loader.getController();
+            rmvProdutoController.setCod(cod);
         }
 
         Scene scene = new Scene(root);
@@ -441,4 +460,13 @@ public class GerenteController implements Initializable {
         stage.setResizable(false);
     }
 
+    public void handleEditarMI(ActionEvent actionEvent) {
+        Produto r = tabelaProdutos.getSelectionModel().getSelectedItem();
+        editProduto(r.getCodigo());
+    }
+
+    public void handleRemoverMI(ActionEvent actionEvent) {
+        Produto r = tabelaProdutos.getSelectionModel().getSelectedItem();
+        removeProduto(r.getCodigo());
+    }
 }
