@@ -1,9 +1,7 @@
 package app.controllers;
 
 import app.Main;
-import app.classes.Estoque;
-import app.classes.Ingredientes;
-import app.classes.Receitas;
+import app.classes.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -17,7 +15,9 @@ import javafx.scene.image.Image;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
+import org.jfree.util.Log;
 
+import javax.security.auth.spi.LoginModule;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -60,6 +60,7 @@ public class VenderReceita implements Initializable {
                 return data.toLowerCase().contains(lowerCaseSearch);
             });
         }));
+        Estoque.atualizarEstoqueR();
     }
 
     @FXML
@@ -76,7 +77,6 @@ public class VenderReceita implements Initializable {
                 txtQnt.setVisible(true);
                 lblQnt.setVisible(true);
 
-                Estoque.atualizarEstoqueR();
                 ObservableList<String> ingredientes = FXCollections.observableArrayList();
 
                 for(Receitas receitas : Estoque.getInstance1().getEstoqueR()){
@@ -107,7 +107,6 @@ public class VenderReceita implements Initializable {
                         for (Ingredientes ingR : receitas.getIngredientes()) {
                             for (Ingredientes ingE :  Estoque.getInstance1().getEstoqueI()) {
                                 if (ingR.getCodigo().equals(ingE.getCodigo())) {
-                                    System.out.println(ingR.getPeso()*qnt + " - " + ingE.getPeso());
                                     if (ingR.getPeso() * qnt > ingE.getPeso()) {
                                         Alert alerta = new Alert(Alert.AlertType.ERROR);
                                         alerta.setTitle("Quantidade Indisponível");
@@ -132,8 +131,61 @@ public class VenderReceita implements Initializable {
                                 }
                             }
                         }
-                        LoginController.vc.getListaProdutos().add(new Receitas(receitas.getNome(),receitas.getValorCusto()*qnt,receitas.getValorVenda()*qnt,receitas.getCodigo(),qnt));
-
+                        Venda venda;
+                        if(LoginController.vc.getStatusVenda().equals("Ocioso")){
+                            LoginController.vc.setStatusVenda("Ativa");
+                            venda = LoginController.vc.getVendedor().iniciarVenda();
+                            venda.setValor(venda.getValor() + receitas.getValorVenda()*qnt);
+                            LoginController.vc.getLblNomeProduto().setVisible(true);
+                            LoginController.vc.getLblQuantidade().setVisible(true);
+                            LoginController.vc.getLblSubtotal().setVisible(true);
+                            LoginController.vc.getLblTotal().setVisible(true);
+                            LoginController.vc.getxVisible().setVisible(true);
+                            LoginController.vc.getRealVisible1().setVisible(true);
+                            LoginController.vc.getRealVisible2().setVisible(true);
+                            venda.inserirItem(new Receitas(receitas.getNome(),receitas.getValorCusto(),receitas.getValorVenda(),receitas.getCodigo(),qnt));
+                            LoginController.vc.getEstoqueProdutos().add(new Receitas(receitas.getNome(),receitas.getValorCusto(),receitas.getValorVenda(),receitas.getCodigo(),qnt));
+                            LoginController.vc.getListaProdutos().add(new Receitas(receitas.getNome(),receitas.getValorCusto(),receitas.getValorVenda(),receitas.getCodigo(),qnt));
+                            LoginController.vc.setLblQuantidade(String.valueOf(qnt));
+                            LoginController.vc.setLblNomeProduto(receitas.getNome());
+                            LoginController.vc.setLblSubtotal(String.format("%.2f", receitas.getValorVenda()*qnt));
+                            LoginController.vc.setLblTotal(String.format("%.2f", venda.getValor()));
+                            LoginController.vc.setVenda(venda);
+                            LoginController.vc.getTxtCodBarras().requestFocus();
+                            return;
+                        }else if(LoginController.vc.getStatusVenda().equals("Ativa")){
+                            venda = LoginController.vc.getVenda();
+                            for (Itens procurar : LoginController.vc.getEstoqueProdutos()){
+                                if(procurar instanceof Receitas){
+                                    if(procurar.getCodigo().equals(receitas.getCodigo())){
+                                        Receitas receitas2 = new Receitas(receitas.getNome(),receitas.getValorCusto(),receitas.getValorVenda(),receitas.getCodigo(),qnt);
+                                        LoginController.vc.getListaProdutos().remove(receitas2);
+                                        receitas2.setQuantidade(receitas2.getQuantidade() + qnt);
+                                        procurar.setQuantidade(procurar.getQuantidade() - qnt);
+                                        venda.setValor(venda.getValor() + receitas.getValorVenda()*qnt);
+                                        LoginController.vc.setLblQuantidade(String.valueOf(receitas2.getQuantidade()));
+                                        LoginController.vc.setLblNomeProduto(receitas2.getNome());
+                                        LoginController.vc.setLblSubtotal(String.format("%.2f", receitas2.getValorVenda()*receitas2.getQuantidade()));
+                                        LoginController.vc.setLblTotal(String.format("%.2f", venda.getValor()));
+                                        LoginController.vc.setVenda(venda);
+                                        LoginController.vc.getTxtCodBarras().requestFocus();
+                                        return;
+                                    }
+                                }
+                            }
+                            venda = LoginController.vc.getVenda();
+                            Receitas receitas3 = new Receitas(receitas.getNome(),receitas.getValorCusto(),receitas.getValorVenda(),receitas.getCodigo(),qnt);
+                            LoginController.vc.getEstoqueProdutos().add(new Receitas(receitas.getNome(),receitas.getValorCusto(),receitas.getValorVenda(),receitas.getCodigo(),qnt));
+                            venda.setValor(venda.getValor() + receitas.getValorVenda()*qnt);
+                            LoginController.vc.getListaProdutos().add(receitas3);
+                            venda.inserirItem(receitas3);
+                            LoginController.vc.setLblQuantidade(String.valueOf(receitas3.getQuantidade()));
+                            LoginController.vc.setLblNomeProduto(receitas3.getNome());
+                            LoginController.vc.setLblSubtotal(String.format("%.2f", receitas3.getValorVenda()*receitas3.getQuantidade()));
+                            LoginController.vc.setLblTotal(String.format("%.2f", venda.getValor()));
+                            LoginController.vc.setVenda(venda);
+                            LoginController.vc.getTxtCodBarras().requestFocus();
+                        }
                         Stage stage = (Stage) txtQnt.getScene().getWindow();
                         stage.close();
                         return;

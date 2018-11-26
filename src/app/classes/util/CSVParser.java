@@ -75,7 +75,7 @@ public class CSVParser {
             Venda v = new Venda();
             aux=Integer.parseInt(info[0])*3;
             for (int i=1;i<=aux;i+=3){
-                v.getProdutos().add(new Produto(String.valueOf(info[i+1]), Integer.parseInt(info[i+2]), String.valueOf(info[i])));
+                v.getItens().add(new Produto(String.valueOf(info[i+1]), Integer.parseInt(info[i+2]), String.valueOf(info[i])));
             }
             aux++;
             v.setPagamento(Double.parseDouble(info[aux+2]));

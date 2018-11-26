@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 public class Venda {
-    private ArrayList <Produto> produtos;
+    private ArrayList <Itens> itens;
     private double valor;
     private double troco;
     private double pagamento;
@@ -14,7 +14,7 @@ public class Venda {
     private LocalDate date;
 
     public Venda() {
-        this.produtos = new ArrayList<Produto>();
+        this.itens = new ArrayList<Itens>();
         this.valor = 0;
         this.troco = 0;
         this.pagamento = 0;
@@ -30,7 +30,7 @@ public class Venda {
     public String notaFiscal(){
         StringBuilder nota = new StringBuilder();
         nota.append("Lista de Produtos\n\n");
-        for(Produto produtosI : produtos){
+        for(Itens produtosI : itens){
             nota.append(produtosI.getCodigo()).append(" - ").append(produtosI.getNome()).append(" - ").append(produtosI.getQuantidade()).append(String.format("x R$ %.2f", produtosI.getValorVenda()));
             nota.append("\n");
         }
@@ -48,12 +48,12 @@ public class Venda {
         return String.valueOf(nota);
     }
 
-    public ArrayList<Produto> getProdutos() {
-        return produtos;
+    public ArrayList<Itens> getItens() {
+        return itens;
     }
 
-    public void setProdutos(ArrayList<Produto> produtos) {
-        this.produtos = produtos;
+    public void setItens(ArrayList<Itens> itens) {
+        this.itens = itens;
     }
 
     public Double getValor() {
@@ -104,14 +104,14 @@ public class Venda {
         this.date = date;
     }
 
-    public void inserirProduto(Produto produto1) {
-        produtos.add(produto1);
+    public void inserirItem(Itens item) {
+        itens.add(item);
     }
 
-    public void cancelarProduto(Produto produto1) {
-        for (Iterator<Produto> i = produtos.iterator(); i.hasNext();) {
-            Produto produto = i.next();
-            if (produto.getCodigo().equals(produto1.getCodigo())) {
+    public void cancelarProduto(Itens item) {
+        for (Iterator<Itens> i = itens.iterator(); i.hasNext();) {
+            Itens item1 = i.next();
+            if (item1.getCodigo().equals(item.getCodigo())) {
                 i.remove();
                 break;
             }
@@ -119,14 +119,14 @@ public class Venda {
     }
 
     public void cancelarVenda() {
-        produtos.clear();
+        itens.clear();
     }
 
     public String toCSV() {
         StringBuilder vendasLista = new StringBuilder();
 
-        vendasLista.append(String.valueOf(this.produtos.size()) + ',');
-        for (Produto p: this.produtos){
+        vendasLista.append(String.valueOf(this.itens.size()) + ',');
+        for (Itens p: this.itens){
             vendasLista.append(p.getCodigo() + ',' + p.getNome() + ',' + p.getQuantidade() + ',');
         }
         vendasLista.append(this.date.toString() + ',' + this.troco + ',' + this.pagamento + ',' + this.tipoPag + ',' + this.id + ',' + this.valor + ',' + "\n\n");
