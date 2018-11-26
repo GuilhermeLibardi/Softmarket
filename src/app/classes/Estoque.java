@@ -290,7 +290,7 @@ public class Estoque {
             System.out.print("Erro ao preparar STMT: ");
             System.out.println(e.getMessage());
         }
-        if (r == null) throw new ProdutoNaoEncontradoException("ao pesquisar produto");
+        if (r == null) throw new ProdutoNaoEncontradoException("ao pesquisar receita");
         return r;
     }
 
