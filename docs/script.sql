@@ -74,7 +74,7 @@ CREATE TABLE IF NOT EXISTS `softmarketdb`.`receitas_contem_ingredientes` (
   CONSTRAINT `fk_ingredientes_contem_receitas_receitas1`
   FOREIGN KEY (`receitas_codBarras`)
   REFERENCES `softmarketdb`.`receitas` (`codBarras`)
-    ON DELETE RESTRICT
+    ON DELETE CASCADE
     ON UPDATE CASCADE
 )
   ENGINE = INNODB;
