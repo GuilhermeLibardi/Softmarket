@@ -291,6 +291,31 @@ public class Estoque {
         return r;
     }
 
+    public Ingredientes pesquisarIngrediente(String codBarras) throws ProdutoNaoEncontradoException {
+        Produto p = null;
+        Ingredientes i = null;
+        try (Connection con = new ConnectionFactory().getConnection()) {
+            String sql = "SELECT * FROM softmarketdb.ingredientes WHERE codBarras = ?";
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setString(1, codBarras);
+            ResultSet resultados = stmt.executeQuery();
+
+            while (resultados.next()) {
+                String codigo = resultados.getString("cod");
+                String nome = resultados.getString("nome");
+                double peso = resultados.getDouble("peso");
+                String codIng = resultados.getString("codIngrediente");
+                i = new Ingredientes(nome, peso, codigo);
+            }
+
+        } catch (SQLException e) {
+            System.out.print("Erro ao preparar STMT: ");
+            System.out.println(e.getMessage());
+        }
+        if (i == null) throw new ProdutoNaoEncontradoException("ao pesquisar produto");
+        return i;
+    }
+
     public void editarProduto(Produto p) throws ProdutoNaoEncontradoException {
         try (Connection con = new ConnectionFactory().getConnection()) {
             String sql = "UPDATE softmarketdb.produtos SET produtos.pCusto = ?, produtos.peso = ?, produtos.pVenda = ?, produtos.nome = ?, produtos.quantidade = ? WHERE produtos.codBarras = ?";

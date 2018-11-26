@@ -1,6 +1,7 @@
 package app.controllers;
 
 import app.classes.Estoque;
+import app.classes.Ingredientes;
 import app.classes.Produto;
 import app.classes.exceptions.ProdutoNaoEncontradoException;
 import javafx.fxml.FXML;
@@ -32,6 +33,7 @@ public class RemoverIngredienteController {
     @FXML
     void handleRemover() {
         try{
+            Ingredientes ingrediente = Estoque.getInstance1().pesquisarIngrediente(txtCodBarras.getText());
             Produto produto = Estoque.getInstance().pesquisarProduto(txtCodBarras.getText());
             Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
             alerta.setTitle("Confirme sua ação");
