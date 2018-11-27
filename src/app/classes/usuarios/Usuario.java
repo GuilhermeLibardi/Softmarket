@@ -49,7 +49,7 @@ public class Usuario {
 
     public String verificaLogin(){
         try (Connection con = new ConnectionFactory().getConnection()){
-            String sql = "SELECT * FROM softmarketdb.usuarios WHERE login = ?;";
+            String sql = "SELECT * FROM jpacon92_softmarketdb.usuarios WHERE login = ?;";
             PreparedStatement stmt = con.prepareStatement(sql);
             stmt.setString(1, this.login);
             ResultSet resultados = stmt.executeQuery();

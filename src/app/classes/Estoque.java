@@ -26,7 +26,7 @@ public class Estoque {
         Ingredientes ingredientes;
 
         try (Connection con = new ConnectionFactory().getConnection()) {
-            String sql = "SELECT * FROM softmarketdb.ingredientes;";
+            String sql = "SELECT * FROM ingredientes;";
             PreparedStatement stmt = con.prepareStatement(sql);
             ResultSet resultados = stmt.executeQuery();
             estoqueI.clear();
@@ -50,7 +50,7 @@ public class Estoque {
         Ingredientes ing;
 
         try (Connection con = new ConnectionFactory().getConnection()) {
-            String sql = "SELECT * FROM softmarketdb.receitas;";
+            String sql = "SELECT * FROM receitas;";
             PreparedStatement stmt = con.prepareStatement(sql);
             ResultSet resultados = stmt.executeQuery();
             estoqueR.clear();
@@ -130,7 +130,7 @@ public class Estoque {
         Produto produto;
 
         try (Connection con = new ConnectionFactory().getConnection()) {
-            String sql = "SELECT * FROM softmarketdb.produtos ORDER BY produtos.nome;";
+            String sql = "SELECT * FROM produtos ORDER BY produtos.nome;";
             PreparedStatement stmt = con.prepareStatement(sql);
             ResultSet resultados = stmt.executeQuery();
             estoque.clear();
@@ -183,7 +183,7 @@ public class Estoque {
 
     public void adicionarProduto(Produto p) {
         try (Connection con = new ConnectionFactory().getConnection()) {
-            String sql = "INSERT INTO softmarketdb.produtos (codBarras, pCusto, pVenda, nome, peso, quantidade, codIngrediente) VALUES(?,?,?,?,?,?,?)";
+            String sql = "INSERT INTO produtos (codBarras, pCusto, pVenda, nome, peso, quantidade, codIngrediente) VALUES(?,?,?,?,?,?,?)";
             PreparedStatement stmt = con.prepareStatement(sql);
             stmt.setString(1, p.getCodigo());
             stmt.setDouble(2, p.getValorCusto());
@@ -204,7 +204,7 @@ public class Estoque {
 
     public void adicionarIngredientes(Ingredientes i) {
         try (Connection con = new ConnectionFactory().getConnection()) {
-            String sql = "INSERT INTO softmarketdb.ingredientes VALUES(?,?,?)";
+            String sql = "INSERT INTO ingredientes VALUES(?,?,?)";
             PreparedStatement stmt = con.prepareStatement(sql);
             stmt.setString(1, i.getCodigo());
             stmt.setString(2, i.getNome());
@@ -221,7 +221,7 @@ public class Estoque {
 
     public void adicionarReceita(Receitas r) {
         try (Connection con = new ConnectionFactory().getConnection()) {
-            String sql = "INSERT INTO softmarketdb.receitas VALUES(?,?,?,?)";
+            String sql = "INSERT INTO receitas VALUES(?,?,?,?)";
             PreparedStatement stmt = con.prepareStatement(sql);
             stmt.setString(1, r.getCodigo());
             stmt.setDouble(2, r.getValorCusto());
@@ -239,7 +239,7 @@ public class Estoque {
 
     public void removerProduto(String codBarras) {
         try (Connection con = new ConnectionFactory().getConnection()) {
-            String sql = "DELETE FROM softmarketdb.produtos WHERE codBarras = ?";
+            String sql = "DELETE FROM produtos WHERE codBarras = ?";
             PreparedStatement stmt = con.prepareStatement(sql);
             stmt.setString(1, codBarras);
             stmt.execute();
@@ -253,7 +253,7 @@ public class Estoque {
 
     public void removerIngredientes(String codigo) {
         try (Connection con = new ConnectionFactory().getConnection()) {
-            String sql = "DELETE FROM softmarketdb.ingredientes WHERE cod = ?";
+            String sql = "DELETE FROM ingredientes WHERE cod = ?";
             PreparedStatement stmt = con.prepareStatement(sql);
             stmt.setString(1, codigo);
             stmt.execute();
@@ -267,7 +267,7 @@ public class Estoque {
 
     public void removerReceitas(String codBarras) {
         try (Connection con = new ConnectionFactory().getConnection()) {
-            String sql = "DELETE FROM softmarketdb.receitas WHERE codBarras = ?";
+            String sql = "DELETE FROM receitas WHERE codBarras = ?";
             PreparedStatement stmt = con.prepareStatement(sql);
             stmt.setString(1, codBarras);
             stmt.execute();
@@ -282,7 +282,7 @@ public class Estoque {
     public Produto pesquisarProduto(String codBarras) throws ProdutoNaoEncontradoException {
         Produto p = null;
         try (Connection con = new ConnectionFactory().getConnection()) {
-            String sql = "SELECT * FROM softmarketdb.produtos WHERE codBarras = ?";
+            String sql = "SELECT * FROM produtos WHERE codBarras = ?";
             PreparedStatement stmt = con.prepareStatement(sql);
             stmt.setString(1, codBarras);
             ResultSet resultados = stmt.executeQuery();
@@ -335,7 +335,7 @@ public class Estoque {
         Ingredientes i = null;
 
         try (Connection con = new ConnectionFactory().getConnection()) {
-            String sql = "SELECT * FROM softmarketdb.ingredientes WHERE cod = ?";
+            String sql = "SELECT * FROM ingredientes WHERE cod = ?";
             PreparedStatement stmt = con.prepareStatement(sql);
             stmt.setString(1, codBarras);
             ResultSet resultados = stmt.executeQuery();
@@ -357,7 +357,7 @@ public class Estoque {
 
     public void editarProduto(Produto p) throws ProdutoNaoEncontradoException {
         try (Connection con = new ConnectionFactory().getConnection()) {
-            String sql = "UPDATE softmarketdb.produtos SET produtos.pCusto = ?, produtos.peso = ?, produtos.pVenda = ?, produtos.nome = ?, produtos.quantidade = ? WHERE produtos.codBarras = ?";
+            String sql = "UPDATE produtos SET produtos.pCusto = ?, produtos.peso = ?, produtos.pVenda = ?, produtos.nome = ?, produtos.quantidade = ? WHERE produtos.codBarras = ?";
             PreparedStatement stmt = con.prepareStatement(sql);
             stmt.setDouble(1, p.getValorCusto());
             stmt.setDouble(2, p.getPeso());
@@ -375,7 +375,7 @@ public class Estoque {
 
     public void editarIngrediente(Ingredientes i) {
         try (Connection con = new ConnectionFactory().getConnection()) {
-            String sql = "UPDATE softmarketdb.ingredientes SET ingredientes.cod = ?, ingredientes.nome = ?, ingredientes.peso = ?  WHERE ingredientes.cod = ?";
+            String sql = "UPDATE ingredientes SET ingredientes.cod = ?, ingredientes.nome = ?, ingredientes.peso = ?  WHERE ingredientes.cod = ?";
             PreparedStatement stmt = con.prepareStatement(sql);
             stmt.setString(1, i.getCodigo());
             stmt.setString(2, i.getNome());
@@ -391,7 +391,7 @@ public class Estoque {
 
     public void editarReceitas(Receitas r) {
         try (Connection con = new ConnectionFactory().getConnection()) {
-            String sql = "UPDATE softmarketdb.receitas SET receitas.codBarras = ?, receitas.nome = ?, receitas.pCusto = ?, receitas.pVenda = ?  WHERE receitas.codBarras = ?";
+            String sql = "UPDATE receitas SET receitas.codBarras = ?, receitas.nome = ?, receitas.pCusto = ?, receitas.pVenda = ?  WHERE receitas.codBarras = ?";
             PreparedStatement stmt = con.prepareStatement(sql);
             stmt.setString(1, r.getCodigo());
             stmt.setString(2, r.getNome());

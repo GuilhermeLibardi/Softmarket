@@ -550,8 +550,8 @@ public class GerenteController implements Initializable {
             String sql = "select sum(lucro_real * quantidade) as lucro, concat(day(data), '/', month(data)) as data\n" +
                     "from RELATORIO_VENDAS\n" +
                     "where MONTH(data) = MONTH(now()) AND YEAR(data) = YEAR(now())\n" +
-                    "group by relatorio_vendas.data\n" +
-                    "order by relatorio_vendas.data;";
+                    "group by data\n" +
+                    "order by data;";
             PreparedStatement stmt = con.prepareStatement(sql);
             ResultSet resultados = stmt.executeQuery();
             while (resultados.next()) {
@@ -560,8 +560,8 @@ public class GerenteController implements Initializable {
                 series1.getData().add(new XYChart.Data(String.valueOf(data), lucro));
             }
 
-            sql = "select concat(day(data), '/', month(data)) as data, sum(quantidade) as volume from relatorio_vendas where month(data) = '11'\n" +
-                    "group by day(relatorio_vendas.data);";
+            sql = "select concat(day(data), '/', month(data)) as data, sum(quantidade) as volume from RELATORIO_VENDAS where month(data) = '11'\n" +
+                    "group by day(data);";
             stmt = con.prepareStatement(sql);
             resultados = stmt.executeQuery();
             while (resultados.next()) {
