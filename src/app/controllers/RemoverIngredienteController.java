@@ -36,7 +36,7 @@ public class RemoverIngredienteController {
             Ingredientes ingrediente = Estoque.getInstance1().pesquisarIngrediente(txtCodBarras.getText());
             Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
             alerta.setTitle("Confirme sua ação");
-            alerta.setHeaderText("Remover " + ingrediente.toString() + " do seu estoque?");
+            alerta.setHeaderText("Remover " + ingrediente.getNome() + " do seu estoque?");
             alerta.setContentText("Confirmar a remoção?");
 
             Optional<ButtonType> result = alerta.showAndWait();
@@ -48,8 +48,8 @@ public class RemoverIngredienteController {
             }
         } catch (ProdutoNaoEncontradoException e){
             Alert alerta = new Alert(Alert.AlertType.ERROR);
-            alerta.setTitle("Produto não encontrado");
-            alerta.setHeaderText("Produto não encontrado");
+            alerta.setTitle("Ingrediente não encontrado");
+            alerta.setHeaderText("Ingrediente não encontrado");
             alerta.setContentText("Não podemos encontrar este ingrediente no estoque, verifique se digitou o código de barras corretamente");
             alerta.showAndWait();
         }

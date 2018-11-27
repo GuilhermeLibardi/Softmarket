@@ -11,7 +11,7 @@
       <Button fx:id="btnCadastrar" layoutX="136.0" layoutY="187.0" mnemonicParsing="false" onAction="#submit" style="-fx-background-color: #1b8678;" text="Cadastrar" textFill="WHITE" />
       <TextField fx:id="txtNome" layoutX="148.0" layoutY="95.0" />
       <TextField fx:id="txtCodBarras" layoutX="148.0" layoutY="64.0" />
-      <TextField fx:id="txtPdc" layoutX="148.0" layoutY="129.0" />
+      <TextField fx:id="txtPeso" layoutX="148.0" layoutY="129.0" />
       <Label layoutX="20.0" layoutY="135.0" text="Peso" />
       <Label layoutX="20.0" layoutY="101.0" text="Nome" />
       <Label layoutX="20.0" layoutY="70.0" text="Código de barras" />

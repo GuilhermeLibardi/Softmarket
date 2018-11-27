@@ -29,9 +29,21 @@ public class AdicionarIngredienteController {
     void submit() {
         for(Ingredientes i : Estoque.getInstance1().getEstoqueI())
         {
-            if(i.getCodigo().equals(txtCodBarras.getText()))
-            {
-
+            if (i.getCodigo().equals(txtCodBarras.getText())) {
+                Alert alerta = new Alert(Alert.AlertType.ERROR);
+                alerta.setTitle("Erro de inserção");
+                alerta.setHeaderText("Erro ao inserir novo ingrediente");
+                alerta.setContentText("Este código de barras já está cadastrado no banco de dados!");
+                alerta.showAndWait();
+                return;
+            }
+            if(i.getNome().equals(txtNome.getText())) {
+                Alert alerta = new Alert(Alert.AlertType.WARNING);
+                alerta.setTitle("Alerta ao inserir");
+                alerta.setHeaderText("Ingrediente com nome repetido");
+                alerta.setContentText("Ingrediente com este nome já existe, considere alterar o nome");
+                alerta.showAndWait();
+                return;
             }
         }
 

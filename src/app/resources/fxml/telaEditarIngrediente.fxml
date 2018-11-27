@@ -8,9 +8,9 @@
 
 <AnchorPane prefHeight="265.0" prefWidth="350.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.EditarIngredienteController">
    <children>
-      <Button fx:id="bntEditar" layoutX="210.0" layoutY="220.0" mnemonicParsing="false" onAction="#edit" prefHeight="25.0" prefWidth="65.0" style="-fx-background-color: #1b8678" text="Editar" textFill="WHITE" visible="false" />
+      <Button fx:id="btnEditar" layoutX="210.0" layoutY="220.0" mnemonicParsing="false" onAction="#edit" prefHeight="25.0" prefWidth="65.0" style="-fx-background-color: #1b8678" text="Editar" textFill="WHITE" visible="false" />
       <TextField fx:id="txtCodBarras" layoutX="137.0" layoutY="66.0" prefHeight="25.0" prefWidth="170.0" />
-      <Label layoutX="43.0" layoutY="70.0" text="Código" />
+      <Label fx:id="lblCodigo" layoutX="43.0" layoutY="70.0" text="Código" />
       <TextField fx:id="txtNome" layoutX="137.0" layoutY="100.0" prefHeight="25.0" prefWidth="170.0" visible="false" />
       <TextField fx:id="txtPeso" layoutX="137.0" layoutY="134.0" prefHeight="25.0" prefWidth="170.0" visible="false" />
       <Label fx:id="lblNome" layoutX="43.0" layoutY="104.0" text="Nome" visible="false" />
@@ -20,7 +20,7 @@
             <Font name="System Bold" size="24.0" />
          </font>
       </Label>
-      <Button cancelButton="true" layoutX="75.0" layoutY="220.0" mnemonicParsing="false" onAction="#cancel" text="Cancelar" visible="false" />
-      <Button fx:id="bntEditar" layoutX="137.0" layoutY="116.0" mnemonicParsing="false" onAction="#search" prefHeight="31.0" prefWidth="77.0" style="-fx-background-color: #1b8678" text="Procurar" textFill="WHITE" />
+      <Button fx:id="btnCancelar" cancelButton="true" layoutX="75.0" layoutY="220.0" mnemonicParsing="false" onAction="#cancel" text="Cancelar" visible="false" />
+      <Button fx:id="btnSearch" layoutX="137.0" layoutY="116.0" mnemonicParsing="false" onAction="#searchButton" prefHeight="31.0" prefWidth="77.0" style="-fx-background-color: #1b8678" text="Procurar" textFill="WHITE" />
    </children>
 </AnchorPane>
