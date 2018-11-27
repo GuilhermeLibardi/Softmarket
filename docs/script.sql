@@ -282,3 +282,6 @@ INSERT INTO vendas_contem_receitas (vendas_cod, receitas_codBarras, quantidade)
 VALUES (6, '9', 1);
 INSERT INTO vendas_contem_receitas (vendas_cod, receitas_codBarras, quantidade)
 VALUES (7, '9', 2);
+
+
+SELECT * FROM ingredientes;

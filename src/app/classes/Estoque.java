@@ -294,8 +294,9 @@ public class Estoque {
     public Ingredientes pesquisarIngrediente(String codBarras) throws ProdutoNaoEncontradoException {
         Produto p = null;
         Ingredientes i = null;
+
         try (Connection con = new ConnectionFactory().getConnection()) {
-            String sql = "SELECT * FROM softmarketdb.ingredientes WHERE codBarras = ?";
+            String sql = "SELECT * FROM softmarketdb.ingredientes WHERE cod = ?";
             PreparedStatement stmt = con.prepareStatement(sql);
             stmt.setString(1, codBarras);
             ResultSet resultados = stmt.executeQuery();
@@ -304,7 +305,6 @@ public class Estoque {
                 String codigo = resultados.getString("cod");
                 String nome = resultados.getString("nome");
                 double peso = resultados.getDouble("peso");
-                String codIng = resultados.getString("codIngrediente");
                 i = new Ingredientes(nome, peso, codigo);
             }
 

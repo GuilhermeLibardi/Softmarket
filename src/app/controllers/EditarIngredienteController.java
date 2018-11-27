@@ -29,10 +29,10 @@ public class EditarIngredienteController{
     void searchButton() {
         try {
             Ingredientes i = Estoque.getInstance1().pesquisarIngrediente(txtCodBarras.getText());
+            btnSearch.setVisible(false);
             txtNome.setVisible(true);
             txtPeso.setVisible(true);
             txtCodBarras.setVisible(true);
-            btnSearch.setVisible(false);
             btnEditar.setVisible(true);
             btnCancelar.setVisible(true);
             lblNome.setVisible(true);
