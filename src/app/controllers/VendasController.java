@@ -1,10 +1,7 @@
 package app.controllers;
 
 import app.Main;
-import app.classes.Estoque;
-import app.classes.Itens;
-import app.classes.Produto;
-import app.classes.Venda;
+import app.classes.*;
 import app.classes.usuarios.Vendedor;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -431,20 +428,21 @@ public class VendasController implements Initializable{
 
         txtCodBarras.requestFocus();
 
-        dialogoRemocao.setTitle("Cancelamento de venda de produto");
-        dialogoRemocao.setHeaderText("Informe o código de barras do produto a ser removido.");
+        dialogoRemocao.setTitle("Cancelamento de venda de item");
+        dialogoRemocao.setHeaderText("Informe o código de barras do item a ser removido.");
         dialogoRemocao.setContentText("Código de Barras:");
         Optional<String> result = dialogoRemocao.showAndWait();
         String cDb = "none";
-
+        Itens produto1;
+        Itens produto;
         if(result.isPresent()) {
             cDb = result.get();
             for (Iterator<Itens> it = listaProdutos.iterator(); it.hasNext();) {
-                Produto produto1 = (Produto) it.next();
+                produto1 = it.next();
                 if (produto1.getCodigo().equals(cDb)) {
                     it.remove();
                     for (Iterator<Itens> i = estoqueProdutos.iterator(); i.hasNext();) {
-                        Itens produto = i.next();
+                        produto = i.next();
                         if (produto.getCodigo().equals(produto1.getCodigo())) {
                             i.remove();
                             break;
@@ -453,10 +451,10 @@ public class VendasController implements Initializable{
                     venda.cancelarProduto(produto1);
                     venda.setValor(venda.getValor()-(produto1.getValorVenda()*produto1.getQuantidade()));
                     if(!listaProdutos.isEmpty()){
-                        Produto produto = (Produto) listaProdutos.get(listaProdutos.size()-1);
+                        Itens produto3 = listaProdutos.get(listaProdutos.size()-1);
                         lblNomeProduto.setText(listaProdutos.get(listaProdutos.size()-1).getNome());
-                        lblQuantidade.setText(Integer.toString(produto.getQuantidade()));
-                        lblSubtotal.setText(String.format("%.2f", listaProdutos.get(listaProdutos.size()-1).getValorVenda()*produto.getQuantidade()));
+                        lblQuantidade.setText(Integer.toString(produto3.getQuantidade()));
+                        lblSubtotal.setText(String.format("%.2f", listaProdutos.get(listaProdutos.size()-1).getValorVenda()*produto3.getQuantidade()));
                         lblTotal.setText(String.format("%.2f", venda.getValor()));
                     }else{
                         lblNomeProduto.setVisible(false);
