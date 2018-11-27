@@ -38,7 +38,6 @@ CREATE TABLE IF NOT EXISTS `softmarketdb`.`produtos` (
   `nome`           VARCHAR(45)     NOT NULL,
   `peso`           DECIMAL(6, 3)   NOT NULL DEFAULT 0,
   `quantidade`     INT             NOT NULL,
-  `pesavel`        ENUM ('s', 'n') NOT NULL,
   `codIngrediente` VARCHAR(30),
   CHECK (pVenda > pCusto),
   PRIMARY KEY (`codBarras`),
@@ -205,28 +204,28 @@ VALUES ('531', 'Tomate', 0.5);
 
 
 INSERT INTO softmarketdb.produtos
-VALUES ('1', 15.99, 19.99, 'Arroz Sepé 5KG', 5.0, 40, 'n', 123);
+VALUES ('1', 15.99, 19.99, 'Arroz Sepé 5KG', 5.0, 40, 123);
 
 INSERT INTO softmarketdb.produtos
-VALUES ('2', 6.99, 10.99, 'Arroz Sepé 2KG', 2.0, 30, 'n', 123);
+VALUES ('2', 6.99, 10.99, 'Arroz Sepé 2KG', 2.0, 30, 123);
 
 INSERT INTO softmarketdb.produtos
-VALUES ('3', 5.99, 9.99, 'Arroz Prato Fino 2KG', 2.0, 10, 'n', 123);
+VALUES ('3', 5.99, 9.99, 'Arroz Prato Fino 2KG', 2.0, 10, 123);
 
 INSERT INTO softmarketdb.produtos
-VALUES ('4', 7.99, 8.99, 'Feijão Saboroso 1KG', 1.0, 40, 'n', 1234);
+VALUES ('4', 7.99, 8.99, 'Feijão Saboroso 1KG', 1.0, 40, 1234);
 
 INSERT INTO softmarketdb.produtos
-VALUES ('5', 7.49, 8.00, 'Feijão Pereira 1KG', 1.0, 20, 'n', 1234);
+VALUES ('5', 7.49, 8.00, 'Feijão Pereira 1KG', 1.0, 20, 1234);
 
 INSERT INTO softmarketdb.produtos
-VALUES ('6', 22.99, 29.99, 'Pacote bolas de gude c/ 100 und', DEFAULT, 40, 'n', NULL);
+VALUES ('6', 22.99, 29.99, 'Pacote bolas de gude c/ 100 und', DEFAULT, 40, NULL);
 
 INSERT INTO softmarketdb.produtos
-VALUES ('7', 15.99, 19.99, 'Picanha Friboi', 1.0, 1, 's', 12345);
+VALUES ('7', 15.99, 19.99, 'Picanha Friboi 1KG', 1.0, 30, 12345);
 
 INSERT INTO softmarketdb.produtos
-VALUES ('8', 15.99, 19.99, 'Batata Palha Elma Chips 300gr', 0.3, 25, 'n', 54321);
+VALUES ('8', 15.99, 19.99, 'Batata Palha Elma Chips 300g', 0.3, 25, 54321);
 
 INSERT INTO receitas
 VALUES ('9', 5.99, 11.99, 'Strogonoff de Frango');
@@ -283,33 +282,3 @@ INSERT INTO vendas_contem_receitas (vendas_cod, receitas_codBarras, quantidade)
 VALUES (6, '9', 1);
 INSERT INTO vendas_contem_receitas (vendas_cod, receitas_codBarras, quantidade)
 VALUES (7, '9', 2);
-
-#Relatório diário de vendas
-select codBarras,
-       data,
-       date_format(data, '%H:%i')   as hora,
-       nome,
-       sum(quantidade)              as quantidade,
-       pCusto,
-       pVenda,
-       sum(lucro_real * quantidade) as lucro
-from RELATORIO_VENDAS
-where Day(data) = Day(curdate())
-group by nome
-order by nome;
-
-#Relatório mensal de vendas
-select codBarras, nome, sum(quantidade) as quantidade, pCusto, pVenda, sum(lucro_real * quantidade) as lucro
-from RELATORIO_VENDAS
-where MONTH(data) = MONTH(now()) AND YEAR(data) = YEAR(now())
-group by nome
-order by nome;
-
-
-#Relatório anual de vendas
-select codBarras, nome, sum(quantidade) as quantidade, pCusto, pVenda, sum(lucro_real * quantidade) as lucro
-from RELATORIO_VENDAS
-where YEAR(data) = YEAR(now())
-group by nome
-order by nome;
-

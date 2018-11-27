@@ -19,7 +19,7 @@
          </font></Button>
       <TextField fx:id="txtCodBarras" layoutX="174.0" layoutY="94.0" onAction="#handleEnter" prefHeight="25.0" prefWidth="193.0" />
       <Label layoutX="33.0" layoutY="99.0" text="Código de Barras" />
-      <Label layoutX="77.0" layoutY="28.0" text="REMOVER PRODUTO" textFill="#1c8577">
+      <Label layoutX="56.0" layoutY="28.0" text="REMOVER INGREDIENTE" textFill="#1c8577">
          <font>
             <Font name="System Bold" size="25.0" />
          </font>

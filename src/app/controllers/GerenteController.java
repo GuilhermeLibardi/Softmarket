@@ -10,6 +10,7 @@ import app.classes.relatorios.RelatorioDiarioVendas;
 import app.classes.relatorios.RelatorioItensMaisVendidos;
 import app.classes.relatorios.RelatorioMensalVendas;
 import app.classes.usuarios.Usuario;
+import app.dao.ConnectionFactory;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -21,6 +22,10 @@ import javafx.fxml.Initializable;
 import javafx.scene.Cursor;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.chart.CategoryAxis;
+import javafx.scene.chart.LineChart;
+import javafx.scene.chart.NumberAxis;
+import javafx.scene.chart.XYChart;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
@@ -31,6 +36,10 @@ import net.sf.jasperreports.engine.JRException;
 
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class GerenteController implements Initializable {
@@ -62,7 +71,7 @@ public class GerenteController implements Initializable {
     private Pane painelEstoque, painelRelatorios, painelReceitas, painelIngredientes;
 
     @FXML
-    private TableColumn<Produto, String> colCodBarras, colNome, colPesavel;
+    private TableColumn<Produto, String> colCodBarras, colNome;
 
     @FXML
     private TableColumn<Ingredientes, String> colCodI, colNomeI;
@@ -94,6 +103,15 @@ public class GerenteController implements Initializable {
     @FXML
     private MenuItem menuItemRemover, menuItemEditar;
 
+    @FXML
+    private CategoryAxis x;
+
+    @FXML
+    private NumberAxis y;
+
+    @FXML
+    private LineChart<?, ?> graficoLinha;
+
     private Usuario usuario;
 
     private ObservableList<Ingredientes> ingredientesReceita = FXCollections.observableArrayList();
@@ -106,6 +124,25 @@ public class GerenteController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        try (Connection con = new ConnectionFactory().getConnection()) {
+            XYChart.Series series = new XYChart.Series();
+            series.setName("Lucro mensal");
+            String sql = "select DAY(data) as dia, sum(lucro_real) as lucro from relatorio_vendas where MONTH(data) = MONTH(curdate())\n" +
+                    "  AND YEAR(data) = YEAR(curdate()) group by DAY(data);";
+            PreparedStatement stmt = con.prepareStatement(sql);
+            ResultSet resultados = stmt.executeQuery();
+            while (resultados.next()) {
+                int dia = resultados.getInt("dia");
+                double lucro = resultados.getDouble("lucro");
+                series.getData().add(new XYChart.Data(String.valueOf(dia), lucro));
+            }
+            graficoLinha.getData().addAll(series);
+        } catch (SQLException e) {
+            System.out.print("Erro ao pegar dados do gráfico");
+            System.out.println(e.getMessage());
+        }
+
+
         ObservableList<String> options = FXCollections.observableArrayList(
                 "Relatório diário de vendas", "Relatório mensal de vendas", "Relatório de itens mais vendidos"
         );
@@ -126,7 +163,6 @@ public class GerenteController implements Initializable {
         colVenda.setCellValueFactory(new PropertyValueFactory<Produto, Double>("valorVenda"));
         colCompra.setCellValueFactory(new PropertyValueFactory<Produto, Double>("valorCusto"));
         colPeso.setCellValueFactory(new PropertyValueFactory<Produto, Double>("peso"));
-        colPesavel.setCellValueFactory(new PropertyValueFactory<Produto, String>("pesavel"));
 
         listaIngredientes.setCellFactory(param -> new ListCell<>() {
             @Override
@@ -449,7 +485,7 @@ public class GerenteController implements Initializable {
         if (fxml.contains("EditarProduto")) {
             EditarProdutoController produtoController = (EditarProdutoController) loader.getController();
             produtoController.setCod(cod);
-        } else if (fxml.contains("RemoverProduto")){
+        } else if (fxml.contains("RemoverProduto")) {
             RemoverProdutoController rmvProdutoController = (RemoverProdutoController) loader.getController();
             rmvProdutoController.setCod(cod);
         }
@@ -469,4 +505,5 @@ public class GerenteController implements Initializable {
         Produto r = tabelaProdutos.getSelectionModel().getSelectedItem();
         removeProduto(r.getCodigo());
     }
+
 }

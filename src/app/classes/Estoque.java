@@ -102,9 +102,8 @@ public class Estoque {
                 String codbarras = resultados.getString("codBarras");
                 int quantidade = resultados.getInt("quantidade");
                 double peso = resultados.getDouble("peso");
-                String pesavel = resultados.getString("pesavel");
                 String codIng = resultados.getString("codIngrediente");
-                produto = new Produto(nome, quantidade, pcusto, pvenda, codbarras, peso, pesavel, codIng);
+                produto = new Produto(nome, quantidade, pcusto, pvenda, codbarras, peso, codIng);
                 estoque.add(produto);
             }
 
@@ -145,7 +144,7 @@ public class Estoque {
 
     public void adicionarProduto(Produto p) {
         try (Connection con = new ConnectionFactory().getConnection()) {
-            String sql = "INSERT INTO softmarketdb.produtos (codBarras, pCusto, pVenda, nome, peso, quantidade, pesavel, codIngrediente) VALUES(?,?,?,?,?,?,?,?)";
+            String sql = "INSERT INTO softmarketdb.produtos (codBarras, pCusto, pVenda, nome, peso, quantidade, codIngrediente) VALUES(?,?,?,?,?,?,?)";
             PreparedStatement stmt = con.prepareStatement(sql);
             stmt.setString(1, p.getCodigo());
             stmt.setDouble(2, p.getValorCusto());
@@ -153,8 +152,7 @@ public class Estoque {
             stmt.setString(4, p.getNome());
             stmt.setDouble(5, p.getPeso());
             stmt.setInt(6, p.getQuantidade());
-            stmt.setString(7, p.getPesavel());
-            stmt.setString(8, p.getIngredienteId());
+            stmt.setString(7, p.getIngredienteId());
             stmt.execute();
 
         } catch (SQLException e) {
@@ -257,9 +255,8 @@ public class Estoque {
                 String codbarras = resultados.getString("codBarras");
                 int quantidade = resultados.getInt("quantidade");
                 double peso = resultados.getDouble("peso");
-                String pesavel = resultados.getString("pesavel");
                 String codIng = resultados.getString("codIngrediente");
-                p = new Produto(nome, quantidade, pcusto, pvenda, codbarras, peso, pesavel, codIng);
+                p = new Produto(nome, quantidade, pcusto, pvenda, codbarras, peso, codIng);
             }
 
         } catch (SQLException e) {
@@ -294,17 +291,41 @@ public class Estoque {
         return r;
     }
 
+    public Ingredientes pesquisarIngrediente(String codBarras) throws ProdutoNaoEncontradoException {
+        Produto p = null;
+        Ingredientes i = null;
+        try (Connection con = new ConnectionFactory().getConnection()) {
+            String sql = "SELECT * FROM softmarketdb.ingredientes WHERE codBarras = ?";
+            PreparedStatement stmt = con.prepareStatement(sql);
+            stmt.setString(1, codBarras);
+            ResultSet resultados = stmt.executeQuery();
+
+            while (resultados.next()) {
+                String codigo = resultados.getString("cod");
+                String nome = resultados.getString("nome");
+                double peso = resultados.getDouble("peso");
+                String codIng = resultados.getString("codIngrediente");
+                i = new Ingredientes(nome, peso, codigo);
+            }
+
+        } catch (SQLException e) {
+            System.out.print("Erro ao preparar STMT: ");
+            System.out.println(e.getMessage());
+        }
+        if (i == null) throw new ProdutoNaoEncontradoException("ao pesquisar produto");
+        return i;
+    }
+
     public void editarProduto(Produto p) throws ProdutoNaoEncontradoException {
         try (Connection con = new ConnectionFactory().getConnection()) {
-            String sql = "UPDATE softmarketdb.produtos SET produtos.pCusto = ?, produtos.peso = ?, produtos.pVenda = ?, produtos.nome = ?, produtos.pesavel = ?, produtos.quantidade = ? WHERE produtos.codBarras = ?";
+            String sql = "UPDATE softmarketdb.produtos SET produtos.pCusto = ?, produtos.peso = ?, produtos.pVenda = ?, produtos.nome = ?, produtos.quantidade = ? WHERE produtos.codBarras = ?";
             PreparedStatement stmt = con.prepareStatement(sql);
             stmt.setDouble(1, p.getValorCusto());
             stmt.setDouble(2, p.getPeso());
             stmt.setDouble(3, p.getValorVenda());
             stmt.setString(4, p.getNome());
-            stmt.setString(5, p.getPesavel());
-            stmt.setInt(6, p.getQuantidade());
-            stmt.setString(7, p.getCodigo());
+            stmt.setInt(5, p.getQuantidade());
+            stmt.setString(6, p.getCodigo());
             stmt.execute();
         } catch (SQLException e) {
             System.out.print("Erro ao preparar STMT: ");

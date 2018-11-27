@@ -53,14 +53,12 @@ public class EditarProdutoController implements Initializable {
             txtPrecoVenda.setVisible(true);
             txtQuantidade.setVisible(true);
             txtPeso.setVisible(true);
-            txtPesavel.setVisible(true);
             btnSearch.setVisible(false);
             btnCadastrar.setVisible(true);
             lblNome.setVisible(true);
             lblCompra.setVisible(true);
             lblVenda.setVisible(true);
             lblQuantidade.setVisible(true);
-            lblPesavel.setVisible(true);
             lblPeso.setVisible(true);
             lblIng.setVisible(true);
             comboIng.setVisible(true);
@@ -75,7 +73,6 @@ public class EditarProdutoController implements Initializable {
             txtPrecoCompra.setText(String.valueOf(p.getValorCusto()).replace(".", ","));
             txtQuantidade.setText(String.valueOf(p.getQuantidade()));
             txtPrecoVenda.setText(String.valueOf(p.getValorVenda()).replace(".", ","));
-            txtPesavel.setText(p.getPesavel());
             txtPeso.setText(String.valueOf(p.getPeso()));
             return;
 
@@ -118,7 +115,7 @@ public class EditarProdutoController implements Initializable {
                     }
                 }
 
-                Estoque.getInstance().editarProduto(new Produto(this.txtNome.getText(), Integer.parseInt(this.txtQuantidade.getText()), Double.parseDouble(this.txtPrecoCompra.getText().replace(",", ".")), Double.parseDouble(this.txtPrecoVenda.getText().replace(",", ".")), txtCodBarras.getText(), Double.parseDouble(this.txtPeso.getText().replace(",", ".")), this.txtPesavel.getText(), codIng));
+                Estoque.getInstance().editarProduto(new Produto(this.txtNome.getText(), Integer.parseInt(this.txtQuantidade.getText()), Double.parseDouble(this.txtPrecoCompra.getText().replace(",", ".")), Double.parseDouble(this.txtPrecoVenda.getText().replace(",", ".")), txtCodBarras.getText(), Double.parseDouble(this.txtPeso.getText().replace(",", ".")), codIng));
             } catch (ProdutoNaoEncontradoException e) {
                 System.out.println(e.getMessage());
             }

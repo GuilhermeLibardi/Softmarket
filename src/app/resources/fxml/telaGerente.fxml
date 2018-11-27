@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.*?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.image.*?>
@@ -60,12 +63,12 @@
          <children>
             <Pane fx:id="painelRelatorios" prefHeight="766.0" prefWidth="955.0" styleClass="paneBackground" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                <children>
-                  <Label layoutX="343.0" layoutY="61.0" text="GERAR RELATÓRIOS" textAlignment="CENTER" textFill="#1c8577">
+                  <Label layoutX="420.0" layoutY="60.0" text="RELATÓRIOS" textAlignment="CENTER" textFill="#1c8577">
                      <font>
                         <Font name="System Bold" size="30.0" />
                      </font>
                   </Label>
-                  <Button fx:id="btnRelatorio" layoutX="472.0" layoutY="462.0" mnemonicParsing="false" onAction="#gerarRelatorio" prefHeight="38.0" prefWidth="78.0" style="-fx-background-color: #1b8678;" text="Gerar" textFill="WHITE">
+                  <Button fx:id="btnRelatorio" layoutX="453.0" layoutY="598.0" mnemonicParsing="false" onAction="#gerarRelatorio" prefHeight="27.0" prefWidth="78.0" style="-fx-background-color: #1b8678;" text="Gerar" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font></Button>
@@ -76,27 +79,34 @@
                   </Label>
                   <Label fx:id="deL" layoutX="284.0" layoutY="290.0" text="De" visible="false" />
                   <Label fx:id="aL" layoutX="510.0" layoutY="290.0" text="a" visible="false" />
-                  <Label layoutX="212.0" layoutY="147.0" text="Tipo">
+                  <Label layoutX="223.0" layoutY="557.0" text="Relatórios detalhados">
                      <font>
                         <Font size="18.0" />
                      </font>
                   </Label>
                   <DatePicker fx:id="dataInicial" layoutX="318.0" layoutY="286.0" visible="false" />
                   <DatePicker fx:id="dataFinal" layoutX="532.0" layoutY="286.0" visible="false" />
-                  <ComboBox fx:id="comboTipo" layoutX="318.0" layoutY="188.0" prefWidth="150.0" promptText="Tipo de relatório" />
+                  <ComboBox fx:id="comboTipo" layoutX="223.0" layoutY="599.0" prefWidth="150.0" promptText="Tipo de relatório" />
+                  <LineChart fx:id="graficoLinha" layoutX="187.0" layoutY="124.0" prefHeight="396.0" prefWidth="599.0" title="Gráfico de lucro">
+                    <xAxis>
+                      <CategoryAxis side="BOTTOM" />
+                    </xAxis>
+                    <yAxis>
+                      <NumberAxis side="LEFT" />
+                    </yAxis>
+                  </LineChart>
                </children>
             </Pane>
             <Pane fx:id="painelEstoque" prefHeight="766.0" prefWidth="955.0" styleClass="paneBackground">
                <children>
-                  <TableView fx:id="tabelaProdutos" layoutX="38.0" layoutY="186.0" prefHeight="485.0" prefWidth="850.0">
+                  <TableView fx:id="tabelaProdutos" layoutX="38.0" layoutY="186.0" prefHeight="485.0" prefWidth="840.0">
                     <columns>
                       <TableColumn fx:id="colCodBarras" prefWidth="133.0" text="Cód. Barras" />
                       <TableColumn id="columnName" fx:id="colNome" prefWidth="343.0" text="Nome" />
-                        <TableColumn fx:id="colCompra" prefWidth="92.0" text="Preço Compra" />
-                        <TableColumn fx:id="colVenda" prefWidth="91.0" text="Preço Venda" />
-                        <TableColumn fx:id="colEstoque" prefWidth="78.0" text="Quantidade" />
-                        <TableColumn fx:id="colPeso" prefWidth="51.0" text="Peso" />
-                        <TableColumn fx:id="colPesavel" prefWidth="59.0" text="Pesável" />
+                        <TableColumn fx:id="colCompra" prefWidth="107.0" text="Preço Compra" />
+                        <TableColumn fx:id="colVenda" prefWidth="93.0" text="Preço Venda" />
+                        <TableColumn fx:id="colEstoque" prefWidth="85.0" text="Quantidade" />
+                        <TableColumn fx:id="colPeso" prefWidth="53.0" text="Peso" />
                     </columns>
                      <contextMenu>
                         <ContextMenu fx:id="contextMenu">

@@ -76,7 +76,7 @@ public class AdicionarProdutoController implements Initializable {
             }
         }
 
-        Estoque.getInstance().adicionarProduto(new Produto(txtNome.getText(), Integer.parseInt(txtQuantidade.getText()), valorCompra, valorVenda, txtCodBarras.getText(), peso, txtPesavel.getText(), codIng));
+        Estoque.getInstance().adicionarProduto(new Produto(txtNome.getText(), Integer.parseInt(txtQuantidade.getText()), valorCompra, valorVenda, txtCodBarras.getText(), peso, codIng));
         Stage stage = (Stage) btnCadastrar.getScene().getWindow();
         stage.close();
     }
