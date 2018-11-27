@@ -36,7 +36,7 @@ public class EditarProdutoController implements Initializable {
 
         ingredientes.add("Nenhum");
 
-        for(Ingredientes ingrediente: Estoque.getInstance().getEstoqueI()){
+        for(Ingredientes ingrediente: Estoque.getInstance1().getEstoqueI()){
             ingredientes.add(ingrediente.getNome());
         }
         txtCodBarras.setText(cod);
@@ -47,7 +47,7 @@ public class EditarProdutoController implements Initializable {
     @FXML
     void searchButton() {
         try {
-            Produto p = Estoque.getInstance().pesquisarProduto(txtCodBarras.getText());
+            Produto p = Estoque.getInstance1().pesquisarProduto(txtCodBarras.getText());
             txtNome.setVisible(true);
             txtPrecoCompra.setVisible(true);
             txtPrecoVenda.setVisible(true);
@@ -63,7 +63,7 @@ public class EditarProdutoController implements Initializable {
             lblIng.setVisible(true);
             comboIng.setVisible(true);
 
-            for(Ingredientes ing: Estoque.getInstance().getEstoqueI()){
+            for(Ingredientes ing: Estoque.getInstance1().getEstoqueI()){
                 if(ing.getCodigo().equals(p.getIngredienteId())){
                     comboIng.setValue(ing.getNome());
                 }
@@ -105,7 +105,7 @@ public class EditarProdutoController implements Initializable {
 
                 String codIng="";
 
-                for(Ingredientes ing : Estoque.getInstance().getEstoqueI()){
+                for(Ingredientes ing : Estoque.getInstance1().getEstoqueI()){
                     if(ing.getNome().equals(comboIng.getValue().toString())){
                         codIng = ing.getCodigo();
                         break;
@@ -115,7 +115,7 @@ public class EditarProdutoController implements Initializable {
                     }
                 }
 
-                Estoque.getInstance().editarProduto(new Produto(this.txtNome.getText(), Integer.parseInt(this.txtQuantidade.getText()), Double.parseDouble(this.txtPrecoCompra.getText().replace(",", ".")), Double.parseDouble(this.txtPrecoVenda.getText().replace(",", ".")), txtCodBarras.getText(), Double.parseDouble(this.txtPeso.getText().replace(",", ".")), codIng));
+                Estoque.getInstance1().editarProduto(new Produto(this.txtNome.getText(), Integer.parseInt(this.txtQuantidade.getText()), Double.parseDouble(this.txtPrecoCompra.getText().replace(",", ".")), Double.parseDouble(this.txtPrecoVenda.getText().replace(",", ".")), txtCodBarras.getText(), Double.parseDouble(this.txtPeso.getText().replace(",", ".")), codIng));
             } catch (ProdutoNaoEncontradoException e) {
                 System.out.println(e.getMessage());
             }

@@ -17,6 +17,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
+import javafx.concurrent.Task;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -119,6 +120,8 @@ public class GerenteController implements Initializable {
 
     private ObservableList<Ingredientes> ingredientesReceita = FXCollections.observableArrayList();
 
+    private Estoque e;
+
 
     public void changeUser(Usuario user) {
         this.usuario = user;
@@ -127,7 +130,7 @@ public class GerenteController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        e = Estoque.getInstance();
 
         ObservableList<String> options = FXCollections.observableArrayList(
                 "Relatório diário de vendas", "Relatório mensal de vendas", "Relatório de itens mais vendidos"
@@ -205,9 +208,9 @@ public class GerenteController implements Initializable {
 
         txtPesquisa.setPromptText("Procure por produtos");
 
-        FilteredList<Receitas> filteredData2 = new FilteredList<>(Estoque.getInstance().getEstoqueR(), r -> true);
-        FilteredList<Ingredientes> filteredData3 = new FilteredList<>(Estoque.getInstance().getEstoqueI(), i -> true);
-        FilteredList<Produto> filteredData = new FilteredList<>(Estoque.getInstance().getEstoque(), p -> true);
+        FilteredList<Receitas> filteredData2 = new FilteredList<>(Estoque.getInstance1().getEstoqueR(), r -> true);
+        FilteredList<Ingredientes> filteredData3 = new FilteredList<>(Estoque.getInstance1().getEstoqueI(), i -> true);
+        FilteredList<Produto> filteredData = new FilteredList<>(Estoque.getInstance1().getEstoque(), p -> true);
 
         txtPesquisa11.textProperty().addListener((observable, oldValue, newValue) -> {
             filteredData3.setPredicate(ingredientes -> {
@@ -347,9 +350,17 @@ public class GerenteController implements Initializable {
         painelEstoque.setVisible(false);
         painelReceitas.setVisible(false);
         painelIngredientes.setVisible(false);
-        atualizarGrafico();
+
+        Task<Void> task = new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+                atualizarGrafico();
+                return null;
+            }
+        };
+
         graficoLinha.setAnimated(false);
-        Timeline fiveSecondsWonder = new Timeline(new KeyFrame(Duration.seconds(5), event -> atualizarGrafico()));
+        Timeline fiveSecondsWonder = new Timeline(new KeyFrame(Duration.seconds(5), event -> task.run()));
         fiveSecondsWonder.setCycleCount(Timeline.INDEFINITE);
         fiveSecondsWonder.play();
     }
@@ -547,19 +558,20 @@ public class GerenteController implements Initializable {
             XYChart.Series series2 = new XYChart.Series();
             series1.setName("Lucro mensal");
             series2.setName("Volume de vendas");
-            String sql = "select sum(lucro_real * quantidade) as lucro, concat(day(data), '/', month(data)) as data\n" +
+            String sql = "select sum(lucro_real * quantidade) as lucro, concat(day(data), '/', month(data)) as datas\n" +
                     "from RELATORIO_VENDAS\n" +
-                    "where MONTH(data) = MONTH(now()) AND YEAR(data) = YEAR(now())\n" +
-                    "group by data\n" +
-                    "order by data;";
+                    "where MONTH(data) = MONTH(now())\n" +
+                    "  AND YEAR(data) = YEAR(now())\n" +
+                    "group by datas\n" +
+                    "order by datas;";
             PreparedStatement stmt = con.prepareStatement(sql);
             ResultSet resultados = stmt.executeQuery();
             while (resultados.next()) {
-                String data = resultados.getString("data");
+                String data = resultados.getString("datas");
                 double lucro = resultados.getDouble("lucro");
                 series1.getData().add(new XYChart.Data(String.valueOf(data), lucro));
-            }
 
+            }
             sql = "select concat(day(data), '/', month(data)) as data, sum(quantidade) as volume from RELATORIO_VENDAS where month(data) = '11'\n" +
                     "group by day(data);";
             stmt = con.prepareStatement(sql);

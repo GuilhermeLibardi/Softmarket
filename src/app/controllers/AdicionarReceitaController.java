@@ -54,7 +54,7 @@ public class AdicionarReceitaController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        ingredientesEstoque = Estoque.getInstance().getEstoqueI();
+        ingredientesEstoque = Estoque.getInstance1().getEstoqueI();
         listaIngredientes.setCellFactory(param -> new ListCell<>() {
             @Override
             protected void updateItem(Ingredientes item, boolean empty) {
