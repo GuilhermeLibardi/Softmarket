@@ -440,6 +440,9 @@ public class VendasController implements Initializable{
             for (Iterator<Itens> it = listaProdutos.iterator(); it.hasNext();) {
                 produto1 = it.next();
                 if (produto1.getCodigo().equals(cDb)) {
+                    if (produto1 instanceof Receitas){
+                        atualizarEstoqueI((Receitas) produto1);
+                    }
                     it.remove();
                     for (Iterator<Itens> i = estoqueProdutos.iterator(); i.hasNext();) {
                         produto = i.next();
@@ -577,6 +580,28 @@ public class VendasController implements Initializable{
             return false;
         }
     }
+
+    public void atualizarEstoqueI(Receitas receitas1){
+        Ingredientes ingredientes1;
+
+        for(Receitas receitas : Estoque.getInstance1().getEstoqueR()) {
+            if(receitas.getCodigo().equals(receitas1.getCodigo())) {
+                for (Ingredientes ing : receitas.getIngredientes()) {
+                    int size = Estoque.getInstance1().getEstoqueI().size();
+                    for (int i = 0; i < size; i++) {
+                        if (Estoque.getInstance1().getEstoqueI().get(i).getCodigo().equals(ing.getCodigo())) {
+                            ingredientes1 = Estoque.getInstance1().getEstoqueI().remove(i);
+                            ingredientes1.setPeso(ingredientes1.getPeso() + ing.getPeso() * receitas1.getQuantidade());
+                            Estoque.getInstance1().getEstoqueI().add(new Ingredientes(ingredientes1.getNome(), ingredientes1.getPeso(), ingredientes1.getCodigo()));
+                            break;
+                        }
+                    }
+                }
+                return;
+            }
+        }
+    }
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
