@@ -139,6 +139,8 @@ public class VenderReceita implements Initializable {
                             LoginController.vc.setLblTotal(String.format("%.2f", venda.getValor()));
                             LoginController.vc.setVenda(venda);
                             LoginController.vc.getTxtCodBarras().requestFocus();
+                            Stage stage = (Stage) txtQnt.getScene().getWindow();
+                            stage.close();
                             return;
                         }else if(LoginController.vc.getStatusVenda().equals("Ativa")){
                             venda = LoginController.vc.getVenda();
@@ -158,6 +160,8 @@ public class VenderReceita implements Initializable {
                                         LoginController.vc.setLblTotal(String.format("%.2f", venda.getValor()));
                                         LoginController.vc.setVenda(venda);
                                         LoginController.vc.getTxtCodBarras().requestFocus();
+                                        Stage stage = (Stage) txtQnt.getScene().getWindow();
+                                        stage.close();
                                         return;
                                     }
                                 }

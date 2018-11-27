@@ -454,12 +454,14 @@ public class VendasController implements Initializable{
                     venda.cancelarProduto(produto1);
                     venda.setValor(venda.getValor()-(produto1.getValorVenda()*produto1.getQuantidade()));
                     if(!listaProdutos.isEmpty()){
+
                         Itens produto3 = listaProdutos.get(listaProdutos.size()-1);
                         lblNomeProduto.setText(listaProdutos.get(listaProdutos.size()-1).getNome());
                         lblQuantidade.setText(Integer.toString(produto3.getQuantidade()));
                         lblSubtotal.setText(String.format("%.2f", listaProdutos.get(listaProdutos.size()-1).getValorVenda()*produto3.getQuantidade()));
                         lblTotal.setText(String.format("%.2f", venda.getValor()));
                     }else{
+                        statusVenda = "Ocioso";
                         lblNomeProduto.setVisible(false);
                         lblQuantidade.setVisible(false);
                         lblSubtotal.setVisible(false);
@@ -499,7 +501,9 @@ public class VendasController implements Initializable{
             xVisible.setVisible(false);
             realVisible1.setVisible(false);
             realVisible2.setVisible(false);
+            statusVenda = "Ocioso";
         }
+        Estoque.getInstance();
         txtCodBarras.requestFocus();
     }
 
