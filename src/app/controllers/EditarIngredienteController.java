@@ -17,17 +17,41 @@ import java.util.ResourceBundle;
 public class EditarIngredienteController{
 
     @FXML
-    private TextField txtCodBarras, txtNome, txtVdc, txtVdv;
+    private TextField txtCodBarras, txtNome, txtPeso;
 
     @FXML
-    private Label lblCodigo, lblNome, lblVdc, lblVdv;
+    private Label lblCodigo, lblNome, lblPeso;
 
     @FXML
-    private Button bntEditar;
+    private Button btnEditar, btnSearch, btnCancelar;
 
     @FXML
     void searchButton() {
+        try {
+            Ingredientes i = Estoque.getInstance1().pesquisarIngrediente(txtCodBarras.getText());
+            txtNome.setVisible(true);
+            txtPeso.setVisible(true);
+            txtCodBarras.setVisible(true);
+            btnSearch.setVisible(false);
+            btnEditar.setVisible(true);
+            btnCancelar.setVisible(true);
+            lblNome.setVisible(true);
+            lblPeso.setVisible(true);
 
+            txtNome.setText(i.getNome());
+            txtPeso.setText(String.valueOf(i.getPeso()));
+
+            return;
+
+        } catch (ProdutoNaoEncontradoException e) {
+            System.out.println(e.getMessage());
+        }
+
+        Alert alerta = new Alert(Alert.AlertType.ERROR);
+        alerta.setTitle("Ingrediente não encontrado");
+        alerta.setHeaderText("Ingrediente não encontrado");
+        alerta.setContentText("Não podemos encontrar este ingrediente no estoque, verifique se digitou o código de barras corretamente");
+        alerta.showAndWait();
     }
 
     @FXML
@@ -37,12 +61,25 @@ public class EditarIngredienteController{
 
     @FXML
     void cancel() {
-
+        Stage window = (Stage) btnCancelar.getScene().getWindow();
+        window.close();
     }
 
     @FXML
     void edit() {
+        if (this.txtNome.isVisible()) {
+            try {
+                String codIng="";
 
+                Estoque.getInstance1().editarIngrediente(new Ingredientes(this.txtNome.getText(), Double.parseDouble(this.txtPeso.getText().replace(",", ".")), this.txtCodBarras.getText()));
+
+            } catch (ProdutoNaoEncontradoException e) {
+                System.out.println(e.getMessage());
+            }
+
+            Stage window = (Stage) btnCancelar.getScene().getWindow();
+            window.close();
+        }
     }
 
 }

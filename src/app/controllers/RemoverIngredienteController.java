@@ -34,16 +34,15 @@ public class RemoverIngredienteController {
     void handleRemover() {
         try{
             Ingredientes ingrediente = Estoque.getInstance1().pesquisarIngrediente(txtCodBarras.getText());
-            Produto produto = Estoque.getInstance().pesquisarProduto(txtCodBarras.getText());
             Alert alerta = new Alert(Alert.AlertType.CONFIRMATION);
             alerta.setTitle("Confirme sua ação");
-            alerta.setHeaderText("Remover " + produto.toString() + " do seu estoque?");
+            alerta.setHeaderText("Remover " + ingrediente.toString() + " do seu estoque?");
             alerta.setContentText("Confirmar a remoção?");
 
             Optional<ButtonType> result = alerta.showAndWait();
             if (result.isPresent() && result.get() == ButtonType.OK) {
-                Estoque.getInstance().removerProduto(produto.getCodigo());
-                Estoque.getInstance().getEstoque().remove(produto);
+                Estoque.getInstance1().removerIngredientes(ingrediente.getCodigo());
+                Estoque.getInstance1().getEstoqueI().remove(ingrediente);
                 Stage window = (Stage) btnCancelar.getScene().getWindow();
                 window.close();
             }
@@ -51,7 +50,7 @@ public class RemoverIngredienteController {
             Alert alerta = new Alert(Alert.AlertType.ERROR);
             alerta.setTitle("Produto não encontrado");
             alerta.setHeaderText("Produto não encontrado");
-            alerta.setContentText("Não podemos encontrar este produto no estoque, verifique se digitou o código de barras corretamente");
+            alerta.setContentText("Não podemos encontrar este ingrediente no estoque, verifique se digitou o código de barras corretamente");
             alerta.showAndWait();
         }
     }
