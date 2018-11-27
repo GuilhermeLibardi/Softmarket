@@ -24,17 +24,17 @@
                   <Rectangle2D height="200.0" width="200.0" />
                </viewport>
             </ImageView>
-            <Label fx:id="lblQuantidade" layoutX="14.0" layoutY="230.0" text="2" visible="false">
+            <Label fx:id="lblQuantidade" layoutX="14.0" layoutY="230.0" text="20" visible="false">
                <font>
                   <Font size="20.0" />
                </font>
             </Label>
-            <Label layoutX="26.0" layoutY="235.0" text="x" visible="false" fx:id="xVisible">
+            <Label layoutX="45.0" layoutY="235.0" text="x" visible="false" fx:id="xVisible">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label fx:id="lblNomeProduto" layoutX="42.0" layoutY="229.0" text="Coca-Cola 2L" visible="false">
+            <Label fx:id="lblNomeProduto" layoutX="68.0" layoutY="230.0" text="Coca-Cola 2L" visible="false">
                <font>
                   <Font size="21.0" />
                </font>

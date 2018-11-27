@@ -102,7 +102,7 @@ public class VendasController implements Initializable{
             }
         });
         if(event.getCode().equals(KeyCode.ENTER) || event.getCode().equals(KeyCode.TAB)) {
-            for(Produto procurar : Estoque.getInstance().getEstoque()) {
+            for(Produto procurar : Estoque.getInstance1().getEstoque()) {
                 if (procurar.getCodigo().equals(txtCodBarras.getText())) {
                     txtQuantidade.requestFocus();
                     return;
@@ -133,7 +133,7 @@ public class VendasController implements Initializable{
         });
         if(event.getCode().equals(KeyCode.ENTER) || event.getCode().equals(KeyCode.TAB)) {
             if(!txtQuantidade.getText().equals("")) {
-                for (Produto procurar1 : Estoque.getInstance().getEstoque()) {
+                for (Produto procurar1 : Estoque.getInstance1().getEstoque()) {
                     if (procurar1.getCodigo().equals(txtCodBarras.getText())) {
                         if (procurar1.getQuantidade() >= (Integer.parseInt(txtQuantidade.getText()))) {
                             if (statusVenda.equals("Ativa")) {
@@ -257,7 +257,7 @@ public class VendasController implements Initializable{
             if (statusVenda.equals("Ocioso")) {
                 statusVenda = ("Ativa");
                 venda = vendedor.iniciarVenda();
-                for (Produto mainP : Estoque.getInstance().getEstoque()) {
+                for (Produto mainP : Estoque.getInstance1().getEstoque()) {
                     if (mainP.getCodigo().equals(txtCodBarras.getText())) {
                         produto1 = new Produto(mainP.getNome(), Integer.parseInt(txtQuantidade.getText()), mainP.getValorCusto(), mainP.getValorVenda(), mainP.getCodigo(), mainP.getIngredienteId());
                         produtoE = new Produto(mainP.getNome(), mainP.getQuantidade() - Integer.parseInt(txtQuantidade.getText()), mainP.getValorCusto(), mainP.getValorVenda(), mainP.getCodigo(), mainP.getIngredienteId());
@@ -305,7 +305,7 @@ public class VendasController implements Initializable{
                         }
                     }
                 }
-                for (Produto mainP : Estoque.getInstance().getEstoque()) {
+                for (Produto mainP : Estoque.getInstance1().getEstoque()) {
                     if (mainP.getCodigo().equals(txtCodBarras.getText())) {
                         produto1 = new Produto(mainP.getNome(), Integer.parseInt(txtQuantidade.getText()), mainP.getValorCusto(), mainP.getValorVenda(), mainP.getCodigo(), mainP.getIngredienteId());
                         produtoE = new Produto(mainP.getNome(), mainP.getQuantidade() - Integer.parseInt(txtQuantidade.getText()), mainP.getValorCusto(), mainP.getValorVenda(), mainP.getCodigo(), mainP.getIngredienteId());
@@ -390,6 +390,7 @@ public class VendasController implements Initializable{
                     break;
                 case F5:
                     pressF5();
+                    Estoque.getInstance();
                     break;
             }
         }else if(event.getCode() == KeyCode.F6){

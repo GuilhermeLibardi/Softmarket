@@ -102,7 +102,7 @@ public class Estoque {
                     System.out.println(e.getMessage());
                 }
             } else if(item instanceof Receitas){
-                for (Itens i : Estoque.getInstance().getEstoqueR()){
+                for (Itens i : Estoque.getInstance1().getEstoqueR()){
                     if (item.getCodigo().equals(i.getCodigo())){
                         Receitas rec = (Receitas) i;
                         for (Ingredientes ingredientes : rec.getIngredientes()) {
@@ -112,17 +112,18 @@ public class Estoque {
                                 stmt.setDouble(1, ingredientes.getPeso()*item.getQuantidade());
                                 stmt.setString(2, ingredientes.getCodigo());
                                 stmt.execute();
+
                             } catch (SQLException e) {
                                 System.out.print("Erro ao preparar STMT: ");
                                 System.out.println(e.getMessage());
                             }
                         }
+                        break;
                     }
                 }
             }
         }
         atualizarEstoque();
-        atualizarEstoqueR();
         atualizarEstoqueI();
     }
 
