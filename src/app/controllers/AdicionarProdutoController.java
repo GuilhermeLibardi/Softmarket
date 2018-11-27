@@ -34,7 +34,7 @@ public class AdicionarProdutoController implements Initializable {
 
         ingredientes.add("Nenhum");
 
-        for(Ingredientes ingrediente: Estoque.getInstance().getEstoqueI()){
+        for(Ingredientes ingrediente: Estoque.getInstance1().getEstoqueI()){
             ingredientes.add(ingrediente.getNome());
         }
 
@@ -45,7 +45,7 @@ public class AdicionarProdutoController implements Initializable {
 
     @FXML
     void submit() {
-        for(Produto p : Estoque.getInstance().getEstoque()) {
+        for(Produto p : Estoque.getInstance1().getEstoque()) {
             if (p.getCodigo().equals(txtCodBarras.getText())) {
                 Alert alerta = new Alert(Alert.AlertType.ERROR);
                 alerta.setTitle("Erro de inserção");
@@ -68,7 +68,7 @@ public class AdicionarProdutoController implements Initializable {
         double peso = Double.parseDouble(txtPeso.getText().replace(",","."));
         String codIng = null;
 
-        for(Ingredientes ing : Estoque.getInstance().getEstoqueI()){
+        for(Ingredientes ing : Estoque.getInstance1().getEstoqueI()){
             if(ing.getNome().equals(comboIng.getValue().toString())){
                 System.out.println("Entrou!");
                 codIng = ing.getCodigo();
@@ -76,7 +76,7 @@ public class AdicionarProdutoController implements Initializable {
             }
         }
 
-        Estoque.getInstance().adicionarProduto(new Produto(txtNome.getText(), Integer.parseInt(txtQuantidade.getText()), valorCompra, valorVenda, txtCodBarras.getText(), peso, codIng));
+        Estoque.getInstance1().adicionarProduto(new Produto(txtNome.getText(), Integer.parseInt(txtQuantidade.getText()), valorCompra, valorVenda, txtCodBarras.getText(), peso, codIng));
         Stage stage = (Stage) btnCadastrar.getScene().getWindow();
         stage.close();
     }

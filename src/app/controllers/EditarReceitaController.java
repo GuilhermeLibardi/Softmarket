@@ -51,7 +51,7 @@ public class EditarReceitaController implements Initializable {
 
     private double pCusto, pVenda;
 
-    private Estoque e = Estoque.getInstance();
+    private Estoque e = Estoque.getInstance1();
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
