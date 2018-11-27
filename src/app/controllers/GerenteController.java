@@ -11,6 +11,8 @@ import app.classes.relatorios.RelatorioItensMaisVendidos;
 import app.classes.relatorios.RelatorioMensalVendas;
 import app.classes.usuarios.Usuario;
 import app.dao.ConnectionFactory;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -32,6 +34,7 @@ import javafx.scene.image.Image;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import net.sf.jasperreports.engine.JRException;
 
 import java.io.IOException;
@@ -101,7 +104,7 @@ public class GerenteController implements Initializable {
     private ContextMenu contextMenu;
 
     @FXML
-    private MenuItem menuItemRemover, menuItemEditar;
+    private MenuItem menuItemRemover, menuItemEditar, menuRemover, menuEditar;
 
     @FXML
     private CategoryAxis x;
@@ -124,23 +127,6 @@ public class GerenteController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        try (Connection con = new ConnectionFactory().getConnection()) {
-            XYChart.Series series = new XYChart.Series();
-            series.setName("Lucro mensal");
-            String sql = "select DAY(data) as dia, sum(lucro_real) as lucro from relatorio_vendas where MONTH(data) = MONTH(curdate())\n" +
-                    "  AND YEAR(data) = YEAR(curdate()) group by DAY(data);";
-            PreparedStatement stmt = con.prepareStatement(sql);
-            ResultSet resultados = stmt.executeQuery();
-            while (resultados.next()) {
-                int dia = resultados.getInt("dia");
-                double lucro = resultados.getDouble("lucro");
-                series.getData().add(new XYChart.Data(String.valueOf(dia), lucro));
-            }
-            graficoLinha.getData().addAll(series);
-        } catch (SQLException e) {
-            System.out.print("Erro ao pegar dados do gráfico");
-            System.out.println(e.getMessage());
-        }
 
 
         ObservableList<String> options = FXCollections.observableArrayList(
@@ -194,11 +180,22 @@ public class GerenteController implements Initializable {
         tabelaProdutos.setRowFactory(tv -> {
             TableRow<Produto> row = new TableRow<>();
             row.setOnMouseClicked(event -> {
+                if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
+                    Produto r = row.getItem();
+                    editProduto(r.getCodigo());
+                }
+            });
+            return row;
+        });
+
+        tabelaIngrediente.setRowFactory(tv -> {
+            TableRow<Ingredientes> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
                 if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY
                         && event.getClickCount() == 2) {
 
-                    Produto r = row.getItem();
-                    editProduto(r.getCodigo());
+                    Ingredientes i = row.getItem();
+                    editIngrediente(i.getCodigo());
                 }
             });
             return row;
@@ -350,6 +347,11 @@ public class GerenteController implements Initializable {
         painelEstoque.setVisible(false);
         painelReceitas.setVisible(false);
         painelIngredientes.setVisible(false);
+        atualizarGrafico();
+        graficoLinha.setAnimated(false);
+        Timeline fiveSecondsWonder = new Timeline(new KeyFrame(Duration.seconds(5), event -> atualizarGrafico()));
+        fiveSecondsWonder.setCycleCount(Timeline.INDEFINITE);
+        fiveSecondsWonder.play();
     }
 
     @FXML
@@ -459,6 +461,23 @@ public class GerenteController implements Initializable {
         }
     }
 
+    void editIngrediente(String cod) {
+        try {
+            changeScreen("/app/resources/fxml/telaEditarIngrediente.fxml", cod);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    void removeIngrediente(String cod) {
+        try {
+            changeScreen("/app/resources//fxml/telaRemoverIngrediente.fxml", cod);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     private void changeScreen(String fxml) throws IOException {
         Stage stage = new Stage();
@@ -488,6 +507,12 @@ public class GerenteController implements Initializable {
         } else if (fxml.contains("RemoverProduto")) {
             RemoverProdutoController rmvProdutoController = (RemoverProdutoController) loader.getController();
             rmvProdutoController.setCod(cod);
+        } else if (fxml.contains("EditarIngrediente")) {
+            EditarIngredienteController ingredienteController = (EditarIngredienteController) loader.getController();
+            ingredienteController.setCod(cod);
+        } else if (fxml.contains("RemoverIngrediente")) {
+            RemoverIngredienteController rmvIngredienteController = (RemoverIngredienteController) loader.getController();
+            rmvIngredienteController.setCod(cod);
         }
 
         Scene scene = new Scene(root);
@@ -506,4 +531,50 @@ public class GerenteController implements Initializable {
         removeProduto(r.getCodigo());
     }
 
+    public void menuEditar(ActionEvent actionEvent) {
+        Ingredientes i = tabelaIngrediente.getSelectionModel().getSelectedItem();
+        editIngrediente(i.getCodigo());
+    }
+
+    public void menuRemover(ActionEvent actionEvent) {
+        Ingredientes i = tabelaIngrediente.getSelectionModel().getSelectedItem();
+        removeIngrediente(i.getCodigo());
+    }
+    private void atualizarGrafico() {
+        graficoLinha.getData().clear();
+        try (Connection con = new ConnectionFactory().getConnection()) {
+            XYChart.Series series1 = new XYChart.Series();
+            XYChart.Series series2 = new XYChart.Series();
+            series1.setName("Lucro mensal");
+            series2.setName("Volume de vendas");
+            String sql = "select sum(lucro_real * quantidade) as lucro, concat(day(data), '/', month(data)) as data\n" +
+                    "from RELATORIO_VENDAS\n" +
+                    "where MONTH(data) = MONTH(now()) AND YEAR(data) = YEAR(now())\n" +
+                    "group by relatorio_vendas.data\n" +
+                    "order by relatorio_vendas.data;";
+            PreparedStatement stmt = con.prepareStatement(sql);
+            ResultSet resultados = stmt.executeQuery();
+            while (resultados.next()) {
+                String data = resultados.getString("data");
+                double lucro = resultados.getDouble("lucro");
+                series1.getData().add(new XYChart.Data(String.valueOf(data), lucro));
+            }
+
+            sql = "select concat(day(data), '/', month(data)) as data, sum(quantidade) as volume from relatorio_vendas where month(data) = '11'\n" +
+                    "group by day(relatorio_vendas.data);";
+            stmt = con.prepareStatement(sql);
+            resultados = stmt.executeQuery();
+            while (resultados.next()) {
+                String data = resultados.getString("data");
+                double volume = resultados.getDouble("volume");
+                series2.getData().add(new XYChart.Data(String.valueOf(data), volume));
+            }
+
+            graficoLinha.getData().addAll(series1);
+            graficoLinha.getData().addAll(series2);
+        } catch (SQLException e) {
+            System.out.print("Erro ao pegar dados do gráfico");
+            System.out.println(e.getMessage());
+        }
+    }
 }
