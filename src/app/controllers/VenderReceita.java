@@ -139,6 +139,8 @@ public class VenderReceita implements Initializable {
                             LoginController.vc.setLblTotal(String.format("%.2f", venda.getValor()));
                             LoginController.vc.setVenda(venda);
                             LoginController.vc.getTxtCodBarras().requestFocus();
+                            Stage stage = (Stage) txtQnt.getScene().getWindow();
+                            stage.close();
                             return;
                         }else if(LoginController.vc.getStatusVenda().equals("Ativa")){
                             venda = LoginController.vc.getVenda();
@@ -149,6 +151,7 @@ public class VenderReceita implements Initializable {
                                         Receitas receitas2 = new Receitas(receitas.getNome(),receitas.getValorCusto(),receitas.getValorVenda(),receitas.getCodigo(),qnt);
                                         LoginController.vc.getListaProdutos().remove(receitas2);
                                         receitas2.setQuantidade(receitas2.getQuantidade() + qnt);
+                                        LoginController.vc.getListaProdutos().add(receitas2);
                                         procurar.setQuantidade(procurar.getQuantidade() - qnt);
                                         venda.setValor(venda.getValor() + receitas.getValorVenda()*qnt);
                                         LoginController.vc.setLblQuantidade(String.valueOf(receitas2.getQuantidade()));
@@ -157,6 +160,8 @@ public class VenderReceita implements Initializable {
                                         LoginController.vc.setLblTotal(String.format("%.2f", venda.getValor()));
                                         LoginController.vc.setVenda(venda);
                                         LoginController.vc.getTxtCodBarras().requestFocus();
+                                        Stage stage = (Stage) txtQnt.getScene().getWindow();
+                                        stage.close();
                                         return;
                                     }
                                 }

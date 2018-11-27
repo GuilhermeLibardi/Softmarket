@@ -440,6 +440,9 @@ public class VendasController implements Initializable{
             for (Iterator<Itens> it = listaProdutos.iterator(); it.hasNext();) {
                 produto1 = it.next();
                 if (produto1.getCodigo().equals(cDb)) {
+                    if (produto1 instanceof Receitas){
+                        atualizarEstoqueI((Receitas) produto1);
+                    }
                     it.remove();
                     for (Iterator<Itens> i = estoqueProdutos.iterator(); i.hasNext();) {
                         produto = i.next();
@@ -451,12 +454,14 @@ public class VendasController implements Initializable{
                     venda.cancelarProduto(produto1);
                     venda.setValor(venda.getValor()-(produto1.getValorVenda()*produto1.getQuantidade()));
                     if(!listaProdutos.isEmpty()){
+
                         Itens produto3 = listaProdutos.get(listaProdutos.size()-1);
                         lblNomeProduto.setText(listaProdutos.get(listaProdutos.size()-1).getNome());
                         lblQuantidade.setText(Integer.toString(produto3.getQuantidade()));
                         lblSubtotal.setText(String.format("%.2f", listaProdutos.get(listaProdutos.size()-1).getValorVenda()*produto3.getQuantidade()));
                         lblTotal.setText(String.format("%.2f", venda.getValor()));
                     }else{
+                        statusVenda = "Ocioso";
                         lblNomeProduto.setVisible(false);
                         lblQuantidade.setVisible(false);
                         lblSubtotal.setVisible(false);
@@ -496,7 +501,9 @@ public class VendasController implements Initializable{
             xVisible.setVisible(false);
             realVisible1.setVisible(false);
             realVisible2.setVisible(false);
+            statusVenda = "Ocioso";
         }
+        Estoque.getInstance();
         txtCodBarras.requestFocus();
     }
 
@@ -577,6 +584,28 @@ public class VendasController implements Initializable{
             return false;
         }
     }
+
+    public void atualizarEstoqueI(Receitas receitas1){
+        Ingredientes ingredientes1;
+
+        for(Receitas receitas : Estoque.getInstance1().getEstoqueR()) {
+            if(receitas.getCodigo().equals(receitas1.getCodigo())) {
+                for (Ingredientes ing : receitas.getIngredientes()) {
+                    int size = Estoque.getInstance1().getEstoqueI().size();
+                    for (int i = 0; i < size; i++) {
+                        if (Estoque.getInstance1().getEstoqueI().get(i).getCodigo().equals(ing.getCodigo())) {
+                            ingredientes1 = Estoque.getInstance1().getEstoqueI().remove(i);
+                            ingredientes1.setPeso(ingredientes1.getPeso() + ing.getPeso() * receitas1.getQuantidade());
+                            Estoque.getInstance1().getEstoqueI().add(new Ingredientes(ingredientes1.getNome(), ingredientes1.getPeso(), ingredientes1.getCodigo()));
+                            break;
+                        }
+                    }
+                }
+                return;
+            }
+        }
+    }
+
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
