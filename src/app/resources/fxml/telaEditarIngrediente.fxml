@@ -21,6 +21,6 @@
          </font>
       </Label>
       <Button cancelButton="true" layoutX="75.0" layoutY="220.0" mnemonicParsing="false" onAction="#cancel" text="Cancelar" visible="false" />
-      <Button fx:id="bntEditar" layoutX="137.0" layoutY="116.0" mnemonicParsing="false" onAction="#edit" prefHeight="31.0" prefWidth="77.0" style="-fx-background-color: #1b8678" text="Procurar" textFill="WHITE" />
+      <Button fx:id="bntEditar" layoutX="137.0" layoutY="116.0" mnemonicParsing="false" onAction="#search" prefHeight="31.0" prefWidth="77.0" style="-fx-background-color: #1b8678" text="Procurar" textFill="WHITE" />
    </children>
 </AnchorPane>

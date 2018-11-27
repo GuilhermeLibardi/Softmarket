@@ -68,14 +68,8 @@ public class EditarIngredienteController{
     @FXML
     void edit() {
         if (this.txtNome.isVisible()) {
-            try {
-                String codIng="";
 
-                Estoque.getInstance1().editarIngrediente(new Ingredientes(this.txtNome.getText(), Double.parseDouble(this.txtPeso.getText().replace(",", ".")), this.txtCodBarras.getText()));
-
-            } catch (ProdutoNaoEncontradoException e) {
-                System.out.println(e.getMessage());
-            }
+            Estoque.getInstance1().editarIngrediente(new Ingredientes(this.txtNome.getText(), Double.parseDouble(this.txtPeso.getText().replace(",", ".")), this.txtCodBarras.getText()));
 
             Stage window = (Stage) btnCancelar.getScene().getWindow();
             window.close();
