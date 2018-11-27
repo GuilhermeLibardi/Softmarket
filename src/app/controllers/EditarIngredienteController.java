@@ -75,5 +75,10 @@ public class EditarIngredienteController{
             window.close();
         }
     }
+    public void setCod(String cod){
+
+        txtCodBarras.setText(cod);
+        btnSearch.fire();
+    }
 
 }

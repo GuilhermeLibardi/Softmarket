@@ -55,7 +55,10 @@ public class RemoverIngredienteController {
         }
     }
 
-
+    public void setCod(String cod){
+        txtCodBarras.setText(cod);
+        btnRemover.fire();
+    }
     @FXML
     void handleEnter() {
         handleRemover();

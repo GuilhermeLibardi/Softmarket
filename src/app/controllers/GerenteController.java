@@ -101,7 +101,7 @@ public class GerenteController implements Initializable {
     private ContextMenu contextMenu;
 
     @FXML
-    private MenuItem menuItemRemover, menuItemEditar;
+    private MenuItem menuItemRemover, menuItemEditar, menuRemover, menuEditar;
 
     @FXML
     private CategoryAxis x;
@@ -199,6 +199,19 @@ public class GerenteController implements Initializable {
 
                     Produto r = row.getItem();
                     editProduto(r.getCodigo());
+                }
+            });
+            return row;
+        });
+
+        tabelaIngrediente.setRowFactory(tv -> {
+            TableRow<Ingredientes> row = new TableRow<>();
+            row.setOnMouseClicked(event -> {
+                if (!row.isEmpty() && event.getButton() == MouseButton.PRIMARY
+                        && event.getClickCount() == 2) {
+
+                    Ingredientes i = row.getItem();
+                    editIngrediente(i.getCodigo());
                 }
             });
             return row;
@@ -459,6 +472,23 @@ public class GerenteController implements Initializable {
         }
     }
 
+    void editIngrediente(String cod) {
+        try {
+            changeScreen("/app/resources/fxml/telaEditarIngrediente.fxml", cod);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    @FXML
+    void removeIngrediente(String cod) {
+        try {
+            changeScreen("/app/resources//fxml/telaRemoverIngrediente.fxml", cod);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 
     private void changeScreen(String fxml) throws IOException {
         Stage stage = new Stage();
@@ -488,6 +518,12 @@ public class GerenteController implements Initializable {
         } else if (fxml.contains("RemoverProduto")) {
             RemoverProdutoController rmvProdutoController = (RemoverProdutoController) loader.getController();
             rmvProdutoController.setCod(cod);
+        } else if (fxml.contains("EditarIngrediente")) {
+            EditarIngredienteController ingredienteController = (EditarIngredienteController) loader.getController();
+            ingredienteController.setCod(cod);
+        } else if (fxml.contains("RemoverIngrediente")) {
+            RemoverIngredienteController rmvIngredienteController = (RemoverIngredienteController) loader.getController();
+            rmvIngredienteController.setCod(cod);
         }
 
         Scene scene = new Scene(root);
@@ -506,4 +542,13 @@ public class GerenteController implements Initializable {
         removeProduto(r.getCodigo());
     }
 
+    public void menuEditar(ActionEvent actionEvent) {
+        Ingredientes i = tabelaIngrediente.getSelectionModel().getSelectedItem();
+        editIngrediente(i.getCodigo());
+    }
+
+    public void menuRemover(ActionEvent actionEvent) {
+        Ingredientes i = tabelaIngrediente.getSelectionModel().getSelectedItem();
+        removeIngrediente(i.getCodigo());
+    }
 }
