@@ -1,5 +1,8 @@
 package app.classes;
 
+import app.dao.ConnectionFactory;
+
+import java.sql.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -46,6 +49,59 @@ public class Venda {
         nota.append("Troco: " + String.format("R$ %.2f", troco) + "\n\n");
 
         return String.valueOf(nota);
+    }
+
+    public void inserirVenda(){
+        int cod=0;
+
+        try (Connection con = new ConnectionFactory().getConnection()) {
+            String sql = "INSERT INTO softmarketdb.vendas (formaPagamento, total) VALUES(?,?)";
+            PreparedStatement stmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+            if(this.tipoPag == 'c'){
+                stmt.setString(1,"Cartão");
+            }else if(this.tipoPag == 'd'){
+                stmt.setString(1,"Dinheiro");
+            }
+            stmt.setDouble(2, this.getValor());
+            stmt.execute();
+            ResultSet rs = stmt.getGeneratedKeys();
+            if(rs.next()){
+                cod = rs.getInt(1);
+            }
+
+        } catch (SQLException e) {
+            System.out.print("Erro ao preparar STMT: ");
+            System.out.println(e.getMessage());
+        }
+
+        for(Itens item : this.itens){
+            if(item instanceof Produto){
+                try (Connection con = new ConnectionFactory().getConnection()) {
+                    String sq2 = "INSERT INTO softmarketdb.vendas_contem_produtos (vendas_cod, produtos_codBarras, quantidade) VALUES(?,?,?)";
+                    PreparedStatement stmt2 = con.prepareStatement(sq2);
+                    stmt2.setInt(1, cod);
+                    stmt2.setString(2, item.getCodigo());
+                    stmt2.setInt(3, item.getQuantidade());
+                    stmt2.execute();
+                } catch (SQLException e) {
+                    System.out.print("Erro ao preparar STMT: ");
+                    System.out.println(e.getMessage());
+                }
+            } else if(item instanceof Receitas){
+                try (Connection con = new ConnectionFactory().getConnection()) {
+                    String sq3 = "INSERT INTO softmarketdb.vendas_contem_receitas (vendas_cod, receitas_codBarras, quantidade) VALUES(?,?,?)";
+                    PreparedStatement stmt3 = con.prepareStatement(sq3);
+                    stmt3.setInt(1, cod);
+                    stmt3.setString(2, item.getCodigo());
+                    stmt3.setInt(3, item.getQuantidade());
+                    stmt3.execute();
+                } catch (SQLException e) {
+                    System.out.print("Erro ao preparar STMT: ");
+                    System.out.println(e.getMessage());
+                }
+            }
+        }
+        Estoque.getInstance().atualizarEstoqueVenda(this);
     }
 
     public ArrayList<Itens> getItens() {

@@ -19,21 +19,7 @@ public class Vendedor extends Usuario {
     }
 
     public void fecharVenda(Venda v){
-        Main.vendasFechadas.add(v);
-        CSVParser parser = new CSVParser();
-        for (Itens produto : v.getItens()){
-            for(Produto mainP : Estoque.getInstance().getEstoque()){
-                if(produto.getCodigo().equals(mainP.getCodigo())){
-                    mainP.setQuantidade(mainP.getQuantidade()-produto.getQuantidade());
-                }
-            }
-        }
-        try {
-            parser.writeVenda(Main.vendasFechadas);
-            parser.writeEstoque(Estoque.getInstance().getEstoque());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        v.inserirVenda();
     }
 
 }
