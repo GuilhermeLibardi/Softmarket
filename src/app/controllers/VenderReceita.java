@@ -188,10 +188,6 @@ public class VenderReceita implements Initializable {
         }
     }
 
-    public void descontarEstoque1 (ArrayList<Ingredientes> ingredientes, int qnt){
-
-    }
-
     public int verificaIngredientes (Receitas receitas){
         for (Ingredientes ingR : receitas.getIngredientes()) {
             for (Ingredientes ingE :  Estoque.getInstance1().getEstoqueI()) {
