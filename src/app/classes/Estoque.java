@@ -4,6 +4,7 @@ import app.classes.exceptions.ProdutoNaoEncontradoException;
 import app.dao.ConnectionFactory;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -158,9 +159,39 @@ public class Estoque {
     public static synchronized Estoque getInstance() {
         if (instancia == null)
             instancia = new Estoque();
-        atualizarEstoque();
-        atualizarEstoqueR();
-        atualizarEstoqueI();
+        Task<Void> estoque = new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+                atualizarEstoque();
+                System.out.println("Atualizando estoque");
+                return null;
+            }
+        };
+        Task<Void> receita = new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+                atualizarEstoque();
+                System.out.println("Atualizando receita");
+                return null;
+            }
+        };
+        Task<Void> ingrediente = new Task<Void>() {
+            @Override
+            protected Void call() throws Exception {
+                atualizarEstoque();
+                System.out.println("Atualizando ingrediente");
+                return null;
+            }
+        };
+        Thread t1 = new Thread(estoque);
+        Thread t2 = new Thread(receita);
+        Thread t3 = new Thread(ingrediente);
+        t1.setDaemon(true);
+        t2.setDaemon(true);
+        t3.setDaemon(true);
+        t1.start();
+        t2.start();
+        t3.start();
         return instancia;
     }
 
