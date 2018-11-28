@@ -88,41 +88,34 @@ public class Estoque {
     }
 
     public void atualizarEstoqueVenda(Venda venda){
+        StringBuilder bd = new StringBuilder();
+
         for (Itens item: venda.getItens()){
             if(item instanceof Produto){
-                try (Connection con = new ConnectionFactory().getConnection()){
-                    String sq1 = "UPDATE produtos SET produtos.quantidade = produtos.quantidade - ?  WHERE codBarras = ?";
-                    PreparedStatement stmt = con.prepareStatement(sq1);
-                    stmt.setInt(1, item.getQuantidade());
-                    System.out.println(item.getQuantidade());
-                    stmt.setString(2,item.getCodigo());
-                    stmt.execute();
-                } catch (SQLException e) {
-                    System.out.print("Erro ao preparar STMT: ");
-                    System.out.println(e.getMessage());
-                }
+                bd.append("UPDATE jpacon92_softmarketdb.produtos SET quantidade = quantidade - " + item.getQuantidade() +  " WHERE codBarras = '" + item.getCodigo() + "'; ");
             } else if(item instanceof Receitas){
                 for (Itens i : Estoque.getInstance1().getEstoqueR()){
                     if (item.getCodigo().equals(i.getCodigo())){
                         Receitas rec = (Receitas) i;
                         for (Ingredientes ingredientes : rec.getIngredientes()) {
-                            try (Connection con = new ConnectionFactory().getConnection()) {
-                                String sq1 = "UPDATE ingredientes SET ingredientes.peso = ingredientes.peso - ?  WHERE cod = ?";
-                                PreparedStatement stmt = con.prepareStatement(sq1);
-                                stmt.setDouble(1, ingredientes.getPeso()*item.getQuantidade());
-                                stmt.setString(2, ingredientes.getCodigo());
-                                stmt.execute();
-
-                            } catch (SQLException e) {
-                                System.out.print("Erro ao preparar STMT: ");
-                                System.out.println(e.getMessage());
-                            }
+                            bd.append("UPDATE jpacon92_softmarketdb.ingredientes SET ingredientes.peso = ingredientes.peso - " + ingredientes.getPeso()*item.getQuantidade() + " WHERE ingredientes.cod = '" + ingredientes.getCodigo() + "'; ");
                         }
                         break;
                     }
                 }
             }
         }
+
+        try (Connection con = new ConnectionFactory().getConnection()) {
+            PreparedStatement stmt = con.prepareStatement(bd.toString());
+            stmt.execute();
+
+        } catch (SQLException e) {
+            System.out.print("Erro ao preparar STMT1: ");
+            System.out.println(e.getMessage());
+        }
+
+
         atualizarEstoque();
         atualizarEstoqueI();
     }

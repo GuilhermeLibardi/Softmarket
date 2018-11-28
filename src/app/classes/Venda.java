@@ -52,6 +52,7 @@ public class Venda {
     }
 
     public void inserirVenda(){
+        StringBuilder bd = new StringBuilder();
         int cod=0;
 
         try (Connection con = new ConnectionFactory().getConnection()) {
@@ -76,31 +77,20 @@ public class Venda {
 
         for(Itens item : this.itens){
             if(item instanceof Produto){
-                try (Connection con = new ConnectionFactory().getConnection()) {
-                    String sq2 = "INSERT INTO jpacon92_softmarketdb.vendas_contem_produtos (vendas_cod, produtos_codBarras, quantidade) VALUES(?,?,?)";
-                    PreparedStatement stmt2 = con.prepareStatement(sq2);
-                    stmt2.setInt(1, cod);
-                    stmt2.setString(2, item.getCodigo());
-                    stmt2.setInt(3, item.getQuantidade());
-                    stmt2.execute();
-                } catch (SQLException e) {
-                    System.out.print("Erro ao preparar STMT: ");
-                    System.out.println(e.getMessage());
-                }
+                bd.append("INSERT INTO jpacon92_softmarketdb.vendas_contem_produtos (vendas_cod, produtos_codBarras, quantidade) VALUES(" + cod + ",'" + item.getCodigo() + "'," + item.getQuantidade() + "); ");
             } else if(item instanceof Receitas){
-                try (Connection con = new ConnectionFactory().getConnection()) {
-                    String sq3 = "INSERT INTO jpacon92_softmarketdb.vendas_contem_receitas (vendas_cod, receitas_codBarras, quantidade) VALUES(?,?,?)";
-                    PreparedStatement stmt3 = con.prepareStatement(sq3);
-                    stmt3.setInt(1, cod);
-                    stmt3.setString(2, item.getCodigo());
-                    stmt3.setInt(3, item.getQuantidade());
-                    stmt3.execute();
-                } catch (SQLException e) {
-                    System.out.print("Erro ao preparar STMT: ");
-                    System.out.println(e.getMessage());
-                }
+                bd.append("INSERT INTO jpacon92_softmarketdb.vendas_contem_receitas (vendas_cod, receitas_codBarras, quantidade) VALUES(" + cod + ",'" + item.getCodigo() + "'," + item.getQuantidade() + "); ");
             }
         }
+        try (Connection con = new ConnectionFactory().getConnection()) {
+            PreparedStatement stmt2 = con.prepareStatement(bd.toString());
+            stmt2.execute();
+        } catch (SQLException e) {
+            System.out.print("Erro ao preparar STMT: ");
+            System.out.println(e.getMessage());
+        }
+
+
         Estoque.getInstance().atualizarEstoqueVenda(this);
     }
 
