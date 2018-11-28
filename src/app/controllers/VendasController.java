@@ -6,6 +6,7 @@ import app.classes.usuarios.Vendedor;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -90,8 +91,6 @@ public class VendasController implements Initializable{
     public void setTableProdutos(TableView<Itens> tableProdutos) {
         this.tableProdutos = tableProdutos;
     }
-
-
 
     @FXML
     void digitarCdb(KeyEvent event){
