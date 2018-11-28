@@ -23,7 +23,7 @@ public class Estoque {
         estoqueI = FXCollections.observableArrayList();
     }
 
-    private static void atualizarEstoqueI() {
+    public static void atualizarEstoqueI() {
         Ingredientes ingredientes;
 
         try (Connection con = new ConnectionFactory().getConnection()) {
@@ -159,27 +159,24 @@ public class Estoque {
     public static synchronized Estoque getInstance() {
         if (instancia == null)
             instancia = new Estoque();
-        Task<Void> estoque = new Task<Void>() {
+        Task<Void> estoque = new Task<>() {
             @Override
             protected Void call() throws Exception {
                 atualizarEstoque();
-                System.out.println("Atualizando estoque");
                 return null;
             }
         };
         Task<Void> receita = new Task<Void>() {
             @Override
             protected Void call() throws Exception {
-                atualizarEstoque();
-                System.out.println("Atualizando receita");
+                atualizarEstoqueR();
                 return null;
             }
         };
         Task<Void> ingrediente = new Task<Void>() {
             @Override
             protected Void call() throws Exception {
-                atualizarEstoque();
-                System.out.println("Atualizando ingrediente");
+                atualizarEstoqueI();
                 return null;
             }
         };
