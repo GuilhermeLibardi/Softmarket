@@ -83,7 +83,7 @@ public class Venda {
                     @Override
                     protected Void call() throws Exception {
                         try (Connection con = new ConnectionFactory().getConnection()) {
-                            String sq2 = "INSERT INTO jpacon92_softmarketdb.vendas_contem_produtos (vendas_cod, produtos_codBarras, quantidade) VALUES(?,?,?)";
+                            String sq2 = "INSERT INTO vendas_contem_produtos (vendas_cod, produtos_codBarras, quantidade) VALUES(?,?,?)";
                             PreparedStatement stmt2 = con.prepareStatement(sq2);
                             stmt2.setInt(1, codigofinal);
                             stmt2.setString(2, item.getCodigo());
@@ -104,7 +104,7 @@ public class Venda {
                     @Override
                     protected Void call() throws Exception {
                         try (Connection con = new ConnectionFactory().getConnection()) {
-                            String sq3 = "INSERT INTO jpacon92_softmarketdb.vendas_contem_receitas (vendas_cod, receitas_codBarras, quantidade) VALUES(?,?,?)";
+                            String sq3 = "INSERT INTO vendas_contem_receitas (vendas_cod, receitas_codBarras, quantidade) VALUES(?,?,?)";
                             PreparedStatement stmt3 = con.prepareStatement(sq3);
                             stmt3.setInt(1, codigofinal);
                             stmt3.setString(2, item.getCodigo());
