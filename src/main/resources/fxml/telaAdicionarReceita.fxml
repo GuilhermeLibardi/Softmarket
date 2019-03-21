@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<AnchorPane prefHeight="262.0" prefWidth="351.0" styleClass="nodeBackground" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.AdicionarReceitaController">
+   <children>
+      <TextField fx:id="txtCodBarras" layoutX="150.0" layoutY="70.0" />
+      <TextField fx:id="txtNome" layoutX="150.0" layoutY="101.0" />
+      <TextField fx:id="txtPdc" layoutX="150.0" layoutY="135.0" />
+      <TextField fx:id="txtPdv" layoutX="150.0" layoutY="170.0" />
+      <Button fx:id="btnCadastrar" layoutX="146.0" layoutY="214.0" mnemonicParsing="false" onAction="#submit" style="-fx-background-color: #1b8678" text="Próximo" textFill="WHITE" />
+      <Label fx:id="lblPdv" layoutX="15.0" layoutY="170.0" text="Preço de venda" />
+      <Label fx:id="lblPdc" layoutX="16.0" layoutY="135.0" text="Preço de custo" />
+      <Label fx:id="lblNome" layoutX="16.0" layoutY="101.0" text="Nome" />
+      <Label fx:id="lblCod" layoutX="16.0" layoutY="70.0" text="Código de barras" />
+      <Label fx:id="lblTitulo" layoutX="42.0" layoutY="14.0" prefHeight="35.0" prefWidth="267.0" text="Detalhes" textFill="#1b8678">
+         <font>
+            <Font name="System Bold" size="24.0" />
+         </font>
+      </Label>
+      <ListView fx:id="listaIngredientes" layoutX="76.0" layoutY="53.0" prefHeight="152.0" prefWidth="200.0" visible="false" />
+      <TableView fx:id="tableIngredientes" layoutX="45.0" layoutY="47.0" prefHeight="158.0" prefWidth="261.0" visible="false">
+        <columns>
+          <TableColumn fx:id="columnNome" prefWidth="167.0" text="Nome" />
+          <TableColumn fx:id="columnPeso" onEditCommit="#editPeso" prefWidth="91.0" text="Peso (Kg)" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>

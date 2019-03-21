@@ -1,0 +1,64 @@
+.table-view .table-cell {
+    -fx-font-size: 15px;
+}
+.table-view{
+
+}
+
+.table-view .column-header, .table-view .filler {
+    -fx-border-width: 0 0 1 0;
+    -fx-background-color: white;
+    -fx-border-color: transparent transparent derive(-fx-base, 80%) transparent;
+    -fx-border-insets: 0 10 1 0;
+}
+
+.table-row-cell {
+    -fx-background-color: white;
+}
+
+.table-row-cell:odd {
+    -fx-background-color: rgba(27, 136, 122, 0.24);
+}
+
+.table-view .table-column {
+    -fx-alignment: center;
+}
+
+  .table-row-cell:selected {
+      /* -fx-border-color:transparent firebrick transparent firebrick  ;
+       -fx-border-width:2.0; */
+  }
+
+
+  .table-row-cell:hover {
+      -fx-background-color: rgba(27, 136, 122, 0.5);
+  }
+
+  .table-row-cell:focused {
+      -fx-background-color: rgba(27, 136, 122, 0.8);
+  }
+
+
+  #ancoraMenu{
+      -fx-background-color: rgba(27, 136, 122, 0.6);
+  }
+
+  .btnMenu{
+      -fx-background-color: rgba(27, 136, 122, 0.6);
+  }
+
+  .btnMenu:hover{
+      -fx-background-color: rgba(27, 136, 122, 0.8);
+      -fx-cursor: hand;
+  }
+
+  .paneBackground{
+      -fx-background-color: #FFFFFF;
+  }
+
+
+.toldoBackground{
+    -fx-background-color: rgba(27, 136, 122, 1);
+}
+
+
