@@ -1,15 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Rectangle2D?>
-<?import javafx.scene.control.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.shape.*?>
-<?import javafx.scene.text.*?>
-<AnchorPane blendMode="MULTIPLY" nodeOrientation="LEFT_TO_RIGHT" pickOnBounds="false" prefHeight="350.0" prefWidth="400.0" snapToPixel="false" styleClass="paneBackground" stylesheets="@../styles/style.css" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.LoginController">
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane blendMode="MULTIPLY" nodeOrientation="LEFT_TO_RIGHT" pickOnBounds="false" prefHeight="350.0" prefWidth="400.0" snapToPixel="false" styleClass="paneBackground" stylesheets="@../styles/login.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.LoginController">
    <children>
-      <Button id="btnLogin" fx:id="btnLogin" layoutX="345.0" layoutY="247.0" mnemonicParsing="false" onAction="#handleLogin" prefHeight="25.0" prefWidth="62.0" style="-fx-background-color: #1b8678;" text="Entrar" textFill="WHITE">
+      <Button id="btnLogin" fx:id="btnLogin" layoutX="345.0" layoutY="247.0" mnemonicParsing="false" onAction="#handleLogin" prefHeight="25.0" prefWidth="62.0" stylesheets="@../styles/login.css" text="Entrar" textFill="WHITE">
          <font>
             <Font name="System Bold" size="12.0" />
          </font>
@@ -22,33 +28,33 @@
             <Rectangle2D height="134.0" width="150.0" />
          </viewport>
       </ImageView>
-      <TextField fx:id="txtUsuario" layoutX="299.0" layoutY="162.0" onAction="#handleEnterUsuario" />
-      <Label layoutX="253.0" layoutY="166.0" text="Usuário" />
-      <Label layoutX="257.0" layoutY="201.0" text="Senha" />
-      <PasswordField fx:id="txtSenha" layoutX="299.0" layoutY="197.0" onAction="#handleSubmitSenha" />
+      <TextField fx:id="txtUsuario" layoutX="299.0" layoutY="162.0" onAction="#handleEnterUsuario" stylesheets="@../styles/login.css" />
+      <Label layoutX="247.0" layoutY="166.0" stylesheets="@../styles/login.css" text="Usuário" />
+      <Label layoutX="255.0" layoutY="201.0" stylesheets="@../styles/login.css" text="Senha" />
+      <PasswordField fx:id="txtSenha" layoutX="299.0" layoutY="197.0" onAction="#handleSubmitSenha" stylesheets="@../styles/login.css" />
       <Circle fill="#1b887a" layoutX="45.0" layoutY="38.0" radius="51.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
       <Circle fill="#1b887a" layoutX="141.0" layoutY="40.0" radius="51.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
       <Circle fill="#1b887a" layoutX="236.0" layoutY="39.0" radius="51.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
       <Circle fill="#1b887a" layoutX="331.0" layoutY="39.0" radius="51.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
       <Circle fill="#1b887a" layoutX="426.0" layoutY="39.0" radius="51.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#1b887a" height="54.0" layoutY="-2.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="477.0" />
-      <Label layoutX="46.0" layoutY="99.0" text="Softmarket" textFill="#3c3c3c">
+      <Label layoutX="124.0" layoutY="5.0" stylesheets="@../styles/login.css" text="Softmarket PDV" textFill="#333333">
          <font>
             <Font name="Corbel" size="27.0" />
          </font>
       </Label>
       <Line endX="100.0" layoutX="234.0" layoutY="205.0" rotate="90.0" startX="-100.0" />
-      <Label layoutX="350.0" layoutY="120.0" text="Login">
+      <Label layoutX="350.0" layoutY="120.0" stylesheets="@../styles/login.css" text="Login">
          <font>
             <Font name="Corbel" size="20.0" />
          </font>
       </Label>
-      <Label fx:id="lblData" layoutX="24.0" layoutY="306.0" prefHeight="17.0" prefWidth="246.0">
+      <Label fx:id="lblData" layoutX="24.0" layoutY="306.0" prefHeight="17.0" prefWidth="246.0" stylesheets="@../styles/login.css">
          <font>
             <Font name="Corbel" size="13.0" />
          </font>
       </Label>
-      <Button fx:id="btnFechar" alignment="CENTER" contentDisplay="CENTER" layoutX="450.0" layoutY="-1.0" mnemonicParsing="false" onAction="#fecharPrograma" style="-fx-background-color: transparent;" text="x" textAlignment="CENTER">
+      <Button id="btnClose" fx:id="btnFechar" alignment="CENTER" contentDisplay="CENTER" layoutX="450.0" layoutY="-1.0" mnemonicParsing="false" onAction="#fecharPrograma" stylesheets="@../styles/login.css" text="x" textAlignment="CENTER">
          <font>
             <Font size="14.0" />
          </font>

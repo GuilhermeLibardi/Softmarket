@@ -1,0 +1,41 @@
+.btn-categoria{
+    -fx-background-color: #3f3f3f;
+    -fx-padding: 5;
+    -fx-border-insets: 10px 20px;
+    -fx-background-insets: 10px 20px;
+    -fx-alignment: center;
+    -fx-pref-height: 150px;
+    -fx-pref-width: 200px;
+    -fx-text-fill: white;
+    -fx-font-size: 12pt;
+}
+
+.btn-menu{
+    -fx-background-color: #3f3f3f;
+    -fx-padding: 5;
+    -fx-border-insets: 10px 20px;
+    -fx-background-insets: 10px 20px;
+    -fx-alignment: center;
+    -fx-pref-height: 150px;
+    -fx-pref-width: 200px;
+    -fx-text-fill: white;
+    -fx-font-size: 12pt;
+
+    -fx-border-width: 1px;
+    -fx-border-color: #cacaca;
+}
+
+.hbox-categorias{
+    -fx-padding: 20px 30px;
+    -fx-pref-height: 200px;
+}
+
+.vbox-detalhes{
+    -fx-border-width: 0px 1px 0px 0px;
+    -fx-border-color: black;
+}
+
+.pane-preco{
+    -fx-border-width: 1px 0px 0px 0px;
+    -fx-border-color: black;
+}
