@@ -99,7 +99,7 @@
                      <children>
                         <ImageView fitHeight="44.0" fitWidth="50.0">
                            <image>
-                              <Image url="@../images/HOME.png" />
+                              <Image url="@../images/HOME2.png" />
                            </image>
                            <StackPane.margin>
                               <Insets left="60.0" right="250.0" />
