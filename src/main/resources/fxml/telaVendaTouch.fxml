@@ -18,7 +18,7 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="680.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1">
    <left>
       <StackPane style="-fx-background-color: #220000;" BorderPane.alignment="CENTER">
          <children>
@@ -411,7 +411,7 @@
                      <children>
                         <ImageView fitHeight="35.0" fitWidth="35.0" StackPane.alignment="CENTER_RIGHT">
                            <image>
-                              <Image url="@botao.png" />
+                              <Image url="@../images/botao.png" />
                            </image>
                            <StackPane.margin>
                               <Insets right="10.0" />
@@ -419,7 +419,7 @@
                         </ImageView>
                         <ImageView fitHeight="37.0" fitWidth="40.0" StackPane.alignment="CENTER_RIGHT">
                            <image>
-                              <Image url="@57453.png" />
+                              <Image url="@../images/carrinho.png" />
                            </image>
                            <StackPane.margin>
                               <Insets right="60.0" />
@@ -427,7 +427,7 @@
                         </ImageView>
                         <ImageView fitHeight="35.0" fitWidth="35.0" nodeOrientation="INHERIT" preserveRatio="true" StackPane.alignment="CENTER">
                            <image>
-                              <Image url="@61973.png" />
+                              <Image url="@../images/HOME.png" />
                            </image>
                            <StackPane.margin>
                               <Insets />
