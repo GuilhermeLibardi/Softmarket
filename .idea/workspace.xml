@@ -1,20 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="33a05ca5-708a-49f5-81df-e03a5f548a9f" name="Default Changelist" comment="Restart">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/softmarket/classes/PDV/Caixa.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/softmarket/classes/PDV/Venda.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/softmarket/classes/Producao/Ingrediente.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/softmarket/classes/Producao/Produto.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/softmarket/classes/Producao/Receita.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/softmarket/classes/RH/Funcionario.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/test/br/com/softmarket/classes/PDV/CaixaTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/test/br/com/softmarket/classes/PDV/VendaTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/test/br/com/softmarket/classes/Producao/IngredienteTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/test/br/com/softmarket/classes/Producao/ProdutoTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/test/br/com/softmarket/classes/Producao/ReceitaTest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/test/br/com/softmarket/classes/RH/FuncionarioTest.java" afterDir="false" />
+    <list default="true" id="33a05ca5-708a-49f5-81df-e03a5f548a9f" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/softmarket/classes/RH/util/CPF.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/br/com/softmarket/controllers/VendasController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.10/fileHashes/fileHashes.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10/fileHashes/fileHashes.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.10/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10/fileHashes/fileHashes.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.10/javaCompile/classAnalysis.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10/javaCompile/classAnalysis.bin" afterDir="false" />
@@ -23,102 +12,14 @@
       <change beforePath="$PROJECT_DIR$/.gradle/4.10/taskHistory/taskHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10/taskHistory/taskHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/4.10/taskHistory/taskHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/4.10/taskHistory/taskHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/outputFiles.bin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/app/Main.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/app/classes/Estoque$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/app/classes/Estoque$2.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/app/classes/Estoque$3.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/app/classes/Estoque.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/app/classes/Ingredientes.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/app/classes/Itens.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/app/classes/Produto.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/app/classes/Receitas.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/app/classes/Venda$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/app/classes/Venda$2.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/app/classes/Venda.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/app/classes/exceptions/ProdutoNaoEncontradoException.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/app/classes/relatorios/Datable.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/app/classes/relatorios/Relatorio.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/app/classes/relatorios/RelatorioAnualVendas.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/app/classes/relatorios/RelatorioDeEstoque.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/app/classes/relatorios/RelatorioDiarioVendas.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/app/classes/relatorios/RelatorioItensMaisVendidos.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/app/classes/relatorios/RelatorioMensalVendas.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/app/classes/relatorios/RelatorioPeriodicoVendas.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/app/classes/usuarios/Gerente.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/app/classes/usuarios/Usuario.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/app/classes/usuarios/Vendedor.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/app/classes/util/CSVParser.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/app/classes/util/Periodo.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/app/controllers/AdicionarIngredienteController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/app/controllers/AdicionarProdutoController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/app/controllers/AdicionarReceitaController$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/app/controllers/AdicionarReceitaController$2.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/app/controllers/AdicionarReceitaController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/app/controllers/EditarIngredienteController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/app/controllers/EditarProdutoController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/app/controllers/EditarReceitaController$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/app/controllers/EditarReceitaController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/app/controllers/GerenteController$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/app/controllers/GerenteController$2.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/app/controllers/GerenteController$3.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/app/controllers/GerenteController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/app/controllers/LoginController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/app/controllers/RemoverIngredienteController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/app/controllers/RemoverProdutoController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/app/controllers/RemoverReceitaController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/app/controllers/VendasController$1$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/app/controllers/VendasController$1.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/app/controllers/VendasController$2.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/app/controllers/VendasController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/app/controllers/VenderReceita.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/app/dao/ConnectionFactory.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/classes/java/main/app/dao/ReceitaContemIngredientes.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/data/estoque.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/data/usuarios.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build/resources/main/data/vendas.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/softmarket/classes/Main/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/classes/Estoque.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/classes/Ingredientes.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/classes/Itens.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/classes/Produto.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/classes/Receitas.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/classes/Venda.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/classes/exceptions/ProdutoNaoEncontradoException.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/classes/relatorios/Datable.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/classes/relatorios/Relatorio.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/classes/relatorios/RelatorioAnualVendas.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/classes/relatorios/RelatorioDeEstoque.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/classes/relatorios/RelatorioDiarioVendas.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/classes/relatorios/RelatorioItensMaisVendidos.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/classes/relatorios/RelatorioMensalVendas.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/classes/relatorios/RelatorioPeriodicoVendas.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/classes/usuarios/Gerente.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/classes/usuarios/Usuario.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/classes/usuarios/Vendedor.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/classes/util/Periodo.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/controllers/AdicionarIngredienteController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/controllers/AdicionarProdutoController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/controllers/AdicionarReceitaController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/controllers/EditarIngredienteController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/controllers/EditarProdutoController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/controllers/EditarReceitaController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/controllers/GerenteController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/controllers/LoginController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/controllers/RemoverIngredienteController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/controllers/RemoverProdutoController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/controllers/RemoverReceitaController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/controllers/VendasController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/controllers/VenderReceita.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/dao/ConnectionFactory.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/dao/ReceitaContemIngredientes.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/data/estoque.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/styles/login.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/data/usuarios.csv" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/data/vendas.csv" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/styles/vendas.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/fxml/telaLogin.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/fxml/telaLogin.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build/resources/main/fxml/telaLogin.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/build/resources/main/fxml/telaLogin.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/softmarket/classes/Main/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/softmarket/classes/Main/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/softmarket/classes/PDV/Caixa.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/softmarket/classes/PDV/Caixa.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/softmarket/classes/PDV/Venda.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/softmarket/classes/PDV/Venda.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/br/com/softmarket/classes/RH/Funcionario.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/br/com/softmarket/classes/RH/Funcionario.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/fxml/telaVendas2.fxml" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/.gradle/" />
@@ -189,15 +90,47 @@
     </system>
   </component>
   <component name="FileEditorManager">
-    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300" />
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/br/com/softmarket/classes/PDV/Venda.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="300">
+              <caret line="20" column="5" selection-start-line="20" selection-start-column="5" selection-end-line="20" selection-end-column="5" />
+              <folding>
+                <element signature="e#409#410#0" expanded="true" />
+                <element signature="e#433#434#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/br/com/softmarket/classes/RH/Funcionario.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="90">
+              <caret line="6" column="12" selection-start-line="6" selection-start-column="12" selection-end-line="6" selection-end-column="12" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/java/br/com/softmarket/classes/RH/util/CPF.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="165">
+              <caret line="19" column="1" lean-forward="true" selection-start-line="19" selection-start-column="1" selection-end-line="19" selection-end-column="1" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
   </component>
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
         <option value="JUnit4 Test Class" />
-        <option value="Class" />
         <option value="CSS File" />
         <option value="JUnit5 Test Class" />
+        <option value="Class" />
       </list>
     </option>
   </component>
@@ -230,19 +163,23 @@
         <option value="$PROJECT_DIR$/src/main/java/br/com/softmarket/Main/Main.java" />
         <option value="$PROJECT_DIR$/src/main/java/br/com/softmarket/PDV/Produto.java" />
         <option value="$PROJECT_DIR$/src/main/java/br/com/softmarket/Producao/Receit.java" />
-        <option value="$PROJECT_DIR$/src/main/java/br/com/softmarket/classes/RH/Funcionario.java" />
-        <option value="$PROJECT_DIR$/build.gradle" />
         <option value="$PROJECT_DIR$/src/main/resources/fxml/telaLogin.fxml" />
         <option value="$PROJECT_DIR$/src/main/resources/styles/login.css" />
         <option value="$PROJECT_DIR$/src/main/resources/styles/vendas.css" />
         <option value="$PROJECT_DIR$/src/main/java/br/com/softmarket/classes/PDV/CaixaTest.java" />
-        <option value="$PROJECT_DIR$/src/main/java/br/com/softmarket/classes/PDV/Caixa.java" />
         <option value="$PROJECT_DIR$/src/main/test/br/com/softmarket/classes/PDV/CaixaTest.java" />
         <option value="$PROJECT_DIR$/src/main/test/br/com/softmarket/classes/PDV/VendaTest.java" />
         <option value="$PROJECT_DIR$/src/main/test/br/com/softmarket/classes/Producao/IngredienteTest.java" />
         <option value="$PROJECT_DIR$/src/main/test/br/com/softmarket/classes/Producao/ProdutoTest.java" />
         <option value="$PROJECT_DIR$/src/main/test/br/com/softmarket/classes/Producao/ReceitaTest.java" />
         <option value="$PROJECT_DIR$/src/main/test/br/com/softmarket/classes/RH/FuncionarioTest.java" />
+        <option value="$PROJECT_DIR$/build.gradle" />
+        <option value="$PROJECT_DIR$/src/main/java/br/com/softmarket/classes/Main/Main.java" />
+        <option value="$PROJECT_DIR$/src/main/java/br/com/softmarket/classes/PDV/Caixa.java" />
+        <option value="$PROJECT_DIR$/src/main/java/br/com/softmarket/classes/PDV/Venda.java" />
+        <option value="$PROJECT_DIR$/src/main/java/br/com/softmarket/classes/RH/util/CPF.java" />
+        <option value="$PROJECT_DIR$/src/main/java/br/com/softmarket/classes/RH/util/Frequencia.java" />
+        <option value="$PROJECT_DIR$/src/main/java/br/com/softmarket/classes/RH/Funcionario.java" />
       </list>
     </option>
   </component>
@@ -258,6 +195,7 @@
     </navigator>
     <panes>
       <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -296,22 +234,12 @@
               <item name="Softmarket" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="softmarket" type="462c0819:PsiDirectoryNode" />
-              <item name="classes" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="client" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Softmarket" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
               <item name="resources" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -474,8 +402,18 @@
       <workItem from="1562962354059" duration="2924000" />
       <workItem from="1563114519797" duration="5470000" />
       <workItem from="1563122598338" duration="4025000" />
-      <workItem from="1563131550481" duration="1975000" />
+      <workItem from="1563131550481" duration="2431000" />
+      <workItem from="1563141552489" duration="9507000" />
+      <workItem from="1563481650919" duration="5092000" />
     </task>
+    <task id="LOCAL-00001" summary="Restart">
+      <created>1563140676667</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1563140676667</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
   </component>
   <component name="TestHistory">
@@ -511,12 +449,12 @@
     </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="22036000" />
+    <option name="totallyTimeSpent" value="37091000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="27" width="1366" height="741" extended-state="6" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49753696" visible="true" weight="0.27045456" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49753696" visible="true" weight="0.27954546" />
       <window_info id="Structure" order="1" sideWeight="0.50246304" side_tool="true" weight="0.26136363" />
       <window_info id="Designer" order="2" />
       <window_info id="UI Designer" order="3" />
@@ -532,9 +470,9 @@
       <window_info anchor="bottom" id="Database Changes" order="8" />
       <window_info anchor="bottom" id="Terminal" order="9" weight="0.3294702" />
       <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
-      <window_info anchor="bottom" id="Version Control" order="11" />
+      <window_info active="true" anchor="bottom" id="Version Control" order="11" visible="true" weight="0.3294702" />
       <window_info anchor="bottom" id="Build" order="12" weight="0.32781458" />
-      <window_info active="true" anchor="bottom" id="Messages" order="13" visible="true" weight="0.3294702" />
+      <window_info anchor="bottom" id="Messages" order="13" weight="0.3294702" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" show_stripe_button="false" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -547,6 +485,8 @@
     </layout>
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
+    <option name="CHECK_NEW_TODO" value="false" />
     <MESSAGE value="Restart" />
     <option name="LAST_COMMIT_MESSAGE" value="Restart" />
   </component>
@@ -579,30 +519,7 @@
     <entry file="file://$PROJECT_DIR$/src/main/java/TestandoOTeste.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/br/com/softmarket/PDV/Produto.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/br/com/softmarket/Producao/Receit.java" />
-    <entry file="file://$PROJECT_DIR$/src/main/resources/fxml/telaLogin.fxml">
-      <provider editor-type-id="text-editor" />
-      <provider selected="true" editor-type-id="JavaFX-Scene-Builder" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/br/com/softmarket/classes/Main/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="180">
-          <caret line="21" column="32" selection-start-line="21" selection-start-column="32" selection-end-line="21" selection-end-column="32" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/build.gradle">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="450">
-          <caret line="30" column="52" selection-start-line="30" selection-start-column="52" selection-end-line="30" selection-end-column="52" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/br/com/softmarket/classes/PDV/CaixaTest.java">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/br/com/softmarket/classes/PDV/CaixaTest.java" />
     <entry file="file://$PROJECT_DIR$/src/main/test/br/com/softmarket/classes/PDV/VendaTest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
@@ -610,24 +527,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/br/com/softmarket/classes/PDV/Venda.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="18" selection-start-line="2" selection-start-column="18" selection-end-line="2" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/test/br/com/softmarket/classes/PDV/CaixaTest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
           <caret line="10" column="5" selection-start-line="10" selection-start-column="5" selection-end-line="10" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/br/com/softmarket/classes/PDV/Caixa.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="18" selection-start-line="2" selection-start-column="18" selection-end-line="2" selection-end-column="18" />
         </state>
       </provider>
     </entry>
@@ -701,10 +604,85 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/br/com/softmarket/classes/RH/Funcionario.java">
+    <entry file="file://$PROJECT_DIR$/src/main/resources/fxml/telaLogin.fxml">
+      <provider editor-type-id="JavaFX-Scene-Builder" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="310">
+          <caret line="28" column="20" lean-forward="true" selection-start-line="28" selection-start-column="20" selection-end-line="28" selection-end-column="20" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/build.gradle">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="19" column="11" selection-start-line="19" selection-start-column="11" selection-end-line="19" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/br/com/softmarket/classes/Main/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="310">
+          <caret line="26" column="19" selection-start-line="26" selection-start-column="19" selection-end-line="26" selection-end-column="19" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/br/com/softmarket/controllers/VendasController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="30">
-          <caret line="2" column="24" selection-start-line="2" selection-start-column="24" selection-end-line="2" selection-end-column="24" />
+          <caret line="2" column="31" selection-start-line="2" selection-start-column="31" selection-end-line="2" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/fxml/telaVendas2.fxml">
+      <provider editor-type-id="JavaFX-Scene-Builder" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="195">
+          <caret line="16" column="64" selection-start-line="16" selection-start-column="64" selection-end-line="16" selection-end-column="64" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/br/com/softmarket/classes/PDV/Venda.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="20" column="5" selection-start-line="20" selection-start-column="5" selection-end-line="20" selection-end-column="5" />
+          <folding>
+            <element signature="e#409#410#0" expanded="true" />
+            <element signature="e#433#434#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/br/com/softmarket/classes/RH/util/Frequencia.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" column="4" selection-start-line="3" selection-start-column="4" selection-end-line="3" selection-end-column="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/br/com/softmarket/classes/RH/Funcionario.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="12" selection-start-line="6" selection-start-column="12" selection-end-line="6" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/br/com/softmarket/classes/PDV/Caixa.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="13" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/br/com/softmarket/classes/RH/util/CPF.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="19" column="1" lean-forward="true" selection-start-line="19" selection-start-column="1" selection-end-line="19" selection-end-column="1" />
         </state>
       </provider>
     </entry>

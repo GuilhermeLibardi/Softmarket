@@ -3,6 +3,7 @@ plugins {
     id 'org.openjfx.javafxplugin' version '0.0.7' //Javafx
 }
 
+
 javafx{
     modules = [ 'javafx.controls', 'javafx.fxml' ]
 }
@@ -16,8 +17,8 @@ test{
 dependencies {
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.3.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.3.1'
+    compile 'io.sentry:sentry:1.7.23'
 }
-
 
 group 'softmarket'
 version '0.1'
