@@ -75,10 +75,10 @@ public class VendasController implements Initializable {
     }
 
     private void creatTable() {
-        colCodBarras.setCellValueFactory(new PropertyValueFactory<Produto, String>("codigoBarras"));
+        colCodBarras.setCellValueFactory(new PropertyValueFactory<Produto, String>("codigo_interno"));
         colNome.setCellValueFactory(new PropertyValueFactory<Produto, String>("nome"));
         colEstoque.setCellValueFactory(new PropertyValueFactory<Produto, Integer>("quantidade"));
-        colVenda.setCellValueFactory(new PropertyValueFactory<Produto, Double>("precoVenda"));
+        colVenda.setCellValueFactory(new PropertyValueFactory<Produto, Double>("preco_venda"));
 
         Callback<TableColumn<Produto, Double>, TableCell<Produto, Double>> cellFactory = new Callback<TableColumn<Produto, Double>, TableCell<Produto, Double>>() {
             @Override
@@ -174,11 +174,11 @@ public class VendasController implements Initializable {
                     vendaAtual.inserirProdutoVenda(txtCodBarras.getText(), Integer.parseInt(txtQuantidade.getText()));
                 }
             }
-            vendaAtual.setValorVenda(produtoAtual.getPrecoVenda()*Double.parseDouble(txtQuantidade.getText()) + vendaAtual.getValorVenda());
+            vendaAtual.setValorVenda(produtoAtual.getPreco_venda()*Double.parseDouble(txtQuantidade.getText()) + vendaAtual.getValorVenda());
             listaProdutos.add(produtoAtual);
             lblQuantidade.setText(txtQuantidade.getText());
             lblNomeProduto.setText(produtoAtual.getNome());
-            lblSubtotal.setText(String.format("%.2f", produtoAtual.getPrecoVenda() * Double.parseDouble(txtQuantidade.getText())));
+            lblSubtotal.setText(String.format("%.2f", produtoAtual.getPreco_venda() * Double.parseDouble(txtQuantidade.getText())));
             lblTotal.setText(String.format("%.2f", vendaAtual.getValorVenda()));
             txtCodBarras.clear();
             txtQuantidade.clear();
@@ -265,8 +265,8 @@ public class VendasController implements Initializable {
             if(vendaAtual.foiVendido(resultCodBarras.get())) {
                 for (Iterator<Produto> it = listaProdutos.iterator(); it.hasNext(); ) {
                     produto = it.next();
-                    if (produto.getCodigoBarras().equals(resultCodBarras.get())) {
-                        valorProduto = produto.getPrecoVenda();
+                    if (produto.getCodigo_interno().equals(resultCodBarras.get())) {
+                        valorProduto = produto.getPreco_venda();
                         it.remove();
                     }
                 }
@@ -276,7 +276,7 @@ public class VendasController implements Initializable {
                     produto = listaProdutos.get(listaProdutos.size() - 1);
                     lblNomeProduto.setText(listaProdutos.get(listaProdutos.size() - 1).getNome());
                     lblQuantidade.setText(Integer.toString(produto.getQuantidade()));
-                    lblSubtotal.setText(String.format("%.2f", listaProdutos.get(listaProdutos.size() - 1).getPrecoVenda() * produto.getQuantidade()));
+                    lblSubtotal.setText(String.format("%.2f", listaProdutos.get(listaProdutos.size() - 1).getPreco_venda() * produto.getQuantidade()));
                     lblTotal.setText(String.format("%.2f", vendaAtual.getValorVenda()));
                 } else {
                     statusVenda = "Ocioso";

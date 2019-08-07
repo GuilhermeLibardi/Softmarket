@@ -15,9 +15,10 @@ test{
 
 
 dependencies {
+    compile group: 'com.sun.jersey', name: 'jersey-client', version: '1.9.1'
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.3.1'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.3.1'
-    implementation 'mysql:mysql-connector-java:5.1.13'
+    implementation 'com.google.code.gson:gson:2.8.5'
     compile 'io.sentry:sentry:1.7.23'
 }
 

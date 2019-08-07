@@ -1,79 +1,39 @@
 package br.com.softmarket.classes.Producao;
 
 public class Produto {
-    private String codigoProduto;
-    private String codigoBarras;
-    private String tipo;
     private String nome;
-    private String grupo;
-    private String subgrupo;
-    private String descricao;
-    private double peso;
-    private int minimoEstoque;
-    private Double precoCusto;
-    private Double precoVenda;
-    private Double precoPromocional;
-    private boolean promocaoAtiva;
     private int quantidade;
+    private String codigo_interno;
+    private String grupo;
+    private Double preco_venda;
+    private Double preco_promocional;
+    private boolean em_promocao;
 
-    public Produto(String codigoProduto, String codigoBarras, String tipo, String nome, String grupo, String subgrupo, String descricao, double peso, int minimoEstoque, Double precoCusto, Double precoVenda, Double precoPromocional, boolean promocaoAtiva) {
-        this.codigoProduto = codigoProduto;
-        this.codigoBarras = codigoBarras;
-        this.tipo = tipo;
+    public Produto(String nome, int quantidade, String codigo_interno, String grupo, Double preco_venda, Double preco_promocional, boolean em_promocao) {
         this.nome = nome;
+        this.quantidade = quantidade;
+        this.codigo_interno = codigo_interno;
         this.grupo = grupo;
-        this.subgrupo = subgrupo;
-        this.descricao = descricao;
-        this.peso = peso;
-        this.minimoEstoque = minimoEstoque;
-        this.precoCusto = precoCusto;
-        this.precoVenda = precoVenda;
-        this.precoPromocional = precoPromocional;
-        this.promocaoAtiva = promocaoAtiva;
+        this.preco_venda = preco_venda;
+        this.preco_promocional = preco_promocional;
+        this.em_promocao = em_promocao;
     }
 
-    public Produto(String nome, Double precoCusto, Double precoVenda, String codigoBarras, Double peso, int quantidade) {
-        this.codigoBarras = codigoBarras;
+    public Produto(String nome, Double precoVenda, String codigoInterno, int quantidade) {
+        this.codigo_interno = codigoInterno;
         this.nome = nome;
-        this.peso = peso;
-        this.precoCusto = precoCusto;
-        this.precoVenda = precoVenda;
+        this.preco_venda = precoVenda;
         this.quantidade = quantidade;
     }
 
-    public Produto(Produto p){
-        this.codigoBarras = p.codigoBarras;
-        this.nome = p.nome;
-        this.peso = p.peso;
-        this.precoCusto = p.precoCusto;
-        this.precoVenda = p.precoVenda;
-    }
-
-    public Produto(String nome, Double precoCusto, Double precoVenda, String codigoBarras, Double peso) {
-    }
-
-    public String getCodigoProduto() {
-        return codigoProduto;
-    }
-
-    public void setCodigoProduto(String codigoProduto) {
-        this.codigoProduto = codigoProduto;
-    }
-
-    public String getCodigoBarras() {
-        return codigoBarras;
-    }
-
-    public void setCodigoBarras(String codigoBarras) {
-        this.codigoBarras = codigoBarras;
-    }
-
-    public String getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
+    public Produto(Produto produto) {
+        this.nome = produto.nome;
+        this.quantidade = produto.quantidade;
+        this.codigo_interno = produto.codigo_interno;
+        this.grupo = produto.grupo;
+        this.preco_venda = produto.preco_venda;
+        this.preco_promocional = produto.preco_promocional;
+        this.em_promocao = produto.em_promocao;
     }
 
     public String getNome() {
@@ -84,6 +44,22 @@ public class Produto {
         this.nome = nome;
     }
 
+    public int getQuantidade() {
+        return quantidade;
+    }
+
+    public void setQuantidade(int quantidade) {
+        this.quantidade = quantidade;
+    }
+
+    public String getCodigo_interno() {
+        return codigo_interno;
+    }
+
+    public void setCodigo_interno(String codigo_interno) {
+        this.codigo_interno = codigo_interno;
+    }
+
     public String getGrupo() {
         return grupo;
     }
@@ -92,75 +68,27 @@ public class Produto {
         this.grupo = grupo;
     }
 
-    public String getSubgrupo() {
-        return subgrupo;
+    public Double getPreco_venda() {
+        return preco_venda;
     }
 
-    public void setSubgrupo(String subgrupo) {
-        this.subgrupo = subgrupo;
+    public void setPreco_venda(Double preco_venda) {
+        this.preco_venda = preco_venda;
     }
 
-    public String getDescricao() {
-        return descricao;
+    public Double getPreco_promocional() {
+        return preco_promocional;
     }
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
+    public void setPreco_promocional(Double preco_promocional) {
+        this.preco_promocional = preco_promocional;
     }
 
-    public int getMinimoEstoque() {
-        return minimoEstoque;
+    public boolean isEm_promocao() {
+        return em_promocao;
     }
 
-    public void setMinimoEstoque(int minimoEstoque) {
-        this.minimoEstoque = minimoEstoque;
-    }
-
-    public Double getPrecoCusto() {
-        return precoCusto;
-    }
-
-    public void setPrecoCusto(Double precoCusto) {
-        this.precoCusto = precoCusto;
-    }
-
-    public Double getPrecoVenda() {
-        return precoVenda;
-    }
-
-    public void setPrecoVenda(Double precoVenda) {
-        this.precoVenda = precoVenda;
-    }
-
-    public Double getPrecoPromocional() {
-        return precoPromocional;
-    }
-
-    public void setPrecoPromocional(Double precoPromocional) {
-        this.precoPromocional = precoPromocional;
-    }
-
-    public boolean isPromocaoAtiva() {
-        return promocaoAtiva;
-    }
-
-    public void setPromocaoAtiva(boolean promocaoAtiva) {
-        this.promocaoAtiva = promocaoAtiva;
-    }
-
-    public double getPeso() {
-        return peso;
-    }
-
-    public void setPeso(double peso) {
-        this.peso = peso;
-    }
-
-    public int getQuantidade() {
-        return quantidade;
-    }
-
-    public void setQuantidade(int quantidade) {
-        this.quantidade = quantidade;
+    public void setEm_promocao(boolean em_promocao) {
+        this.em_promocao = em_promocao;
     }
 }
