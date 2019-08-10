@@ -13,7 +13,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane blendMode="MULTIPLY" nodeOrientation="LEFT_TO_RIGHT" pickOnBounds="false" prefHeight="350.0" prefWidth="400.0" snapToPixel="false" styleClass="paneBackground" stylesheets="@../styles/login.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.controllers.LoginController">
+<AnchorPane blendMode="MULTIPLY" nodeOrientation="LEFT_TO_RIGHT" pickOnBounds="false" prefHeight="350.0" prefWidth="400.0" snapToPixel="false" styleClass="paneBackground" stylesheets="@../styles/login.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.com.softmarket.controllers.LoginController">
    <children>
       <Button id="btnLogin" fx:id="btnLogin" layoutX="345.0" layoutY="247.0" mnemonicParsing="false" onAction="#handleLogin" prefHeight="25.0" prefWidth="62.0" stylesheets="@../styles/login.css" text="Entrar" textFill="WHITE">
          <font>

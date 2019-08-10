@@ -2,6 +2,8 @@ package  br.com.softmarket.classes.Estoque;
 
 import br.com.softmarket.classes.Producao.Produto;
 import br.com.softmarket.dao.ApiController;
+import io.sentry.Sentry;
+import javafx.collections.ObservableList;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -45,6 +47,7 @@ public class Estoque {
                 estoqueP.put(produto.getCodigo_interno(), produto.getQuantidade());
             }
         } catch (Exception e){
+            Sentry.capture(e);
             System.out.println(e);
         }
     }
@@ -57,6 +60,7 @@ public class Estoque {
                 }
             }
         } catch (Exception e){
+            Sentry.capture(e);
             System.out.println(e);
         }
         return null;

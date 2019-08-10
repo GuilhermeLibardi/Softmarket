@@ -1,10 +1,20 @@
 package br.com.softmarket.classes.PDV;
 
+import br.com.softmarket.classes.Estoque.Estoque;
+import br.com.softmarket.classes.Producao.Produto;
+import br.com.softmarket.dao.ApiController;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+import io.sentry.Sentry;
+import javafx.collections.ObservableList;
+
+import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
 
 public class Venda {
-    private static Map<String, Integer> produtosVenda;
+    private Map<String, Integer> produtosVenda;
     private String codigoVenda;
     private Double valorVenda;
     private Double valorTroco;
@@ -29,6 +39,24 @@ public class Venda {
         TipoPagamento = "";
         OrigemVenda = "";
         produtosVenda = new HashMap<>();
+    }
+
+    public static Venda iniciarVenda() {
+        return new Venda();
+    }
+
+    public void fecharVenda() {
+        try {
+            ApiController.fecharVenda(this);
+        }catch (Exception e){
+            Sentry.capture(e);
+            System.out.println(e);
+        }
+    }
+
+    public void cancelarVenda() {
+        produtosVenda.clear();
+        valorVenda = 0.0;
     }
 
     public boolean foiVendido(String codProduto){
@@ -73,16 +101,11 @@ public class Venda {
         return valorPago-valorVenda;
     }
 
-    public static Venda iniciarVenda() {
-        return new Venda();
+    public Map<String, Integer> getProdutosVenda() {
+        return produtosVenda;
     }
 
-    public void fecharVenda() {
-        //gerar nota e atualizar estoque
-    }
-
-    public void cancelarVenda() {
-        produtosVenda.clear();
-        valorVenda = 0.0;
+    public void setProdutosVenda(Map<String, Integer> produtosVenda) {
+        this.produtosVenda = produtosVenda;
     }
 }
