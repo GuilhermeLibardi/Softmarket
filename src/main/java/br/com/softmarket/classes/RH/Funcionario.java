@@ -15,15 +15,27 @@ public class Funcionario {
         this.password = senha;
     }
 
-    public boolean verificaLogin(){
-        try{
-            this.nome = ApiController.verificaLogin(this);
-            return true;
-        } catch (Exception e){
-            Sentry.capture(e);
-        }
-        System.out.println("Apareceu aqui");
-        return false;
+    public String getNome() {
+        return nome;
     }
 
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 }

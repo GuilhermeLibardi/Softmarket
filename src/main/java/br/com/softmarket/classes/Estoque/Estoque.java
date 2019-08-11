@@ -42,6 +42,7 @@ public class Estoque {
     }
 
     private static void atualizarEstoque() {
+        estoqueP.clear();
         try {
             for(Produto produto : ApiController.index()){
                 estoqueP.put(produto.getCodigo_interno(), produto.getQuantidade());

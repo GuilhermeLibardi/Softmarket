@@ -1,25 +1,21 @@
 package br.com.softmarket.dao;
 
+import br.com.softmarket.classes.PDV.Caixa;
+
 public class TokenApi {
     private String token;
-    private String nome;
+    private Caixa caixa;
 
-    public TokenApi(String token, String nome) {
+    public TokenApi(String token, Caixa caixa) {
         this.token = token;
-        this.nome = nome;
+        this.caixa = caixa;
     }
-
-    public TokenApi() {
-        this.token = "";
-        this.nome = "";
-    }
-
 
     public String getToken() {
         return token;
     }
 
-    public String getNome() {
-        return nome;
+    public Caixa getCaixa() {
+        return caixa;
     }
 }

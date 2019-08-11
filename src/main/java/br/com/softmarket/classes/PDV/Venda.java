@@ -20,29 +20,28 @@ public class Venda {
     private Double valorTroco;
     private Double valorPago;
     private String TipoPagamento;
-    private String OrigemVenda;
+    private int caixa_id;
 
-    public Venda(String codigoVenda, Double valorVenda, Double valorTroco, Double valorPago, String tipoPagamento, String origemVenda) {
+    public Venda(String codigoVenda, Double valorVenda, Double valorTroco, Double valorPago, String tipoPagamento) {
         this.codigoVenda = codigoVenda;
         this.valorVenda = valorVenda;
         this.valorTroco = valorTroco;
         this.valorPago = valorPago;
         TipoPagamento = tipoPagamento;
-        OrigemVenda = origemVenda;
     }
 
-    public Venda(){
+    public Venda(int idCaixa){
         this.codigoVenda = "";
         this.valorVenda = 0.0;
         this.valorTroco = 0.0;
         this.valorPago = 0.0;
+        caixa_id = idCaixa;
         TipoPagamento = "";
-        OrigemVenda = "";
         produtosVenda = new HashMap<>();
     }
 
-    public static Venda iniciarVenda() {
-        return new Venda();
+    public static Venda iniciarVenda(int idCaixa) {
+        return new Venda(idCaixa);
     }
 
     public void fecharVenda() {
@@ -87,10 +86,6 @@ public class Venda {
         this.valorPago = valorPago;
     }
 
-    public void setOrigemVenda(String origemVenda) {
-        OrigemVenda = origemVenda;
-    }
-
     public void inserirProdutoVenda(String codBarras, int quantidade) {
         produtosVenda.put(codBarras, quantidade);
     }
@@ -99,6 +94,10 @@ public class Venda {
 
     public Double calcularTroco() {
         return valorPago-valorVenda;
+    }
+
+    public void setTipoPagamento(String tipoPagamento) {
+        TipoPagamento = tipoPagamento;
     }
 
     public Map<String, Integer> getProdutosVenda() {

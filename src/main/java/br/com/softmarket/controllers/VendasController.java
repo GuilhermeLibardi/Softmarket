@@ -2,6 +2,7 @@ package br.com.softmarket.controllers;
 
 import br.com.softmarket.classes.Estoque.Estoque;
 import br.com.softmarket.classes.Main.Main;
+import br.com.softmarket.classes.PDV.Caixa;
 import br.com.softmarket.classes.PDV.Venda;
 import br.com.softmarket.classes.Producao.Produto;
 import javafx.beans.value.ObservableValue;
@@ -50,6 +51,9 @@ public class VendasController implements Initializable {
     @FXML
     private TextField txtQuantidade;
 
+    @FXML
+    private SplitPane splitPaneVenda;
+
     private ObservableList<Produto> listaProdutos = FXCollections.observableArrayList();
 
     @FXML
@@ -68,8 +72,12 @@ public class VendasController implements Initializable {
 
     private Venda vendaAtual;
 
+    private Caixa caixaAtual = Main.caixa;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
+        txtCodBarras.requestFocus();
+        SplitPane.setResizableWithParent(splitPaneVenda, Boolean.FALSE);
         creatTable();
         Estoque.getInstance();
     }
@@ -98,6 +106,7 @@ public class VendasController implements Initializable {
         };
         colVenda.setCellFactory(cellFactory);
         tableProdutos.setItems(listaProdutos);
+        tableProdutos.setFocusTraversable(false);
     }
 
     @FXML
@@ -117,6 +126,8 @@ public class VendasController implements Initializable {
             //Alerta de Produto não encontrado
             criarAlertaErro("Produto não encontrado!", "Código de barras não encontrado", "Digite um código de barras de um produto cadastrado no sistema.");
             txtCodBarras.requestFocus();
+        }else if (event.getCode().equals(KeyCode.ESCAPE)){
+            txtCodBarras.clear();
         }
     }
 
@@ -154,6 +165,9 @@ public class VendasController implements Initializable {
                 txtQuantidade.requestFocus();
             }
             txtQuantidade.requestFocus();
+        }else if (event.getCode().equals(KeyCode.ESCAPE)){
+            txtCodBarras.requestFocus();
+            txtQuantidade.clear();
         }
     }
 
@@ -165,7 +179,7 @@ public class VendasController implements Initializable {
             setarVisibilidadeTrue();
             if (statusVenda.equals("Ocioso")) {
                 statusVenda = ("Ativa");
-                vendaAtual = Venda.iniciarVenda();
+                vendaAtual = Venda.iniciarVenda(caixaAtual.getId());
                 vendaAtual.inserirProdutoVenda(txtCodBarras.getText(), Integer.parseInt(txtQuantidade.getText()));
             }else if (statusVenda.equals("Ativa")) {
                 if(vendaAtual.foiVendido(txtCodBarras.getText())){
@@ -176,6 +190,7 @@ public class VendasController implements Initializable {
             }
             vendaAtual.setValorVenda(produtoAtual.getPreco_venda()*Double.parseDouble(txtQuantidade.getText()) + vendaAtual.getValorVenda());
             listaProdutos.add(produtoAtual);
+            caixaAtual.setMontante_final(caixaAtual.getMontante_final()+vendaAtual.getValorVenda());
             lblQuantidade.setText(txtQuantidade.getText());
             lblNomeProduto.setText(produtoAtual.getNome());
             lblSubtotal.setText(String.format("%.2f", produtoAtual.getPreco_venda() * Double.parseDouble(txtQuantidade.getText())));
@@ -183,6 +198,13 @@ public class VendasController implements Initializable {
             txtCodBarras.clear();
             txtQuantidade.clear();
             txtCodBarras.requestFocus();
+        }
+    }
+
+    @FXML
+    void botaoPress(KeyEvent event) {
+        if (event.getCode().equals(KeyCode.ESCAPE)){
+            txtQuantidade.requestFocus();
         }
     }
 
@@ -222,27 +244,17 @@ public class VendasController implements Initializable {
                     Estoque.getInstance();
                     break;
             }
-        } else if (event.getCode() == KeyCode.F6) {
-            try {
-                changeScreen("/app/resources/fxml/telaVenderReceita.fxml");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        }
+        if(event.getCode().equals(KeyCode.F12)){
+            fecharCaixa();
         }
     }
 
-    private void changeScreen(String fxml) throws IOException {
-        Stage stage = new Stage();
-
-        stage.getIcons().add(new Image(Main.class.getResourceAsStream("/app/resources/images/ICONE.png")));
-        FXMLLoader loader = new FXMLLoader();
-        loader.setLocation(getClass().getResource(fxml));
-        Parent root = loader.load();
-
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
-        stage.setResizable(false);
+    private void fecharCaixa(){
+        Optional<ButtonType> result = criarAlertaConfirmacao("Fechar Caixa", "Voce esta prestes a fechar o caixa", "Deseja fechar?").showAndWait();
+        if (result.get() == ButtonType.OK) {
+            caixaAtual.FecharCaixa();
+        }
     }
 
     private TextInputDialog criarDialog(String title, String header, String content){
@@ -326,11 +338,11 @@ public class VendasController implements Initializable {
         Optional<ButtonType> resultado = dialogoExe.showAndWait();
 
         if (resultado.get() == btnCartao) {
-            vendaAtual.setOrigemVenda("C");
+            vendaAtual.setTipoPagamento("cartao");
             vendaAtual.setValorPago(vendaAtual.getValorVenda());
         } else if (resultado.get() == btnDinheiro) {
             TextInputDialog dialogoPagamento = criarDialog("Valor Pago","Insira o valor pago", "R$");
-            vendaAtual.setOrigemVenda("D");
+            vendaAtual.setTipoPagamento("dinheiro");
             Optional<String> pagamento = dialogoPagamento.showAndWait();
             while (!isDoubleString(pagamento.get()) || Double.parseDouble(pagamento.get()) < vendaAtual.getValorVenda()) {
                 criarAlertaErro("Valor Incorreto", "Você digitou um valor incorreto.", "Digite o valor pago pelo cliente novamente.");

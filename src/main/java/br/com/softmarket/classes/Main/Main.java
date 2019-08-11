@@ -1,5 +1,6 @@
 package br.com.softmarket.classes.Main;
 
+import br.com.softmarket.classes.PDV.Caixa;
 import br.com.softmarket.dao.ApiController;
 import io.sentry.Sentry;
 import javafx.application.Application;
@@ -15,6 +16,8 @@ import java.net.UnknownHostException;
 
 
 public class Main extends Application {
+    public static Caixa caixa;
+
     @Override
     public void start(Stage primaryStage) {
         try {

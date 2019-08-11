@@ -1,7 +1,11 @@
 package br.com.softmarket.controllers;
 
 import br.com.softmarket.classes.Main.Main;
+import br.com.softmarket.classes.PDV.Caixa;
 import br.com.softmarket.classes.RH.Funcionario;
+import br.com.softmarket.dao.ApiController;
+import com.google.gson.Gson;
+import io.sentry.Sentry;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -9,10 +13,7 @@ import javafx.fxml.Initializable;
 import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.stage.Screen;
 import javafx.stage.Stage;
@@ -20,6 +21,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class LoginController implements Initializable {
@@ -43,10 +45,33 @@ public class LoginController implements Initializable {
     @FXML
     public void handleLogin() throws java.io.IOException {
         Funcionario funcionario = new Funcionario(txtUsuario.getText(),txtSenha.getText());
+       try{
+           Caixa caixa = ApiController.verificaLogin(funcionario);
+           System.out.println(caixa.toString());
+           if(new Gson().toJson(caixa).equals("{}")){
+               Optional<String> result = criarDialog("Abrir Caixa", "Adicionar valor inicial", "Valor inicial:").showAndWait();
+               if(result.isPresent()){
+                   if(result.get().matches("([0-9])*(.([0-9]){2})*")){
+                       Main.caixa = caixa.AbrirCaixa(Double.parseDouble(result.get()));
+                       changeScreen("/fxml/telaVendas.fxml", funcionario);
+                   }
+               }
+           }else{
+               Main.caixa = caixa;
+               changeScreen("/fxml/telaVendas.fxml", funcionario);
+           }
+       }catch (Exception e){
+           Sentry.capture(e);
+       }
+    }
 
-        if(funcionario.verificaLogin()){
-            changeScreen("/fxml/telaVendas.fxml", funcionario);
-        }
+    private TextInputDialog criarDialog(String title, String header, String content){
+        TextInputDialog dialogo = new TextInputDialog();
+        dialogo.setTitle(title);
+        dialogo.setHeaderText(header);
+        dialogo.setContentText(content);
+
+        return dialogo;
     }
 
     @FXML
