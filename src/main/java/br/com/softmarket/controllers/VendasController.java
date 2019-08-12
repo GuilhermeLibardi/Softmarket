@@ -190,7 +190,6 @@ public class VendasController implements Initializable {
             }
             vendaAtual.setValorVenda(produtoAtual.getPreco_venda()*Double.parseDouble(txtQuantidade.getText()) + vendaAtual.getValorVenda());
             listaProdutos.add(produtoAtual);
-            caixaAtual.setMontante_final(caixaAtual.getMontante_final()+vendaAtual.getValorVenda());
             lblQuantidade.setText(txtQuantidade.getText());
             lblNomeProduto.setText(produtoAtual.getNome());
             lblSubtotal.setText(String.format("%.2f", produtoAtual.getPreco_venda() * Double.parseDouble(txtQuantidade.getText())));
